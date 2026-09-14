@@ -90,6 +90,7 @@ Open every comment with a plain-text label from `references/review-comments.md`:
 - `references/banned-phrases.md`: AI-era phrases to cut, grouped by failure mode
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
 - `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify
+- `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
 ## Frontmatter contract
 
