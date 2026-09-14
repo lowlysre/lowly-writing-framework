@@ -31,6 +31,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Body structure shared by PRs and issues (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the two above applies
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
 - Touching a README, doc, or code comment → `references/docs-and-comments.md` (present-tense rule)
+- Writing a design doc, RFC, or retrospective → `references/body-writing.md` for section structure and `references/docs-and-comments.md` for tense; sentence-level architecture for long-form prose is a voice-pack concern, not covered here
 - Running the finished-artifact self-check on any PR body, doc, or comment → `references/self-check.md`
 - Defining, clarifying, or implementing a requirement or acceptance criterion, in a dedicated requirements doc or inline in a comment/PR/commit → `references/requirements-ears.md` (EARS syntax, document mode vs. inline mode)
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`

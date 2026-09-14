@@ -1,4 +1,4 @@
-<img src="assets/hero.svg" alt="lowly-writing-framework" width="100%">
+<img src="assets/hero.svg" alt="lowly-writing-framework: structure for PRs, issues, reviews, and docs" width="100%">
 
 # lowly-writing-framework
 
@@ -22,17 +22,17 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 1. Make a small code change on a branch in any repo with a remote on GitHub.
 2. Ask your agent: "open a draft PR for this branch."
-3. Watch the skill activate before the PR call. The `description` frontmatter names `create_pull_request` as a trigger, so the agent loads `SKILL.md` and `references/pr-writing.md` before drafting.
+3. Watch the skill activate before the PR call. The `description` frontmatter names `create_pull_request` as a trigger, and `SKILL.md` routes the agent to `references/pr-writing.md` before it drafts.
 4. The body fills the repo's PR template, or the skill's fallback of a `## Summary` heading over 1-3 sentences on why the change exists, then what changed.
-5. The body carries a closing reference in the full `owner/repo#123` form. If no issue exists yet, the agent files one scoped to the change first, per `references/pr-writing.md`.
+5. The body carries a closing reference in the full `owner/repo#123` form. If no issue exists yet, the skill has the agent file one scoped to the change first, per `references/pr-writing.md`.
 6. A `## Testing` section states what ran and what didn't. An untested path stays visible as an unchecked box or a `> [!WARNING]` admonition.
-7. Before the PR call, the agent writes the body to a temp file and runs the mechanical checks from `references/self-check.md` against it. A bare `#123`, a backticked issue reference, a `Part of` phrasing, or a missing `<!--:robot:-->` watermark fails the check and gets fixed before anything reaches GitHub.
+7. Before the PR call, the skill has the agent write the body to a temp file and run the mechanical checks from `references/self-check.md` against it. A bare `#123`, a backticked issue reference, a `Part of` phrasing, or a missing `<!--:robot:-->` watermark fails the check and gets fixed before anything reaches GitHub.
 
 # How-to guides
 
 ## Pair with a voice-pack skill
 
-Install both skills. The Agent Skills spec has no dependency or `extends` mechanism, so composition works by co-activation: both skills' `description` frontmatter lists the same triggers (PR body, issue body, review comment, doc prose, code comment, requirement, and the same tool calls), so an agent that matches one matches the other and loads both. This skill decides structure; the voice pack decides tone, punctuation, and phrasing. Neither file references the other by name.
+Install both skills. The Agent Skills spec has no dependency or `extends` mechanism, so composition relies on how agents select skills: each agent matches a request against every installed skill's `description` and loads the ones that fit. Both skills' `description` frontmatter lists the same triggers (PR body, issue body, review comment, doc prose, code comment, requirement, and the same tool calls), so a request that matches one matches the other. This is client behavior, not a spec guarantee; an agent that only loads a single best-match skill loads one of the two. This skill decides structure; the voice pack decides tone, punctuation, and phrasing. Neither file references the other by name.
 
 If you write your own voice pack, copy this repo's `description` line as the starting point for yours and keep the artifact list in sync when either changes.
 
@@ -102,7 +102,7 @@ Open every comment with a plain-text label from `references/review-comments.md`:
   - edit verbs: edit, copy edit, revise, rewrite, reword, redo, polish, refactor
   - tool calls: the six PR and review-comment tools listed in `SKILL.md`, from `create_pull_request` through `reply_and_resolve_review_thread`
 
-A voice-pack skill that lists the same set co-activates with this one.
+A voice-pack skill that lists the same set matches the same requests as this one.
 
 ## Mechanical checks
 
@@ -126,7 +126,7 @@ Each check in `references/self-check.md` is a command with a `grep` form and a `
 
 Two facts about Agent Skills force the split. First, the spec has no `extends` or `depends` field, so one skill can't declare that it builds on another. Second, `npx skills update` deletes and recreates the skill directory, so a personalization subfolder inside a single skill is wiped on every update. A voice layer either lives in a fork that diverges from upstream or in a separate skill.
 
-Separate skills are the only clean composition. Both skills list the same triggers, an agent loads both, and each governs a different axis of the same artifact: this one decides what goes where, the voice pack decides how it reads. The scope section in `SKILL.md` and the rule in `AGENTS.md` about not adding taste rules here exist to keep that boundary from drifting.
+Separate skills are the only clean composition. Both skills list the same triggers, an agent that loads every matching skill loads both, and each governs a different axis of the same artifact: this one decides what goes where, the voice pack decides how it reads. The scope section in `SKILL.md` and the rule in `AGENTS.md` about not adding taste rules here exist to keep that boundary from drifting.
 
 ## The frameworks it enforces
 

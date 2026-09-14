@@ -9,7 +9,7 @@ This doesn't relax anything in `SKILL.md`. The surface still reads like a human 
 - State actions as explicit imperative steps, one per bullet, in the order they run. Don't fold two actions into one sentence, an actor executing sequentially needs the split even where terse prose would normally combine them
 - Acceptance criteria and requirements use EARS syntax from `references/requirements-ears.md`, even inline in a body where prose would otherwise cover it. A trigger/response pair is unambiguous to parse, a paragraph the actor has to infer conditions from isn't
 - Name exact identifiers: file paths, function/class names, config keys, issue/PR numbers. Never "the relevant file" or "as mentioned above", a human reader can resolve the referent from context, an agent can't
-- Figurative and rhetorical phrasing (antithesis, aphorism, a punchline standing in for a plain statement) is disqualifying here whatever the voice rules in play allow elsewhere: a device a human reads past without noticing is exactly the sentence a model has to resolve as if it were literal
+- Figurative phrasing is disqualifying here whatever the voice rules in play allow elsewhere: every actionable sentence has to read literally, because a turn of phrase a human reads past without noticing is exactly the sentence a model has to resolve as if it were an instruction
 - Never let the human-facing summary and the agent-facing steps diverge. If the summary would normally omit a step for brevity, keep the step anyway, an actor parsing only the actionable section still needs the complete list; cut length from the summary before the steps, never the reverse
 
 ## Boundaries
