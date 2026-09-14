@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-labelledby="title desc">
+  <title id="title">lowly-writing-framework</title>
+  <desc id="desc">Structure for PRs, issues, reviews, and docs.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4493f8"/>
+      <stop offset="1" stop-color="#3fb950"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- stacked document outlines -->
+  <g transform="translate(790 150)" fill="none" stroke-width="3">
+    <rect x="72" y="0" width="260" height="200" rx="14" stroke="#30363d"/>
+    <rect x="36" y="36" width="260" height="200" rx="14" stroke="#484f58"/>
+    <rect x="0" y="72" width="260" height="200" rx="14" stroke="url(#accent)" fill="#0d1117"/>
+    <line x1="32" y1="114" x2="160" y2="114" stroke="#4493f8" stroke-width="8" stroke-linecap="round"/>
+    <g stroke="#8b949e" stroke-linecap="round">
+      <line x1="32" y1="146" x2="228" y2="146"/>
+      <line x1="32" y1="168" x2="204" y2="168"/>
+      <line x1="32" y1="190" x2="216" y2="190"/>
+    </g>
+    <line x1="32" y1="228" x2="80" y2="228" stroke="#3fb950" stroke-width="4" stroke-linecap="round"/>
+    <line x1="96" y1="228" x2="200" y2="228" stroke="#8b949e" stroke-linecap="round"/>
+    <polyline points="196,246 208,258 228,234" stroke="#3fb950" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- bracket motif -->
+  <g fill="none" stroke="#30363d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="90,200 70,200 70,430 90,430"/>
+    <polyline points="700,200 720,200 720,430 700,430"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">
+    <text x="110" y="270" font-size="54" font-weight="700" fill="#e6edf3">lowly-writing-</text>
+    <text x="110" y="330" font-size="54" font-weight="700" fill="#e6edf3">framework</text>
+    <text x="110" y="384" font-size="24" fill="#8b949e">Structure for PRs, issues, reviews, and docs.</text>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="17">
+    <text x="110" y="440" fill="#4493f8">## Summary</text>
+    <text x="270" y="440" fill="#3fb950">closes owner/repo#123</text>
+    <text x="110" y="470" fill="#d29922">suggestion (non-blocking):</text>
+    <text x="410" y="470" fill="#8b949e">WHEN x THE system SHALL y</text>
+  </g>
+
+  <rect x="110" y="500" width="260" height="5" rx="2.5" fill="url(#accent)"/>
+</svg>

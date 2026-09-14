@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-labelledby="title desc">
+  <title id="title">lowly-writing-framework</title>
+  <desc id="desc">Structure for PRs, issues, reviews, and docs.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="1" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4493f8"/>
+      <stop offset="1" stop-color="#3fb950"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="300" rx="16" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="1199" height="299" rx="16" fill="none" stroke="#30363d"/>
+
+  <!-- stacked document outlines -->
+  <g transform="translate(820 52)" fill="none" stroke-width="2">
+    <rect x="48" y="0" width="200" height="150" rx="10" stroke="#30363d"/>
+    <rect x="24" y="24" width="200" height="150" rx="10" stroke="#484f58"/>
+    <rect x="0" y="48" width="200" height="150" rx="10" stroke="url(#accent)" fill="#0d1117"/>
+    <g stroke="#4493f8" stroke-linecap="round">
+      <line x1="24" y1="80" x2="120" y2="80" stroke-width="6"/>
+    </g>
+    <g stroke="#8b949e" stroke-linecap="round">
+      <line x1="24" y1="104" x2="176" y2="104"/>
+      <line x1="24" y1="120" x2="160" y2="120"/>
+      <line x1="24" y1="136" x2="168" y2="136"/>
+    </g>
+    <g stroke="#3fb950" stroke-linecap="round">
+      <line x1="24" y1="164" x2="60" y2="164" stroke-width="3"/>
+      <line x1="72" y1="164" x2="150" y2="164" stroke="#8b949e"/>
+    </g>
+    <g stroke="#3fb950" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="150,178 158,186 172,170"/>
+    </g>
+  </g>
+
+  <!-- bracket motif -->
+  <g fill="none" stroke="#30363d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="70,88 56,88 56,212 70,212"/>
+    <polyline points="722,88 736,88 736,212 722,212"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace">
+    <text x="90" y="128" font-size="52" font-weight="700" fill="#e6edf3">lowly-writing-framework</text>
+    <text x="90" y="178" font-size="22" fill="#8b949e">Structure for PRs, issues, reviews, and docs.</text>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="15" fill="#4493f8">
+    <text x="90" y="222">## Summary</text>
+    <text x="230" y="222" fill="#3fb950">closes owner/repo#123</text>
+    <text x="470" y="222" fill="#d29922">suggestion (non-blocking):</text>
+  </g>
+
+  <rect x="90" y="242" width="220" height="4" rx="2" fill="url(#accent)"/>
+</svg>
