@@ -32,9 +32,22 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 ## Pair with a voice-pack skill
 
-Install both skills. The Agent Skills spec has no dependency or `extends` mechanism, so composition relies on how agents select skills: each agent matches a request against every installed skill's `description` and loads the ones that fit. Both skills' `description` frontmatter lists the same triggers (PR body, issue body, review comment, doc prose, code comment, requirement, and the same tool calls), so a request that matches one matches the other. This is client behavior, not a spec guarantee; an agent that only loads a single best-match skill loads one of the two. This skill decides structure; the voice pack decides tone, punctuation, and phrasing. Neither file references the other by name.
+The Agent Skills spec has no dependency or `extends` mechanism, so an agent matches a request against every installed skill's `description` and loads whichever fit. Pairing two skills means making both `description` fields match the same requests, nothing more.
 
-If you write your own voice pack, copy this repo's `description` line as the starting point for yours and keep the artifact list in sync when either changes.
+To install an existing voice pack:
+
+1. Install it the same way as this skill: `npx skills add <owner>/<voice-pack-repo> -g`.
+2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
+3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
+
+This is client behavior, not a spec guarantee: an agent that loads only a single best-match skill loads one of the two, not both.
+
+To write your own voice pack:
+
+1. Scaffold a new skill directory with its own `SKILL.md`.
+2. Copy this repo's `description` line into it verbatim, then edit only the sentence after "BLOCKING REQUIREMENT" if your voice pack narrows the artifact list. Keep the artifact and tool-call lists identical to this skill's, or the two won't co-activate.
+3. Fill the body with tone, punctuation, and phrasing rules only. Don't restate anything from this skill's Scope section (body structure, issue-closing rules, EARS, Conventional Comments labels, present tense) or it'll fight this skill's rules instead of layering on top.
+4. Whenever this repo's `description` line changes, update your copy to match.
 
 ## Update
 
@@ -61,19 +74,11 @@ On Windows PowerShell, `Select-String` takes the same patterns; the file lists b
 
 ## Write an EARS requirement
 
-Pick the pattern the requirement is, from `references/requirements-ears.md`:
-
-- Always true: `THE API SHALL reject requests without an Authorization header`
-- On a trigger: `WHEN a user submits a login form THE system SHALL validate credentials within 200ms`
-- While a state holds: `WHILE the connection is in maintenance mode THE system SHALL reject new writes`
-- On an error: `IF the payment gateway times out, THEN THE system SHALL retry up to 3 times with exponential backoff`
-- Behind a feature flag: `WHERE multi-region replication is enabled THE system SHALL write to at least 2 regions before acknowledging`
-
-One sentence, one `SHALL`, one observable trigger. `should` and `may` mean it isn't a requirement yet. Inline in a code comment, compress it: `// WHEN queue depth > 1000, SHALL shed new writes`.
+Full syntax, the five patterns, and document vs. inline mode live in `references/requirements-ears.md`. The short version: one sentence, one `SHALL`, one observable trigger; `should` and `may` mean it isn't a requirement yet.
 
 ## Write a Conventional Comments review
 
-Open every comment with a plain-text label from `references/review-comments.md`: `praise:`, `nitpick:`, `suggestion:`, `issue:`, `question:`, `thought:`, `chore:`, `note:`. Add a decoration only when it changes what the author does: `suggestion (non-blocking):`, `issue (security):`. One comment per point. End each comment with `<!--:robot:-->` on its own line.
+Full label list and decoration rules live in `references/review-comments.md`. The short version: open every comment with a plain-text label (`praise:`, `issue:`, `suggestion:`, and the rest), one comment per point, `<!--:robot:-->` on its own line at the end.
 
 # Reference
 
