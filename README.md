@@ -6,6 +6,24 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 This README follows [Diátaxis](https://diataxis.fr/), so each top-level section answers one kind of question: learning, doing, looking up, understanding.
 
+## Contents
+
+- [Tutorial](#tutorial)
+  - [Install](#install)
+  - [First walk: draft a PR body](#first-walk-draft-a-pr-body)
+- [How-to guides](#how-to-guides)
+  - [Pair with a voice-pack skill](#pair-with-a-voice-pack-skill)
+  - [Update](#update)
+  - [Run the mechanical self-check by hand](#run-the-mechanical-self-check-by-hand)
+  - [Write an EARS requirement](#write-an-ears-requirement)
+  - [Write a Conventional Comments review](#write-a-conventional-comments-review)
+- [Reference](#reference)
+  - [File map](#file-map)
+  - [Versioning](#versioning)
+- [Explanation](#explanation)
+  - [Why split framework from voice](#why-split-framework-from-voice)
+  - [The frameworks it enforces](#the-frameworks-it-enforces)
+
 # Tutorial
 
 ## Install
@@ -32,9 +50,22 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 ## Pair with a voice-pack skill
 
-Install both skills. The Agent Skills spec has no dependency or `extends` mechanism, so composition relies on how agents select skills: each agent matches a request against every installed skill's `description` and loads the ones that fit. Both skills' `description` frontmatter lists the same triggers (PR body, issue body, review comment, doc prose, code comment, requirement, and the same tool calls), so a request that matches one matches the other. This is client behavior, not a spec guarantee; an agent that only loads a single best-match skill loads one of the two. This skill decides structure; the voice pack decides tone, punctuation, and phrasing. Neither file references the other by name.
+"Voice pack" isn't a term from the Agent Skills spec or a wider convention, it's this repo's own name for a separately installed Agent Skill that governs tone, punctuation, and phrasing for the same artifacts this skill structures: PR and issue bodies, review comments, docs, code comments. This skill decides what goes where; the voice pack decides how it reads. Neither skill names the other.
 
-If you write your own voice pack, copy this repo's `description` line as the starting point for yours and keep the artifact list in sync when either changes.
+The Agent Skills spec has no dependency or `extends` mechanism, so an agent matches a request against every installed skill's `description` and loads whichever fit. Pairing two skills means making both `description` fields match the same requests, nothing more.
+
+To install an existing voice pack:
+
+1. Install it the same way as this skill: `npx skills add <owner>/<voice-pack-repo> -g`.
+2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
+3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
+
+To write your own voice pack:
+
+1. Scaffold a new skill directory with its own `SKILL.md`.
+2. Copy this repo's `description` line into it verbatim, then edit only the sentence after "BLOCKING REQUIREMENT" if your voice pack narrows the artifact list. Keep the artifact and tool-call lists identical to this skill's, or the two won't co-activate.
+3. Fill the body with tone, punctuation, and phrasing rules only. Don't restate anything from this skill's Scope section (body structure, issue-closing rules, EARS, Conventional Comments labels, present tense) or it'll fight this skill's rules instead of layering on top.
+4. Whenever this repo's `description` line changes, update your copy to match.
 
 ## Update
 
@@ -61,19 +92,11 @@ On Windows PowerShell, `Select-String` takes the same patterns; the file lists b
 
 ## Write an EARS requirement
 
-Pick the pattern the requirement is, from `references/requirements-ears.md`:
-
-- Always true: `THE API SHALL reject requests without an Authorization header`
-- On a trigger: `WHEN a user submits a login form THE system SHALL validate credentials within 200ms`
-- While a state holds: `WHILE the connection is in maintenance mode THE system SHALL reject new writes`
-- On an error: `IF the payment gateway times out, THEN THE system SHALL retry up to 3 times with exponential backoff`
-- Behind a feature flag: `WHERE multi-region replication is enabled THE system SHALL write to at least 2 regions before acknowledging`
-
-One sentence, one `SHALL`, one observable trigger. `should` and `may` mean it isn't a requirement yet. Inline in a code comment, compress it: `// WHEN queue depth > 1000, SHALL shed new writes`.
+Full syntax, the five patterns, and document vs. inline mode live in `references/requirements-ears.md`. The short version: one sentence, one `SHALL`, one observable trigger; `should` and `may` mean it isn't a requirement yet.
 
 ## Write a Conventional Comments review
 
-Open every comment with a plain-text label from `references/review-comments.md`: `praise:`, `nitpick:`, `suggestion:`, `issue:`, `question:`, `thought:`, `chore:`, `note:`. Add a decoration only when it changes what the author does: `suggestion (non-blocking):`, `issue (security):`. One comment per point. End each comment with `<!--:robot:-->` on its own line.
+Full label list and decoration rules live in `references/review-comments.md`. The short version: open every comment with a plain-text label (`praise:`, `issue:`, `suggestion:`, and the rest), one comment per point, `<!--:robot:-->` on its own line at the end.
 
 # Reference
 
@@ -92,33 +115,9 @@ Open every comment with a plain-text label from `references/review-comments.md`:
 - `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
-## Frontmatter contract
+## Versioning
 
-`SKILL.md` opens with:
-
-- `name`: `lowly-writing-framework`, matching the repo and install directory name
-- `description`: a blocking-requirement trigger naming everything the skill governs
-  - artifacts: PR title/body, issue body, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, requirement/acceptance-criterion
-  - edit verbs: edit, copy edit, revise, rewrite, reword, redo, polish, refactor
-  - tool calls: the six PR and review-comment tools listed in `SKILL.md`, from `create_pull_request` through `reply_and_resolve_review_thread`
-
-A voice-pack skill that lists the same set matches the same requests as this one.
-
-## Mechanical checks
-
-Each check in `references/self-check.md` is a command with a `grep` form and a `Select-String` form:
-
-- Narrative/historical tells in docs and comments (`used to`, `previously`, and the rest of that list)
-- Hand-built `pull/456#issue-` URLs
-- Bare `#123` or owner-less `repo#123` references
-- Backticked issue references, whole or partial
-- Non-closing phrasing (`Part of`, `Relates to`) and presence of a closing keyword
-- Bare URLs outside a markdown link
-- Four or more comma-separated backticked identifiers in a row
-- Bolded or backticked review-comment labels
-- Missing or misplaced `<!--:robot:-->` watermark
-- Verify-what-landed after any `gh api` post or edit
-- Body length against the ceiling
+Tagged with git tags in semver form (`v1.0.0`). A change to `SKILL.md`'s `description` frontmatter is a major/breaking release: it's the line a voice-pack skill copies verbatim to co-activate, so a diff there means every voice pack needs to update its own copy to keep matching. A structural rule change inside `SKILL.md`'s body or any `references/*.md` file is minor or patch, it doesn't require a voice pack to change anything.
 
 # Explanation
 
