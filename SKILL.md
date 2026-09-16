@@ -17,7 +17,7 @@ This skill owns structure and mechanics only:
 - Conventional Comments labels on review comments
 - Present-tense rule for docs and code comments
 - Self-check mechanics: the grep-it-don't-eyeball-it checklist
-- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify
+- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks
 - Banned AI-era phrases
 
 Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope. A separately installed voice-pack skill may layer those on top; when both are installed, both apply to the same artifact, this skill for what goes where and the voice pack for how it reads.
@@ -36,7 +36,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Defining, clarifying, or implementing a requirement or acceptance criterion, in a dedicated requirements doc or inline in a comment/PR/commit → `references/requirements-ears.md` (EARS syntax, document mode vs. inline mode)
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
-- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify)
+- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, `gh discussion` and GraphQL-only discussion mutations)
 
 ## Formatting
 

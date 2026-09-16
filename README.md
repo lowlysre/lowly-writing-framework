@@ -112,7 +112,7 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/self-check.md`: mechanical checks (run the command) and judgment checks (read the text) for every finished artifact
 - `references/banned-phrases.md`: AI-era phrases to cut, grouped by failure mode
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
-- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify
+- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
 ## Versioning
