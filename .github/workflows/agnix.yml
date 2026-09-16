@@ -25,3 +25,4 @@ jobs:
         with:
           path: lowly-writing-framework
           version: v0.54.0
+          strict: true
