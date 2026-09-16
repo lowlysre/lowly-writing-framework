@@ -2,7 +2,7 @@
 
 # lowly-writing-framework
 
-An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a **voice pack**, a separately installed Agent Skill that governs tone, punctuation, and phrasing for the same artifacts, can supply that.
+An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
 
 This README follows [Diátaxis](https://diataxis.fr/), so each top-level section answers one kind of question: learning, doing, looking up, understanding.
 
@@ -50,6 +50,8 @@ npx skills add lowlysre/lowly-writing-framework -g
 # How-to guides
 
 ## Pair with a voice-pack skill
+
+A voice pack is a separately installed Agent Skill that governs tone, punctuation, and phrasing for the same artifacts this skill structures: PR and issue bodies, review comments, docs, code comments. This skill decides what goes where; the voice pack decides how it reads. Neither file references the other by name.
 
 The Agent Skills spec has no dependency or `extends` mechanism, so an agent matches a request against every installed skill's `description` and loads whichever fit. Pairing two skills means making both `description` fields match the same requests, nothing more.
 
