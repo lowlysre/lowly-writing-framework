@@ -45,7 +45,7 @@ Discussions have no REST endpoint. `gh discussion` (preview in gh 2.98, flagged 
 What `gh discussion` covers, all body-taking forms accept `--body-file <path>`:
 
 - Create: `gh discussion create --category <name-or-slug> --title <t> --body-file body.md`
-- Read before editing: `gh discussion view <n> --json title,body,category,answered,id`. The `id` field is the discussion's node ID, needed by every mutation below, and `category.isAnswerable` tells you whether the Answers rules in `references/discussions.md` apply
+- Read before editing: `gh discussion view <n> --json title,body,category,answered,id`. The `id` field is the discussion's node ID, needed by every mutation below, and `category.isAnswerable` tells you whether the discussion can have an answer marked at all
 - Edit the post: `gh discussion edit <n> --body-file body.md` (also `--title`, `--category`)
 - Top-level comment: `gh discussion comment <n> --body-file body.md`
 - Reply in a thread: `gh discussion comment <comment-url-or-node-id> --body-file body.md`. `gh discussion view <n> --comments --json comments --jq '.comments.nodes[] | {id, url, isAnswer}'` lists each top-level comment's `DC_...` node ID and its `#discussioncomment-456` URL; either form works as the argument
@@ -53,7 +53,7 @@ What `gh discussion` covers, all body-taking forms accept `--body-file <path>`:
 
 What needs `gh api graphql`:
 
-- List categories with their answerability, to pick one for a new discussion per `references/discussions.md`: `gh api graphql -f query='query($o:String!,$r:String!){repository(owner:$o,name:$r){id discussionCategories(first:25){nodes{id name slug isAnswerable}}}}' -f o=<owner> -f r=<repo>`. The `repository.id` and category `id` here are what `createDiscussion` takes if the subcommand isn't available: `gh api graphql -f query='mutation($repo:ID!,$cat:ID!,$t:String!,$b:String!){createDiscussion(input:{repositoryId:$repo,categoryId:$cat,title:$t,body:$b}){discussion{number url}}}' -f repo=<repo-id> -f cat=<category-id> -f t=<title> -F b=@body.md`
+- List categories with their answerability, to pick one for a new discussion: `gh api graphql -f query='query($o:String!,$r:String!){repository(owner:$o,name:$r){id discussionCategories(first:25){nodes{id name slug isAnswerable}}}}' -f o=<owner> -f r=<repo>`. The `repository.id` and category `id` here are what `createDiscussion` takes if the subcommand isn't available: `gh api graphql -f query='mutation($repo:ID!,$cat:ID!,$t:String!,$b:String!){createDiscussion(input:{repositoryId:$repo,categoryId:$cat,title:$t,body:$b}){discussion{number url}}}' -f repo=<repo-id> -f cat=<category-id> -f t=<title> -F b=@body.md`
 - Mark or unmark an answer, using the comment's `DC_...` node ID: `gh api graphql -f query='mutation($id:ID!){markDiscussionCommentAsAnswer(input:{id:$id}){discussion{answerChosenAt}}}' -f id=<comment-node-id>`; `unmarkDiscussionCommentAsAnswer` takes the same input
 - Close or reopen: `gh api graphql -f query='mutation($id:ID!,$why:DiscussionCloseReason!){closeDiscussion(input:{discussionId:$id,reason:$why}){discussion{closed}}}' -f id=<discussion-node-id> -f why=RESOLVED` (`OUTDATED` and `DUPLICATE` are the other reasons); `reopenDiscussion(input:{discussionId})` reverses it
 - Re-fetch a comment body to verify what landed, since `gh discussion view` has no single-comment `--json body`: `gh api graphql -f query='query($id:ID!){node(id:$id){... on DiscussionComment{body}}}' -f id=<comment-node-id> --jq .data.node.body`. For the opening post, `gh discussion view <n> --json body --jq .body` is enough
