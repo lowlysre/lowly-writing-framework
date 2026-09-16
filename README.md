@@ -6,6 +6,25 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 This README follows [Diátaxis](https://diataxis.fr/), so each top-level section answers one kind of question: learning, doing, looking up, understanding.
 
+## Contents
+
+- [Tutorial](#tutorial)
+  - [Install](#install)
+  - [First walk: draft a PR body](#first-walk-draft-a-pr-body)
+- [How-to guides](#how-to-guides)
+  - [Pair with a voice-pack skill](#pair-with-a-voice-pack-skill)
+  - [Update](#update)
+  - [Run the mechanical self-check by hand](#run-the-mechanical-self-check-by-hand)
+  - [Write an EARS requirement](#write-an-ears-requirement)
+  - [Write a Conventional Comments review](#write-a-conventional-comments-review)
+- [Reference](#reference)
+  - [File map](#file-map)
+  - [Frontmatter contract](#frontmatter-contract)
+  - [Mechanical checks](#mechanical-checks)
+- [Explanation](#explanation)
+  - [Why split framework from voice](#why-split-framework-from-voice)
+  - [The frameworks it enforces](#the-frameworks-it-enforces)
+
 # Tutorial
 
 ## Install
