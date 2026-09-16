@@ -61,8 +61,6 @@ To install an existing voice pack:
 2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
 3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
 
-This is client behavior, not a spec guarantee: an agent that loads only a single best-match skill loads one of the two, not both.
-
 To write your own voice pack:
 
 1. Scaffold a new skill directory with its own `SKILL.md`.
