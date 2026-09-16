@@ -1,0 +1,27 @@
+name: agnix
+
+on:
+  pull_request:
+    paths:
+      - "SKILL.md"
+      - "AGENTS.md"
+      - "references/**"
+      - ".agnix.toml"
+      - ".github/workflows/agnix.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Skill name must match its parent directory, so pin the checkout path to the skill name
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: lowly-writing-framework
+
+      - uses: agent-sh/agnix@784ae6497e2c879e3b7a97ab7a7005b5d5e2025f # v0.54.0
+        with:
+          path: lowly-writing-framework
+          version: v0.54.0
