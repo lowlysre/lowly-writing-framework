@@ -1,6 +1,6 @@
-# Body structure shared by PR and issue bodies
+# Body structure shared by PR, issue, and discussion bodies
 
-Loaded from `SKILL.md` alongside `references/pr-writing.md` (PR-specific: titles, issue-closing rules, testing, AI watermark) or `references/issue-writing.md` (issue-specific: titles, template selection). Everything here applies to both PR and issue bodies.
+Loaded from `SKILL.md` alongside `references/pr-writing.md` (PR-specific: titles, issue-closing rules, testing, AI watermark), `references/issue-writing.md` (issue-specific: titles, template selection), or `references/discussions.md` (discussion-specific: category, titles, answers). Everything here applies to PR bodies, issue bodies, and the opening post of a discussion; "issue" below covers a discussion post too.
 
 ## Editing an existing body
 

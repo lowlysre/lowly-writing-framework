@@ -1,11 +1,11 @@
 ---
 name: lowly-writing-framework
-description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, or reply_and_resolve_review_thread.
+description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, GitHub Discussion post or comment, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, or reply_and_resolve_review_thread, or running gh discussion create, edit, or comment.
 ---
 
 # Writing framework for dev artifacts
 
-Structure and mechanics for PR bodies, issue bodies, review comments, docs, code comments, and requirements. A PR description is a courtesy to the reviewer; docs and comments are a courtesy to the next reader. This skill decides what an artifact has to contain and how it's laid out, not how it sounds.
+Structure and mechanics for PR bodies, issue bodies, discussion posts, review comments, docs, code comments, and requirements. A PR description is a courtesy to the reviewer; docs and comments are a courtesy to the next reader. This skill decides what an artifact has to contain and how it's laid out, not how it sounds.
 
 ## Scope
 
@@ -13,11 +13,12 @@ This skill owns structure and mechanics only:
 
 - Body structure: fill the template, why over how, Context section, length ceiling, `Bonus`/`Chores` split
 - Issue-closing rules: every PR closes an issue, full `owner/repo#123` form, sub-issue instead of `Part of`
+- Discussion mechanics: category selection, question-as-title, thread replies over top-level comments, marking answers
 - Requirements in EARS syntax
 - Conventional Comments labels on review comments
 - Present-tense rule for docs and code comments
 - Self-check mechanics: the grep-it-don't-eyeball-it checklist
-- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify
+- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks
 - Banned AI-era phrases
 
 Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope. A separately installed voice-pack skill may layer those on top; when both are installed, both apply to the same artifact, this skill for what goes where and the voice pack for how it reads.
@@ -28,7 +29,8 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references)
-- Body structure shared by PRs and issues (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the two above applies
+- Drafting a discussion post, commenting or replying on one, or marking an answer → `references/discussions.md` (category selection, titles, thread replies, answers, why a PR can't close one)
+- Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
 - Touching a README, doc, or code comment → `references/docs-and-comments.md` (present-tense rule)
 - Writing a design doc, RFC, or retrospective → `references/body-writing.md` for section structure and `references/docs-and-comments.md` for tense; sentence-level architecture for long-form prose is a voice-pack concern, not covered here
@@ -36,7 +38,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Defining, clarifying, or implementing a requirement or acceptance criterion, in a dedicated requirements doc or inline in a comment/PR/commit → `references/requirements-ears.md` (EARS syntax, document mode vs. inline mode)
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
-- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify)
+- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, `gh discussion` and GraphQL-only discussion mutations)
 
 ## Formatting
 
@@ -75,6 +77,7 @@ This skill governs the writing, never the change. Don't reshape a diff, drop a c
 - Before editing an existing PR title/body (or any live comment/doc on GitHub), always fetch the current text first, never edit from an earlier draft in the conversation, per `references/gh-cli.md`
 - Trigger it the moment you write or edit any code comment or doc line, don't wait until the PR step to catch narrative language that snuck into the diff
 - Trigger it before drafting or posting any PR review comment, that means before `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, and `reply_and_resolve_review_thread`, not just before a generic "write a review comment" ask
+- Trigger it before any `gh discussion create`, `gh discussion edit`, or `gh discussion comment` call, and before the GraphQL mutations in `references/gh-cli.md` that stand in for them; there's no structured tool for discussions, so the `gh` call is the only trigger point
 - In a long session, don't rely on remembering this rule from the system prompt: treat every one of the tool calls named above as its own fresh trigger, regardless of how many turns or unrelated tool calls came before it
 - Trigger it whenever a requirement or acceptance criterion is being defined, clarified, or implemented, regardless of artifact: use `references/requirements-ears.md`
 - Run the self-check in `references/self-check.md` over the PR body and every touched comment/doc/prose artifact, right before declaring the task done, and again after every later revision, always against the full current text, never as a patch on the previous draft. Every `update_pull_request` call is itself a "later revision", not just a content edit exempt from the check: run the self-check against the body you're about to send before that call, structured tools don't get a pass just because they skip `references/gh-cli.md`'s shell mechanics

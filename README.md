@@ -2,7 +2,7 @@
 
 # lowly-writing-framework
 
-An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
+An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, discussion posts, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
 
 This README follows [Diátaxis](https://diataxis.fr/), so each top-level section answers one kind of question: learning, doing, looking up, understanding.
 
@@ -50,14 +50,14 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 ## Pair with a voice-pack skill
 
-"Voice pack" isn't a term from the Agent Skills spec or a wider convention, it's this repo's own name for a separately installed Agent Skill that governs tone, punctuation, and phrasing for the same artifacts this skill structures: PR and issue bodies, review comments, docs, code comments. This skill decides what goes where; the voice pack decides how it reads. Neither skill names the other.
+"Voice pack" isn't a term from the Agent Skills spec or a wider convention, it's this repo's own name for a separately installed Agent Skill that governs tone, punctuation, and phrasing for the same artifacts this skill structures: PR and issue bodies, discussion posts and comments, review comments, docs, code comments. This skill decides what goes where; the voice pack decides how it reads. Neither skill names the other.
 
 The Agent Skills spec has no dependency or `extends` mechanism, so an agent matches a request against every installed skill's `description` and loads whichever fit. Pairing two skills means making both `description` fields match the same requests, nothing more.
 
 To install an existing voice pack:
 
 1. Install it the same way as this skill: `npx skills add <owner>/<voice-pack-repo> -g`.
-2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
+2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, discussion post or comment, review comment, doc prose, code comment, requirement, `create_pull_request` through `reply_and_resolve_review_thread`, and the `gh discussion` subcommands). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
 3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
 
 To write your own voice pack:
@@ -103,16 +103,17 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 ## File map
 
 - `SKILL.md`: always-loaded entry point; scope, formatting mechanics, never-trim list, boundaries, workflow triggers, structural anti-patterns, and the routing table below
-- `references/body-writing.md`: body structure shared by PR and issue bodies (fill the template, why over how, Context section, 3-paragraph and 3,000-character ceilings, `Bonus` split, mermaid diagrams)
+- `references/body-writing.md`: body structure shared by PR bodies, issue bodies, and discussion posts (fill the template, why over how, Context section, 3-paragraph and 3,000-character ceilings, `Bonus` split, mermaid diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, `## Testing` honesty, `## Pre-merge`/`## Post-merge` sections, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, YAML form rendering, related-work references
+- `references/discussions.md`: discussion category selection and category forms, question-as-title, thread replies, marking answers, why a PR can't close a discussion
 - `references/review-comments.md`: Conventional Comments labels and decorations for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README, doc, and code-comment prose; when an issue number belongs in a comment
 - `references/requirements-ears.md`: the five EARS patterns, document mode vs. inline mode, requirement self-check
 - `references/self-check.md`: mechanical checks (run the command) and judgment checks (read the text) for every finished artifact
 - `references/banned-phrases.md`: AI-era phrases to cut, grouped by failure mode
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
-- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify
+- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
 ## Versioning
