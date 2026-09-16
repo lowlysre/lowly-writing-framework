@@ -19,6 +19,7 @@ This README follows [Diátaxis](https://diataxis.fr/), so each top-level section
   - [Write a Conventional Comments review](#write-a-conventional-comments-review)
 - [Reference](#reference)
   - [File map](#file-map)
+  - [Versioning](#versioning)
 - [Explanation](#explanation)
   - [Why split framework from voice](#why-split-framework-from-voice)
   - [The frameworks it enforces](#the-frameworks-it-enforces)
@@ -113,6 +114,10 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
 - `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
+
+## Versioning
+
+Tagged with git tags in semver form (`v1.0.0`). A change to `SKILL.md`'s `description` frontmatter is a major/breaking release: it's the line a voice-pack skill copies verbatim to co-activate, so a diff there means every voice pack needs to update its own copy to keep matching. A structural rule change inside `SKILL.md`'s body or any `references/*.md` file is minor or patch, it doesn't require a voice pack to change anything.
 
 # Explanation
 
