@@ -19,8 +19,6 @@ This README follows [Diátaxis](https://diataxis.fr/), so each top-level section
   - [Write a Conventional Comments review](#write-a-conventional-comments-review)
 - [Reference](#reference)
   - [File map](#file-map)
-  - [Frontmatter contract](#frontmatter-contract)
-  - [Mechanical checks](#mechanical-checks)
 - [Explanation](#explanation)
   - [Why split framework from voice](#why-split-framework-from-voice)
   - [The frameworks it enforces](#the-frameworks-it-enforces)
@@ -115,34 +113,6 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
 - `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
-
-## Frontmatter contract
-
-`SKILL.md` opens with:
-
-- `name`: `lowly-writing-framework`, matching the repo and install directory name
-- `description`: a blocking-requirement trigger naming everything the skill governs
-  - artifacts: PR title/body, issue body, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, requirement/acceptance-criterion
-  - edit verbs: edit, copy edit, revise, rewrite, reword, redo, polish, refactor
-  - tool calls: the six PR and review-comment tools listed in `SKILL.md`, from `create_pull_request` through `reply_and_resolve_review_thread`
-
-A voice-pack skill that lists the same set matches the same requests as this one.
-
-## Mechanical checks
-
-Each check in `references/self-check.md` is a command with a `grep` form and a `Select-String` form:
-
-- Narrative/historical tells in docs and comments (`used to`, `previously`, and the rest of that list)
-- Hand-built `pull/456#issue-` URLs
-- Bare `#123` or owner-less `repo#123` references
-- Backticked issue references, whole or partial
-- Non-closing phrasing (`Part of`, `Relates to`) and presence of a closing keyword
-- Bare URLs outside a markdown link
-- Four or more comma-separated backticked identifiers in a row
-- Bolded or backticked review-comment labels
-- Missing or misplaced `<!--:robot:-->` watermark
-- Verify-what-landed after any `gh api` post or edit
-- Body length against the ceiling
 
 # Explanation
 
