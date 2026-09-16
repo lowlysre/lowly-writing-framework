@@ -59,6 +59,8 @@ flowchart TD
 
 Don't drop `padding` below 14: wide multi-line `<br/>` labels combined with the rounded corners above crowd the border at 8px and below, especially on the widest line of a stacked label.
 
+Don't define a node inline with a `:::` class shorthand as the target of a dotted edge: `A -.-> T[Target]:::risk` fails on GitHub with "Unable to render rich display" even though mermaid 11 parses it fine locally. Declare the node first (`T[Target]:::risk`), then draw the edge with the bare id (`A -.-> T`).
+
 `theme: dark` forces box contrast to hold regardless of the viewer's own GitHub light/dark mode setting, and `nodeBorder` matches GitHub's own accent blue (the same one used for usernames and links). Skip fighting for per-link arrowhead colors, Mermaid arrowheads always inherit the line's color with no themeVariable or linkStyle to set them separately. Skip `font-weight` too, GitHub's font stack only has regular/bold weight files, so any numeric value in between snaps to one or the other rather than landing on a true medium weight.
 
 ## Before posting
