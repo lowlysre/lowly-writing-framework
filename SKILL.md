@@ -12,6 +12,7 @@ Structure and mechanics for PR bodies, issue bodies, review comments, docs, code
 This skill owns structure and mechanics only:
 
 - Body structure: fill the template, why over how, Context section, length ceiling, `Bonus`/`Chores` split
+- Mermaid diagram mechanics: GitHub rendering quirks, theme/styling, legends for color-coded diagrams
 - Issue-closing rules: every PR closes an issue, full `owner/repo#123` form, sub-issue instead of `Part of`
 - Requirements in EARS syntax
 - Conventional Comments labels on review comments
@@ -29,6 +30,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references)
 - Body structure shared by PRs and issues (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the two above applies
+- Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, theme/styling, legends for color-coded diagrams)
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
 - Touching a README, doc, or code comment → `references/docs-and-comments.md` (present-tense rule)
 - Writing a design doc, RFC, or retrospective → `references/body-writing.md` for section structure and `references/docs-and-comments.md` for tense; sentence-level architecture for long-form prose is a voice-pack concern, not covered here

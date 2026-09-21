@@ -10,6 +10,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 
 - `SKILL.md`: the always-loaded entry point, scope/formatting/boundaries rules that apply everywhere, plus a routing table into `references/`
 - `references/body-writing.md`: body structure shared by PR and issue bodies (fill-template, Context section, length ceiling, diagrams), loaded alongside whichever of the two files below applies
+- `references/diagrams.md`: mermaid diagram mechanics for PR/issue bodies and docs (GitHub rendering quirks, theme/styling, legends for color-coded diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, testing honesty, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, related-work references
 - `references/review-comments.md`: conventional comment labels for reviewing someone else's PR
@@ -27,6 +28,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - When a threshold changes (paragraph counts, sentence limits, etc.), grep the whole repo for the old number first, `references/self-check.md` and `references/body-writing.md` restate several of the same thresholds and drift apart if only one is updated
 - Keep the `description` frontmatter in `SKILL.md` listing the same artifact set and tool calls a voice-pack skill triggers on; co-activation depends on the overlap
 - This repo's own PRs and commits follow the skill it defines, dogfood `references/pr-writing.md` and `references/self-check.md` when writing a PR for this repo
+- Pick the commit/PR type by what changed about the skill's behavior, not by the fact that the diff is markdown: `feat:` for a new rule, section, or technique the skill didn't cover before; `fix:` for correcting a mistake in an existing rule (wrong guidance, a broken example, a rendering bug in documented syntax); `docs:` reserved for meta-documentation about the repo itself, this file, the README, the license. `references/pr-writing.md`'s conventional-commits default treats every markdown diff as `docs:`, right for a documentation repo, but the markdown here *is* the skill's behavior, so a change to `SKILL.md` or anything under `references/` gets `feat:`/`fix:` instead
 
 ## Workflow
 
