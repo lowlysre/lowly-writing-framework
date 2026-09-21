@@ -54,3 +54,9 @@ Three details make this render right instead of subtly wrong on GitHub:
 - **Force the legend below the diagram, not floating above it.** A `Legend` subgraph with no edges into the main flow is a disconnected component, and Mermaid's layout engine renders those above the flow, not after it, regardless of source order. Wrap the diagram's real content in its own `subgraph Main[ ]`, hide that wrapper's box with `style Main fill:none,stroke:none`, give it `direction LR` to preserve the flow's original left-to-right layout, switch the outer graph to `flowchart TB`, and connect the two subgraphs with an invisible link declared last (`Main ~~~ Legend`). The outer `TB` direction stacks `Main` above `Legend`; nothing about the diagram's own internal layout changes.
 
 Keep legend labels to one or two words, matching the category name a reader would already infer from context, not a restatement of the whole diagram.
+
+## Verifying a diagram actually renders right on GitHub
+
+A diagram that looks right in an editor's live preview, a CLI's chat preview, or a third-party renderer isn't proof it renders right on GitHub itself: every one of those is a different Mermaid build from the one GitHub ships, and a fragile pattern (nested subgraphs, a cluster-to-cluster invisible link, an HTML label forcing node size) is exactly where those builds diverge. GitHub renders Mermaid inside its own sandboxed `viewscreen.githubusercontent.com` iframe, a live PR/issue preview or comment is the only render that reflects what a reader will actually see.
+
+Before shipping a diagram that leans on one of the fragile patterns above, paste it into a scratch gist (`gh gist create scratch.md --public`) and open it, that renders through the same GitHub pipeline a PR or issue body uses. Delete the gist once it's confirmed. A plain flowchart with no nested subgraphs or invisible links doesn't need this, the fragility is specific to the layout tricks, not to Mermaid diagrams generally.
