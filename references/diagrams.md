@@ -25,17 +25,32 @@ Don't define a node inline with a `:::` class shorthand as the target of a dotte
 
 ## Legends for color-coded diagrams
 
-GitHub's Mermaid renderer has no built-in legend support ([mermaid-js/mermaid#2110](https://github.com/mermaid-js/mermaid/issues/2110) is still open). Once a diagram uses `style`/`classDef` fills to distinguish categories, a legend is what tells the reader what each color means instead of leaving them to guess or hunt for a caption. Build one with a dedicated subgraph: one node per category, joined by invisible links (`~~~`) so they lay out in a row instead of stacking, each node styled with the same fill used on its category elsewhere in the diagram and `stroke-width:0px` so it reads as a swatch, not a decision box:
+GitHub's Mermaid renderer has no built-in legend support ([mermaid-js/mermaid#2110](https://github.com/mermaid-js/mermaid/issues/2110) is still open). Once a diagram uses `style`/`classDef` fills to distinguish categories, a legend is what tells the reader what each color means instead of leaving them to guess or hunt for a caption. Build one as a titled subgraph of same-size swatch nodes, forced below the diagram it explains, joined by invisible links (`~~~`) so they lay out in a row instead of stacking:
 
 ```mermaid
-subgraph Legend[ ]
-    direction LR
-    human(("Human step")):::human
-    auto(("Automated step")):::automated
-    human ~~~ auto
-end
-classDef human fill:#f85149,stroke-width:0px
-classDef automated fill:#6e7681,stroke-width:0px
+flowchart TB
+    subgraph Main[ ]
+        direction LR
+        A["Start"]:::human --> B["Ship"]:::automated
+    end
+    style Main fill:none,stroke:none
+
+    subgraph Legend["Legend"]
+        direction LR
+        human(("<p style='width:7rem;margin:0px;'>Human step</p>")):::human
+        auto(("<p style='width:7rem;margin:0px;'>Automated step</p>")):::automated
+        human ~~~ auto
+    end
+    classDef human fill:#f85149,stroke-width:0px
+    classDef automated fill:#6e7681,stroke-width:0px
+
+    Main ~~~ Legend
 ```
 
-Keep legend labels to one or two words, matching the category name a reader would already infer from context, not a restatement of the whole diagram. Place the `Legend` subgraph last in the diagram source so it renders as a trailing row, not interleaved with the flow it's explaining.
+Three details make this render right instead of subtly wrong on GitHub:
+
+- **Give the subgraph a real title.** `subgraph Legend["Legend"]`, not `subgraph Legend[ ]`, GitHub renders the bracketed text as the subgraph's own heading, an empty one leaves the legend box unlabeled.
+- **Force every swatch to the same size.** A circle node (`((...))`) sizes itself to fit its own label, so "Human step" renders visibly smaller than "Automated step" sitting right next to it. Wrap each label in a fixed-width `<p style='width:7rem;margin:0px;'>` so every swatch sizes to the same box regardless of text length, and pick one width wide enough for the longest label in that legend.
+- **Force the legend below the diagram, not floating above it.** A `Legend` subgraph with no edges into the main flow is a disconnected component, and Mermaid's layout engine renders those above the flow, not after it, regardless of source order. Wrap the diagram's real content in its own `subgraph Main[ ]`, hide that wrapper's box with `style Main fill:none,stroke:none`, give it `direction LR` to preserve the flow's original left-to-right layout, switch the outer graph to `flowchart TB`, and connect the two subgraphs with an invisible link declared last (`Main ~~~ Legend`). The outer `TB` direction stacks `Main` above `Legend`; nothing about the diagram's own internal layout changes.
+
+Keep legend labels to one or two words, matching the category name a reader would already infer from context, not a restatement of the whole diagram.
