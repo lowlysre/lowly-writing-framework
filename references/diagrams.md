@@ -47,11 +47,19 @@ flowchart TB
     Main ~~~ Legend
 ```
 
-Three details make this render right instead of subtly wrong on GitHub:
+Three details make this render right instead of subtly wrong on GitHub, plus one optional polish:
 
 - **Give the subgraph a real title.** `subgraph Legend["Legend"]`, not `subgraph Legend[ ]`, GitHub renders the bracketed text as the subgraph's own heading, an empty one leaves the legend box unlabeled.
 - **Force every swatch to the same size.** A circle node (`((...))`) sizes itself to fit its own label, so "Human step" renders visibly smaller than "Automated step" sitting right next to it. Wrap each label in a fixed-width `<p style='width:7rem;margin:0px;'>` so every swatch sizes to the same box regardless of text length, and pick one width wide enough for the longest label in that legend.
 - **Force the legend below the diagram, not floating above it.** A `Legend` subgraph with no edges into the main flow is a disconnected component, and Mermaid's layout engine renders those above the flow, not after it, regardless of source order. Wrap the diagram's real content in its own `subgraph Main[ ]`, hide that wrapper's box with `style Main fill:none,stroke:none`, give it `direction LR` to preserve the flow's original left-to-right layout, switch the outer graph to `flowchart TB`, and connect the two subgraphs with an invisible link declared last (`Main ~~~ Legend`). The outer `TB` direction stacks `Main` above `Legend`; nothing about the diagram's own internal layout changes.
+- **Scale it down, optionally.** A full-size legend competes visually with the diagram it's explaining. Give the swatches their own `classDef`s, `legHuman`/`legAutomated` here, distinct from the main flow's `human`/`automated`, reusing those class names on the legend nodes would shrink the main flow's own nodes too, since `:::human` on a legend node and a main-flow node both resolve to the same class. Add a smaller `font-size` to the legend-only classes and widen the label's fixed width enough that it doesn't truncate at that size:
+
+```mermaid
+classDef legHuman fill:#f85149,stroke-width:0px,font-size:9px
+classDef legAutomated fill:#6e7681,stroke-width:0px,font-size:9px
+```
+
+  and bump the `<p style='width:...'>` from the snippet above to `width:4.5rem` at that font size, `7rem` is sized for the default 16px font and truncates a label like "Automated step" once it's shrunk.
 
 Keep legend labels to one or two words, matching the category name a reader would already infer from context, not a restatement of the whole diagram.
 
