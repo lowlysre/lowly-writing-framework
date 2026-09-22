@@ -18,7 +18,7 @@ Defer to the local repo's convention first: check CONTRIBUTING, PR templates, an
 
 Absent a template, the heading is `## Testing`, not a bolded `**Testing:**` label or any other variant.
 
-Be honest, this is non-negotiable. Say when tests were added and move on. If testing is hard or missing, say why. Never write generic "all tests pass" prose or fabricate verification steps. Leave honest unchecked boxes; don't tick inapplicable items. Skip mentioning local checks CI already runs, only call out what CI doesn't cover.
+Be honest, this is non-negotiable. Say when tests were added and move on. If testing is hard or missing, say why. Never write generic "all tests pass" prose or fabricate verification steps. Leave honest unchecked boxes; don't tick inapplicable items. Skip mentioning local checks CI already runs, only call out what CI doesn't cover: check the repo's CI config for what already runs on every push before writing a sentence like "ran `uv run pytest`" or "ran the linter locally", a check CI re-runs on this PR anyway is redundant proof, not honesty. Reserve the section for what CI can't see: manual exploratory steps, a scenario outside CI's coverage, or why testing wasn't possible.
 
 A claim can be true when written and stale by the time the PR is pushed; the self-check in `references/self-check.md` covers re-verifying claims against the current diff.
 
