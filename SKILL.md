@@ -28,7 +28,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 **Formatting**, **Never trim these**, **Boundaries**, and **Anti-patterns** below apply everywhere. For anything PR-specific, review-comment-specific, or doc/comment-specific, open the matching reference file when you're actually about to write that artifact:
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
-- Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references)
+- Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
 - Body structure shared by PRs and issues (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the two above applies
 - Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, theme/styling, legends for color-coded diagrams)
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
