@@ -55,6 +55,7 @@ Phrases that have become de facto signals of LLM output since 2023.
 - **holistic**: say what's covered end-to-end and why it matters
 - **synergy** / **synergies**: say the specific interaction
 - **innovative** / **cutting-edge** / **state-of-the-art**: these are marketing words; drop them or say what makes the approach novel
+- **belt-and-suspenders** / **belt and braces**: name the two safeguards and the failure each one catches that the other doesn't; if neither catches anything the other misses, drop one
 
 ## Hedging and soft-launch language
 
