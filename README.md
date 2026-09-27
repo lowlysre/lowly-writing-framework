@@ -106,7 +106,7 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/body-writing.md`: body structure shared by PR and issue bodies (fill the template, why over how, Context section, 3-paragraph and 3,000-character ceilings, `Bonus` split, mermaid diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, `## Testing` honesty, `## Pre-merge`/`## Post-merge` sections, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, YAML form rendering, related-work references
-- `references/discussions.md`: Discussion category selection and forms, question titles, quote-and-answer replies, marking answers and closing, upvotes and reactions instead of "+1" comments
+- `references/discussions.md`: discussion vs. issue, kinds of post (question, proposal, announcement, show and tell, poll, conversation) with per-kind titles and bodies, category selection from the repo's own categories, answering and responding, closing summaries, upvotes and reactions instead of "+1" comments
 - `references/review-comments.md`: Conventional Comments labels and decorations for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README, doc, and code-comment prose; when an issue number belongs in a comment
 - `references/requirements-ears.md`: the five EARS patterns, document mode vs. inline mode, requirement self-check
