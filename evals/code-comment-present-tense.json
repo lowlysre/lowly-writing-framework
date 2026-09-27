@@ -1,0 +1,11 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Add an inline code comment above the `for attempt in range(3):` loop in `client.py` explaining it. Background: we added the retry last week in PR acme/api#482 after an outage, because the vendor's gateway drops roughly 1 in 200 connections under load. There's a vendor bug filed upstream as vendor-org/gateway#91 that would make the retry unnecessary once fixed.",
+  "files": [],
+  "expected_behavior": [
+    "The comment describes current behavior in present tense, with no history such as 'added', 'after the outage', or 'last week'",
+    "The comment doesn't cite acme/api#482 or any other PR or issue from this repo",
+    "Citing the upstream vendor-org/gateway#91 bug is acceptable, and if cited it uses the full owner/repo#123 form",
+    "The comment is 4 lines or fewer"
+  ]
+}

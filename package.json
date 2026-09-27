@@ -1,0 +1,11 @@
+{
+  "name": "lowly-writing-framework",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tokens": "node .github/scripts/token-badges.mjs"
+  },
+  "devDependencies": {
+    "gpt-tokenizer": "^4.0.0"
+  }
+}

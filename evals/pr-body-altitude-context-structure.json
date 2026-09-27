@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR body for this change in acme/data-pipeline. This is phase 2 of the 4-phase migration tracked in acme/data-pipeline#500; phase 1 already landed the new schema. This PR closes acme/data-pipeline#512. It rewrites the ingestion module (`ingest/reader.py`, `ingest/parser.py`, `ingest/writer.py`, `ingest/retry.py`, twelve functions total) to read from the new schema, adds a validation layer (`ingest/validate.py`) with six rule functions, and updates the CLI (`cli/ingest_cmd.py`) to add a --dry-run flag. It also changes the batch size default from 1000 to 5000 rows, changes the retry policy from a fixed 3 retries to exponential backoff, changes the output format from CSV to Parquet, and adds a `compression` field to the config schema. CI runs pytest and mypy on every push; I also ran the full pipeline against a 2M-row staging snapshot by hand, which pytest doesn't cover. No PR template exists.",
+  "files": [],
+  "expected_behavior": [
+    "A ## Context section sits at the top naming the phase-2-of-4 migration and acme/data-pipeline#500, before the change description",
+    "The rewritten modules are described at the module/package level (the ingestion module, the validation layer) rather than narrating all twelve functions or every file symbol-by-symbol",
+    "The body uses ###/#### headings rather than running past 4 unbroken paragraphs, given how many substantive changes it describes",
+    "The body closes acme/data-pipeline#512 with a closing keyword in the full owner/repo#123 form, and references acme/data-pipeline#500 without a closing keyword since that's the parent tracking issue, not what this PR closes",
+    "The Testing section names the manual 2M-row staging run and doesn't claim pytest or mypy passed locally, since CI already reruns both on this PR",
+    "<!--:robot:--> is the literal last line"
+  ]
+}
