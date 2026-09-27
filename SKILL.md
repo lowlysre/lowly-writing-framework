@@ -30,7 +30,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
-- Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (category selection, question titles, quote-and-answer replies, marking answers, upvotes instead of "+1" comments)
+- Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (searching first, category selection from the repo's actual categories, question titles and posts, answering the real problem, quote-and-answer replies, marking answers, upvotes instead of "+1" comments)
 - Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
 - Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, theme/styling, legends for color-coded diagrams)
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
