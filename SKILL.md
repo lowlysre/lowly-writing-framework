@@ -1,11 +1,11 @@
 ---
 name: lowly-writing-framework
-description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, or reply_and_resolve_review_thread.
+description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, GitHub Discussion post/comment/answer, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, or reply_and_resolve_review_thread.
 ---
 
 # Writing framework for dev artifacts
 
-Structure and mechanics for PR bodies, issue bodies, review comments, docs, code comments, and requirements. A PR description is a courtesy to the reviewer; docs and comments are a courtesy to the next reader. This skill decides what an artifact has to contain and how it's laid out, not how it sounds.
+Structure and mechanics for PR bodies, issue bodies, discussions, review comments, docs, code comments, and requirements. A PR description is a courtesy to the reviewer; docs and comments are a courtesy to the next reader. This skill decides what an artifact has to contain and how it's laid out, not how it sounds.
 
 ## Scope
 
@@ -16,9 +16,10 @@ This skill owns structure and mechanics only:
 - Issue-closing rules: every PR closes an issue, full `owner/repo#123` form, sub-issue instead of `Part of`
 - Requirements in EARS syntax
 - Conventional Comments labels on review comments
+- Discussion structure: category selection, question titles, quote-and-answer replies, marking answers, upvotes over "+1" comments
 - Present-tense rule for docs and code comments
 - Self-check mechanics: the grep-it-don't-eyeball-it checklist
-- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks
+- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks, upvotes and reactions
 - Banned AI-era phrases
 
 Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope. A separately installed voice-pack skill may layer those on top; when both are installed, both apply to the same artifact, this skill for what goes where and the voice pack for how it reads.
@@ -29,7 +30,8 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
-- Body structure shared by PRs and issues (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the two above applies
+- Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (category selection, question titles, quote-and-answer replies, marking answers, upvotes instead of "+1" comments)
+- Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
 - Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, theme/styling, legends for color-coded diagrams)
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
 - Touching a README, doc, or code comment → `references/docs-and-comments.md` (present-tense rule)

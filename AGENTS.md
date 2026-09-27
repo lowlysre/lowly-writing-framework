@@ -9,10 +9,11 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 ## Layout
 
 - `SKILL.md`: the always-loaded entry point, scope/formatting/boundaries rules that apply everywhere, plus a routing table into `references/`
-- `references/body-writing.md`: body structure shared by PR and issue bodies (fill-template, Context section, length ceiling, diagrams), loaded alongside whichever of the two files below applies
+- `references/body-writing.md`: body structure shared by PR, issue, and discussion bodies (fill-template, Context section, length ceiling, diagrams), loaded alongside whichever of the files below applies
 - `references/diagrams.md`: mermaid diagram mechanics for PR/issue bodies and docs (GitHub rendering quirks, theme/styling, legends for color-coded diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, testing honesty, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, related-work references
+- `references/discussions.md`: GitHub Discussion category selection, question titles, quote-and-answer replies, marking answers, upvotes and reactions
 - `references/review-comments.md`: conventional comment labels for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README/doc/code-comment prose
 - `references/self-check.md`: the finishing pass run over PR and issue bodies, docs, and comments

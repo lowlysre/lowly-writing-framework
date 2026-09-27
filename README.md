@@ -57,7 +57,7 @@ The Agent Skills spec has no dependency or `extends` mechanism, so an agent matc
 To install an existing voice pack:
 
 1. Install it the same way as this skill: `npx skills add <owner>/<voice-pack-repo> -g`.
-2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
+2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, discussion post/comment/answer, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
 3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
 
 To write your own voice pack:
@@ -106,13 +106,14 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/body-writing.md`: body structure shared by PR and issue bodies (fill the template, why over how, Context section, 3-paragraph and 3,000-character ceilings, `Bonus` split, mermaid diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, `## Testing` honesty, `## Pre-merge`/`## Post-merge` sections, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, YAML form rendering, related-work references
+- `references/discussions.md`: Discussion category selection and forms, question titles, quote-and-answer replies, marking answers and closing, upvotes and reactions instead of "+1" comments
 - `references/review-comments.md`: Conventional Comments labels and decorations for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README, doc, and code-comment prose; when an issue number belongs in a comment
 - `references/requirements-ears.md`: the five EARS patterns, document mode vs. inline mode, requirement self-check
 - `references/self-check.md`: mechanical checks (run the command) and judgment checks (read the text) for every finished artifact
 - `references/banned-phrases.md`: AI-era phrases to cut, grouped by failure mode
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
-- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations
+- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations (answers, closing, upvotes, reactions)
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
 ## Versioning
