@@ -9,18 +9,7 @@ Structure and mechanics for PR bodies, issue bodies, discussions, review comment
 
 ## Scope
 
-This skill owns structure and mechanics only:
-
-- Body structure: fill the template, why over how, Context section, length ceiling, `Bonus`/`Chores` split
-- Mermaid diagram mechanics: GitHub rendering quirks, theme/styling, legends for color-coded diagrams
-- Issue-closing rules: every PR closes an issue, full `owner/repo#123` form, sub-issue instead of `Part of`
-- Requirements in EARS syntax
-- Conventional Comments labels on review comments
-- Discussion structure: kinds of post, category selection, threading and answer-marking, wrapping up with a written outcome, upvotes over "+1" comments
-- Present-tense rule for docs and code comments
-- Self-check mechanics: the grep-it-don't-eyeball-it checklist
-- `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks, upvotes and reactions
-- Banned AI-era phrases
+This skill owns structure and mechanics only: what an artifact contains, where each section sits, whether a reference autolinks, which grep catches a slip. The routing table below lists every topic it covers.
 
 Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope. A separately installed voice-pack skill may layer those on top; when both are installed, both apply to the same artifact, this skill for what goes where and the voice pack for how it reads.
 
@@ -49,14 +38,14 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Don't let backticks pile up: four or more comma-separated identifiers in a row is as hard to scan as no formatting. Use a nested sub-bullet per item, or name the resource type once in prose and backtick only what a reviewer would otherwise have to guess at
 - Prefer nested unordered lists (two levels max) over flat lists with multi-line items
 - Link authoritative sources inline as named markdown links, never bare URLs (exception: a bare GitHub issue/PR URL, which GitHub renders as a rich `owner/repo#123` reference on its own); credit people by name when their work shaped the change
-- Issue references: always the full `owner/repo#123` form, even same-repo, on every mention, not just the closing one. Don't reason from what GitHub's autolinker happens to accept, a bare `#123` does autolink same-repo, but relying on that means deciding per-reference whether it "counts" as same-repo, and that judgment call is exactly the slip that drops the owner off a reference that isn't (`overture-core#17` read as local when the file is actually `OvertureMaps/overture-core`). Always writing the full form skips the judgment call entirely: never write a bare `#123`, never write an owner-less `reponame#123`. Write the whole reference plain, no backticks anywhere in it, not even around just the `owner/repo` part: GitHub only autolinks when `owner/repo#123` is one contiguous run of plain text, so `` `owner/repo`#123 `` is exactly as dead as backticking the whole thing. The backticks around examples on this page are just this doc's own convention for showing syntax, don't carry them into the actual PR/comment text. Never hand-build a URL off the PR's own URL, `.../pull/456#issue-<id>` isn't the issue; if you need the issue's real URL, `gh issue view 123 --json url`
+- Issue references: always the full `owner/repo#123` form on every mention, same-repo included, so there's never a per-reference call about what counts as same-repo. Never a bare `#123`, never an owner-less `reponame#123`. No backticks anywhere in it, not even around just the `owner/repo` part: GitHub only autolinks one contiguous run of plain text (the backticks on this page only show syntax). Never hand-build a URL off the PR's own URL, `.../pull/456#issue-<id>` isn't the issue; get the real one with `gh issue view 123 --json url`
 - Beat link rot: when a link carries a claim, quote the one relevant sentence alongside it, the durable copy that survives a 404 or version bump
-- Break prose into paragraphs by topic instead of running several points together as one block. A paragraph arguing more than one point, or running past 4-5 sentences, is a signal to split it, one idea per paragraph. Count points, not periods: a sentence padded with parentheticals and comma-chained clauses (the mechanism, the tradeoff, the verdict, all in one breath) is still several ideas stacked, split by idea even under the sentence cap
-- One point per sentence. A sentence stacking a mechanism, a tradeoff, and a verdict behind parentheticals and comma clauses (`at the cost of...`, `especially since...`) is dense even under the paragraph's sentence cap. Split each stacked clause into its own sentence, or its own bullet if the pieces are enumerable. A voice pack may relax this for long-form prose (design docs, RFCs); it holds for PR/issue bodies, review comments, and code comments
+- Break prose into paragraphs by topic, one idea per paragraph. A paragraph arguing more than one point, or running past 4-5 sentences, needs splitting
+- One point per sentence. A sentence stacking a mechanism, a tradeoff, and a verdict behind parentheticals and comma clauses (`at the cost of...`, `especially since...`) is several ideas even under the paragraph's sentence cap: count points, not periods. Split each stacked clause into its own sentence, or its own bullet if the pieces are enumerable. A voice pack may relax this for long-form prose (design docs, RFCs); it holds for PR/issue bodies, review comments, and code comments
 - When a link points at code, permalink to the exact lines (commit SHA, not branch, plus `#L10-L20`), not just the file: GitHub renders a rich code preview for line-anchored permalinks, a bare file link doesn't
 - On surfaces GitHub renders as markdown (PR bodies, PR review comments, README/wiki docs), use GitHub's admonition syntax, `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`, instead of a bare `Note:`/`Warning:` prefix, when the line is a genuine callout the reader shouldn't skim past. A plain sentence is still the default, don't wrap every aside in one. Skip them on surfaces that don't render GitHub markdown (commit messages, terminal/CLI output, non-GitHub trackers): plain `Note:` there
 - ~~Strikethrough~~ is fine on a long-lived PR body that changed direction after review and needs the pivot visible inline, not for typos or wording fixes
-- Never hard-wrap a paragraph with manual line breaks at some fixed column. Write each paragraph as one continuous line in the source and let the renderer soft-wrap it for the reader. A single newline mid-paragraph collapses to a space in GitHub's rendered markdown, so hard-wrapping buys nothing there and only makes the raw source (what a reviewer sees in `gh pr view`, an editor, or a diff) look broken, wrapping short at arbitrary points instead of at sentence or clause boundaries. Only break lines where markdown structure actually requires it: between block elements (headings, list items, code fences) and at real paragraph boundaries, never inside one
+- Never hard-wrap a paragraph at a fixed column: write each paragraph as one line in the source. GitHub collapses a mid-paragraph newline to a space, so wrapping only makes the raw source (`gh pr view`, an editor, a diff) look broken. Break lines only between block elements (headings, list items, code fences) and at paragraph boundaries
 
 ## Never trim these
 
@@ -83,7 +72,7 @@ This skill governs the writing, never the change. Don't reshape a diff, drop a c
 - Trigger it before drafting or posting any PR review comment, that means before `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, and `reply_and_resolve_review_thread`, not just before a generic "write a review comment" ask
 - In a long session, don't rely on remembering this rule from the system prompt: treat every one of the tool calls named above as its own fresh trigger, regardless of how many turns or unrelated tool calls came before it
 - Trigger it whenever a requirement or acceptance criterion is being defined, clarified, or implemented, regardless of artifact: use `references/requirements-ears.md`
-- Run the self-check in `references/self-check.md` over the PR body and every touched comment/doc/prose artifact, right before declaring the task done, and again after every later revision, always against the full current text, never as a patch on the previous draft. Every `update_pull_request` call is itself a "later revision", not just a content edit exempt from the check: run the self-check against the body you're about to send before that call, structured tools don't get a pass just because they skip `references/gh-cli.md`'s shell mechanics
+- Run the self-check in `references/self-check.md` over the PR body and every touched comment/doc/prose artifact, right before declaring the task done and again after every later revision, always against the full current text. Every `update_pull_request` call is a later revision: run the self-check on the body you're about to send, structured tools included
 - Posting or editing a PR/issue title, body, or comment directly through `gh` (not a structured tool like `create_pull_request`) has its own failure modes, shell escaping, `-f` vs `-F`, unverified posts, see `references/gh-cli.md`
 - Match commit message style to the title conventions in `references/pr-writing.md`
 

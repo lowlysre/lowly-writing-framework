@@ -1,0 +1,12 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR title and body for this change in acme/billing-api. Invoice PDFs rendered blank for invoices with more than 50 line items, because the renderer stopped at the first page break. The fix paginates line items across pages. While in there I also fixed a typo in the invoice footer text. It fixes issue 212 in acme/billing-api, which is a sub-issue of acme/platform#40. The repo's CI runs `pytest` and `ruff` on every push, and I also opened a 120-item invoice in the staging UI by hand. No PR template exists.",
+  "files": [],
+  "expected_behavior": [
+    "Every issue reference uses the full owner/repo#123 form in plain text, with no bare #212, no owner-less billing-api#212, and no backticks around any reference",
+    "The body closes the issue with a closing keyword (fixes/closes/resolves acme/billing-api#212) and never uses 'Part of' or 'Relates to'",
+    "The footer typo fix sits under its own Bonus/Chores/Also fixed sub-header, not in the main narrative",
+    "The Testing section mentions the manual staging check and doesn't claim pytest or ruff passed locally",
+    "Each paragraph is a single source line with no hard wraps, and <!--:robot:--> is the literal last line"
+  ]
+}
