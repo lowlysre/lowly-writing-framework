@@ -57,7 +57,7 @@ The Agent Skills spec has no dependency or `extends` mechanism, so an agent matc
 To install an existing voice pack:
 
 1. Install it the same way as this skill: `npx skills add <owner>/<voice-pack-repo> -g`.
-2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
+2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, discussion post/comment/answer, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
 3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
 
 To write your own voice pack:
@@ -106,13 +106,14 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/body-writing.md`: body structure shared by PR and issue bodies (fill the template, why over how, Context section, 3-paragraph and 3,000-character ceilings, `Bonus` split, mermaid diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, `## Testing` honesty, `## Pre-merge`/`## Post-merge` sections, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, YAML form rendering, related-work references
+- `references/discussions.md`: kinds of post (question, proposal, announcement, show and tell, poll, conversation), category selection from the repo's own categories, threading and answer-marking mechanics, closing summaries, upvotes and reactions instead of "+1" comments
 - `references/review-comments.md`: Conventional Comments labels and decorations for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README, doc, and code-comment prose; when an issue number belongs in a comment
 - `references/requirements-ears.md`: the five EARS patterns, document mode vs. inline mode, requirement self-check
 - `references/self-check.md`: mechanical checks (run the command) and judgment checks (read the text) for every finished artifact
 - `references/banned-phrases.md`: AI-era phrases to cut, grouped by failure mode
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
-- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations
+- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations (answers, closing, upvotes, reactions)
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
 ## Versioning
@@ -131,4 +132,6 @@ Separate skills are the only clean composition. Both skills list the same trigge
 
 - [EARS](https://ieeexplore.ieee.org/document/5211796) (Easy Approach to Requirements Syntax, Mavin et al., IEEE RE 2009) constrains every requirement to one of five testable sentence patterns. Mavin's own summary on [alistairmavin.com](https://alistairmavin.com/ears/): "The Easy Approach to Requirements Syntax (EARS) is a mechanism to gently constrain textual requirements"
 - [Conventional Comments](https://conventionalcomments.org/) labels every review comment so the author knows at a glance what's blocking and what isn't. From the spec: "Adhering to a consistent format improves reader's expectations and machine readability"
+- Stack Overflow's [How do I ask a good question?](https://stackoverflow.com/help/how-to-ask) and [How do I write a good answer?](https://stackoverflow.com/help/how-to-answer) shape the question rules in `references/discussions.md`: search before posting, a specific question as the title, and upvoting instead of "thanks" comments. From the answer guide: "Saying “thanks” is appreciated, but it doesn't answer the question. Instead, vote up the answers that helped you the most!"
+- [My Mother Was StackExchange](https://lowlysre.substack.com/p/my-mother-was-stackexchange) refines those rules with answering the problem behind the question and editing an answer in place when it's corrected. From the post: "Being technically right isn't always enough, what matters more is being usefully right"
 - [Diátaxis](https://diataxis.fr/) organizes documentation into four quadrants by the reader's need: tutorials, how-to guides, reference, explanation. This README uses it, and `references/docs-and-comments.md` inherits its present-tense, describe-the-system-as-it-is stance

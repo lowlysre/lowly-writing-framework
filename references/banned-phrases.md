@@ -28,13 +28,14 @@ These pad transitions without adding information. Delete the opener and start th
 - **Importantly,**: if it's important, say why; the word doesn't make it so
 - **Ultimately,**: cut it; say the consequence directly
 - **In summary,** / **To summarize,** / **In conclusion,**: cut; the text already ends
+- **In a nutshell,** / **At the end of the day,** / **When all is said and done,**: cut; same as "In summary," or "Ultimately," say the consequence directly
 - **Overall,**: cut; say the thing
 - **It is worth noting that** / **It's worth noting that**: cut the opener, state the fact
 - **worth flagging upfront**: cut the opener, state the fact
 - **Note that** / **Please note**: cut; use `> [!NOTE]` when the callout genuinely needs visual weight, plain prose otherwise
 - **First and foremost,**: cut; lead with the most important thing, no announcement needed
 - **Last but not least,**: cut; just state the item
-- **Needless to say,**: cut; if it's needless, skip it; if it's not, say it straight
+- **Needless to say,** / **It goes without saying**: cut; if it's needless, skip it; if it's not, say it straight
 
 ## AI-era tells
 
@@ -54,6 +55,7 @@ Phrases that have become de facto signals of LLM output since 2023.
 - **holistic**: say what's covered end-to-end and why it matters
 - **synergy** / **synergies**: say the specific interaction
 - **innovative** / **cutting-edge** / **state-of-the-art**: these are marketing words; drop them or say what makes the approach novel
+- **belt-and-suspenders** / **belt and braces**: name the two safeguards and the failure each one catches that the other doesn't; if neither catches anything the other misses, drop one
 
 ## Hedging and soft-launch language
 
