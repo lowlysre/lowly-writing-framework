@@ -1,6 +1,6 @@
 # Calibration examples
 
-Before/after pairs for structural rules stated elsewhere in this skill, grouped by the artifact they apply to. Read the section matching the artifact you're drafting, alongside that artifact's reference file; the section for `SKILL.md` rules applies to every artifact. Each example names the rule it shows and where that rule lives. The rule text stays in its home file, this file only shows it applied.
+Before/after pairs for structural rules whose text is a judgment call, grouped by the artifact they apply to. Read only the sections `SKILL.md` routes you to for the artifact you're drafting, alongside that artifact's reference file. Each example names the rule it shows and where that rule lives. The rule text stays in its home file, this file only shows it applied. A rule whose text already carries its own inline example doesn't get one here.
 
 Copy the structure, not the content. The project names, sentences, file paths, and issue numbers inside each example are placeholders, so a draft that reuses them (an `acme/` owner, a "retry path") has copied the example instead of applying the rule. How the sentences read is a voice-pack concern, not this file's.
 
@@ -8,98 +8,25 @@ Several "before" halves trip the mechanical checks in `references/self-check.md`
 
 ## Contents
 
-- Every artifact (`SKILL.md` rules)
-  - Admonition vs. plain sentence, in a PR body
-  - Admonition vs. plain sentence, in a README
+- Bodies: `SKILL.md` rules
   - Issue references and scope notes
   - One point per sentence
   - Roll-call bullets
   - Summary that restates the diff
-- PR and issue bodies (`references/body-writing.md`)
+- Bodies: `references/body-writing.md` rules
   - Anticipated reviewer question
   - Pulling an aside into `Bonus`
   - Altitude on a large diff
   - Context section placement
   - Four paragraphs into headings
-- PR `## Testing` (`references/pr-writing.md`)
-  - Claim CI already covers
-  - Doubt with no named test behind it
+- PR Testing section (`references/pr-writing.md`)
   - Manual steps around the merge
-- Review comments (`references/review-comments.md`)
-  - `question:` that's a suggestion
-  - Non-blocking decoration
-- Code comments (`references/docs-and-comments.md`)
-  - Issue number in a code comment
 - Meat proxy mode (`references/meat-proxy-mode.md`)
   - Prose ask into executable steps
 
-## Every artifact
+## Bodies: `SKILL.md` rules
 
 <examples>
-
-<example>
-
-### Admonition vs. plain sentence, in a PR body
-
-Shows the admonition rule in `SKILL.md` Formatting: a `> [!WARNING]` is for a line the reader shouldn't skim past, a plain sentence is the default.
-
-Before, every gap gets the same callout, so none of them stands out:
-
-```markdown
-## Testing
-Unit tests cover the new retry path.
-
-> [!WARNING]
-> No test covers the rollback script, it only runs manually today and hasn't been exercised against prod-sized data.
-
-> [!WARNING]
-> Fixture data for the malformed-header case doesn't exist yet, so that branch is untested.
-```
-
-After:
-
-```markdown
-## Testing
-Unit tests cover the new retry path.
-
-> [!WARNING]
-> No test covers the rollback script, it only runs manually today and hasn't been exercised against prod-sized data.
-
-Fixture data for the malformed-header case doesn't exist yet, so that branch is untested.
-```
-
-The untested rollback script is a rollback risk from `SKILL.md`'s Never trim these list, so it keeps the callout. The missing fixture is a known gap that still gets stated, per the testing rules in `references/pr-writing.md`, but it carries no production risk, so it drops to a plain sentence.
-
-</example>
-
-<example>
-
-### Admonition vs. plain sentence, in a README
-
-Same rule on a different surface, `references/docs-and-comments.md` applies it to READMEs.
-
-Before:
-
-```markdown
-> [!NOTE]
-> The CLI reads `config.toml` from the current directory.
-
-> [!WARNING]
-> `sync --prune` deletes remote branches that have no local copy, and there's no undo.
-```
-
-After:
-
-```markdown
-The CLI reads `config.toml` from the current directory.
-
-> [!WARNING]
-> `sync --prune` deletes remote branches that have no local copy, and there's no undo.
-```
-
-The config path is ordinary reference information. The irreversible delete is data loss, so it's the only line that earns a callout.
-
-</example>
 
 <example>
 
@@ -214,7 +141,7 @@ The diff already lists the files. The summary says what broke, who saw it, and w
 
 </examples>
 
-## PR and issue bodies
+## Bodies: `references/body-writing.md` rules
 
 <examples>
 
@@ -370,54 +297,6 @@ The opening paragraph stays as the lede. The headings mark the divisions the fou
 
 <example>
 
-### Claim CI already covers
-
-Shows the redundant-CI rule in `references/pr-writing.md`'s Testing section. Assume the repo's CI runs `npm test` and `npm run lint` on every push.
-
-Before:
-
-```markdown
-## Testing
-Ran `npm test` and `npm run lint` locally, both pass. Clicked through checkout in Safari with an expired card.
-```
-
-After:
-
-```markdown
-## Testing
-Clicked through checkout in Safari with an expired card.
-```
-
-CI reruns both commands on this PR, so saying they passed locally proves nothing extra. The manual Safari check is the only thing CI can't see.
-
-</example>
-
-<example>
-
-### Doubt with no named test behind it
-
-Shows the invented-bar rule in `references/pr-writing.md`'s Testing section. Assume the repo has no end-to-end suite.
-
-Before:
-
-```markdown
-## Testing
-Added unit tests for the parser. Couldn't fully end-to-end test this, so there may be edge cases in production.
-```
-
-After:
-
-```markdown
-## Testing
-Added unit tests for the parser.
-```
-
-There's no end-to-end suite to have skipped, so the second sentence invents a bar the project never set. If a named suite existed and didn't run, the line stays and names it: "The `e2e/import` suite didn't run, it needs a staging database."
-
-</example>
-
-<example>
-
 ### Manual steps around the merge
 
 Shows the `## Post-merge (manual)` rule in `references/pr-writing.md`: steps an operator runs get their own section with a box per step.
@@ -441,101 +320,6 @@ Unit tests cover the new column.
 ```
 
 The steps sit in their own section instead of inside Testing, and the list order carries the sequence instead of a trailing "in that order".
-
-</example>
-
-</examples>
-
-## Review comments
-
-<examples>
-
-<example>
-
-### `question:` that's a suggestion
-
-Shows the `question:` rule in `references/review-comments.md`: a question the reviewer already knows the answer to is a suggestion.
-
-Before:
-
-```markdown
-question: Wouldn't it be better to use a set here instead of a list?
-
-<!--:robot:-->
-```
-
-After:
-
-```markdown
-suggestion: Use a set here. `in` on a list is linear, and this runs once per incoming event.
-
-<!--:robot:-->
-```
-
-The label now matches what the reviewer wants, and the why is stated rather than implied. A real question is one the reviewer can't answer alone: "question: Can this list hold duplicates? If not, a set makes the lookup constant-time."
-
-</example>
-
-<example>
-
-### Non-blocking decoration
-
-Shows the decoration rule in `references/review-comments.md`: an unlabeled `suggestion:` reads as blocking, so a preference gets `(non-blocking)`.
-
-Before:
-
-```markdown
-suggestion: Rename `data` to `invoices`, since it's the only list in scope.
-
-<!--:robot:-->
-```
-
-After:
-
-```markdown
-suggestion (non-blocking): Rename `data` to `invoices`, since it's the only list in scope.
-
-<!--:robot:-->
-```
-
-A naming preference shouldn't hold the merge, and without the decoration the author can't tell. The reverse, `suggestion (blocking):`, is noise, blocking is already the default.
-
-</example>
-
-</examples>
-
-## Code comments
-
-<examples>
-
-<example>
-
-### Issue number in a code comment
-
-Shows the issue-reference rule in `references/docs-and-comments.md`: a code comment cites an upstream bug, never this repo's own PR history.
-
-Before:
-
-```python
-# Added retries in acme/api#482 after the March timeouts
-for attempt in range(3):
-```
-
-After, describing current behavior:
-
-```python
-# The vendor drops about 1 in 200 connections under load, so retry before failing
-for attempt in range(3):
-```
-
-After, when the cause is someone else's bug:
-
-```python
-# Workaround for upstream-org/http-lib#2168: the pool doesn't release connections on read timeout
-pool.clear()
-```
-
-The before is a history breadcrumb that belongs in the PR, it tells a future reader when the code changed but not why it's still needed. An upstream bug reference earns its place because it tells the reader when the workaround can go.
 
 </example>
 

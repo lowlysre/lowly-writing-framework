@@ -41,7 +41,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
 - Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, `gh discussion` and GraphQL-only discussion mutations)
-- Drafting any artifact above → also read the matching section of `references/calibration-examples.md` (before/after pairs grouped by artifact; its table of contents lists the sections, and the section for `SKILL.md` rules applies to every artifact)
+- Drafting a PR, issue, or discussion body → also read the `Bodies` sections of `references/calibration-examples.md`, plus its `PR Testing section` for a PR (before/after pairs for the judgment-call rules; skip the file for review comments, code comments, and docs). In meat proxy mode, read its `Meat proxy mode` section too
 
 ## Formatting
 
