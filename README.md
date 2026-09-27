@@ -68,7 +68,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 | Tier | What loads | Tokens |
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
-| On activation | `SKILL.md` body | ~2,600 |
+| On activation | `SKILL.md` body | ~2,500 |
 | On demand | Every file under `references/` | ~19,400 |
 <!-- token-table:end -->
 

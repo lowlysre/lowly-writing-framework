@@ -13,8 +13,6 @@ This skill owns structure and mechanics only: what an artifact contains, where e
 
 Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope. A separately installed voice-pack skill may layer those on top; when both are installed, both apply to the same artifact, this skill for what goes where and the voice pack for how it reads.
 
-Before adding a rule to this skill, ask: is this a structural or mechanical rule (it changes what the artifact contains, where a section sits, or whether a reference autolinks), or a taste rule (it changes how a sentence sounds)? Taste rules don't belong here.
-
 **Formatting**, **Never trim these**, **Boundaries**, and **Anti-patterns** below apply everywhere. For anything PR-specific, review-comment-specific, or doc/comment-specific, open the matching reference file when you're actually about to write that artifact:
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
