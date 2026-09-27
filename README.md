@@ -2,6 +2,10 @@
 
 # lowly-writing-framework
 
+<!-- token-badges:start -->
+[![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~19k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~19k%20tokens-informational)](#token-budget)
+<!-- token-badges:end -->
+
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
 
 This README follows [Diátaxis](https://diataxis.fr/), so each top-level section answers one kind of question: learning, doing, looking up, understanding.
@@ -19,6 +23,7 @@ This README follows [Diátaxis](https://diataxis.fr/), so each top-level section
   - [Write a Conventional Comments review](#write-a-conventional-comments-review)
 - [Reference](#reference)
   - [File map](#file-map)
+  - [Token budget](#token-budget)
   - [Versioning](#versioning)
 - [Explanation](#explanation)
   - [Why split framework from voice](#why-split-framework-from-voice)
@@ -116,7 +121,31 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
 - `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations (answers, closing, upvotes, reactions)
 - `evals/`: evaluation scenarios, one JSON file each (`query` plus an `expected_behavior` list), run by hand before trimming a rule
+- `.github/scripts/token-badges.mjs`: regenerates the [Token budget](#token-budget) badges and table, run with `npm run tokens`
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
+
+## Token budget
+
+The badges at the top follow the three loading tiers in the [Agent Skills spec](https://agentskills.io/specification#progressive-disclosure), which recommends "< 5000 tokens" for the `SKILL.md` body:
+
+<!-- token-table:start -->
+| Tier | What loads | Tokens |
+|---|---|---|
+| Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
+| On activation | `SKILL.md` body | ~2,600 |
+| On demand | Every file under `references/` | ~19,400 |
+<!-- token-table:end -->
+
+The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.
+
+Counts use the `o200k_base` encoding from [gpt-tokenizer](https://github.com/niieani/gpt-tokenizer). Claude's tokenizer isn't public, so treat them as estimates. The badges are static shields.io images and don't update themselves. After changing `SKILL.md` or anything under `references/`, regenerate the badges and this table:
+
+```sh
+npm install
+npm run tokens
+```
+
+`.github/scripts/token-badges.mjs` rewrites the content between the `token-badges` and `token-table` comment markers in this README.
 
 ## Versioning
 

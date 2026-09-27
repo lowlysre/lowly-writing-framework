@@ -38,4 +38,5 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 
 - No build or lint beyond agnix, changes are the markdown
 - Run the mechanical checks in `references/self-check.md` against every touched file before opening a PR
+- After changing `SKILL.md` or anything under `references/`, run `npm install` once and then `npm run tokens` to regenerate the README's token badges and Token budget table
 - Before trimming or rewording a rule to save context, run the scenarios in `evals/` against the changed skill and grade each output against its `expected_behavior` list. There's no runner: give a fresh agent the scenario's `query`, have it read only this checkout's `SKILL.md` and whatever that routes it to, and grade by hand. Add a scenario covering any rule a change touches that no scenario exercises yet
