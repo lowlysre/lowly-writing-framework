@@ -2,8 +2,6 @@
 
 Loaded from `SKILL.md` when drafting or editing a GitHub Discussion post, a discussion comment or reply, or marking an answer. The `gh`/GraphQL mechanics for all of these live in `references/gh-cli.md`'s Discussions section; this file covers what the artifact contains. The opening post also follows `references/body-writing.md`, read both before drafting a substantial post.
 
-Question-and-answer structure here follows Stack Overflow's [How do I ask a good question?](https://stackoverflow.com/help/how-to-ask) and [How do I write a good answer?](https://stackoverflow.com/help/how-to-answer), refined by [My Mother Was StackExchange](https://lowlysre.substack.com/p/my-mother-was-stackexchange). A discussion thread outlives the person who asked it: "write like someone will read it years from now. Because odds are someone will."
-
 ## Before posting
 
 Search first, a question already answered in the repo doesn't need a second thread. Run `gh discussion list --search "<terms>" --state all` and `gh issue list --search "<terms>" --state all` with the error text or the feature name. When a hit covers the question, point the user to it instead of drafting. When a near-miss doesn't, link it in the new post and say in one sentence why it didn't help, that's what keeps the new post from being closed as a duplicate.
