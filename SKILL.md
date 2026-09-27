@@ -39,9 +39,9 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 - Running the finished-artifact self-check on any PR body, doc, or comment → `references/self-check.md`
 - Defining, clarifying, or implementing a requirement or acceptance criterion, in a dedicated requirements doc or inline in a comment/PR/commit → `references/requirements-ears.md` (EARS syntax, document mode vs. inline mode)
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
-- Unsure how a structural rule looks applied (admonition vs. plain sentence, issue references and scope notes, an anticipated reviewer question) → `references/calibration-examples.md` (worked before/after examples, open only when a rule's application is unclear)
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
 - Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, `gh discussion` and GraphQL-only discussion mutations)
+- Drafting any artifact above → also read the matching section of `references/calibration-examples.md` (before/after pairs grouped by artifact; its table of contents lists the sections, and the section for `SKILL.md` rules applies to every artifact)
 
 ## Formatting
 
