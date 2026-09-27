@@ -13,7 +13,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - `references/diagrams.md`: mermaid diagram mechanics for PR/issue bodies and docs (GitHub rendering quirks, theme/styling, legends for color-coded diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, testing honesty, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, related-work references
-- `references/discussions.md`: GitHub Discussion kinds of post (question, proposal, announcement, show and tell, poll, conversation), category selection, per-kind titles and bodies, replies, wrapping up, upvotes and reactions
+- `references/discussions.md`: GitHub Discussion kinds of post, category selection, threading and answer-marking, wrapping up, upvotes and reactions
 - `references/review-comments.md`: conventional comment labels for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README/doc/code-comment prose
 - `references/self-check.md`: the finishing pass run over PR and issue bodies, docs, and comments

@@ -16,7 +16,7 @@ This skill owns structure and mechanics only:
 - Issue-closing rules: every PR closes an issue, full `owner/repo#123` form, sub-issue instead of `Part of`
 - Requirements in EARS syntax
 - Conventional Comments labels on review comments
-- Discussion structure: kinds of post and their per-kind titles and bodies, category selection, answering and responding, wrapping up with a written outcome, upvotes over "+1" comments
+- Discussion structure: kinds of post, category selection, threading and answer-marking, wrapping up with a written outcome, upvotes over "+1" comments
 - Present-tense rule for docs and code comments
 - Self-check mechanics: the grep-it-don't-eyeball-it checklist
 - `gh` CLI mechanics: fetch-before-edit, `--body-file`, `-f` vs `-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks, upvotes and reactions
@@ -30,7 +30,7 @@ Before adding a rule to this skill, ask: is this a structural or mechanical rule
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
-- Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (discussion vs. issue, kinds of post from questions to proposals to announcements, category selection from the repo's actual categories, per-kind titles and bodies, answering and responding, wrapping up with a written outcome, upvotes instead of "+1" comments)
+- Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (kinds of post, category selection from the repo's actual categories, threading and answer-marking mechanics, wrapping up with a written outcome, upvotes instead of "+1" comments)
 - Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
 - Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, theme/styling, legends for color-coded diagrams)
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels)
