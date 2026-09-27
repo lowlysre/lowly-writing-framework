@@ -8,28 +8,16 @@
 
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
 
-This README follows [Diátaxis](https://diataxis.fr/), so each top-level section answers one kind of question: learning, doing, looking up, understanding.
+A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
 
 ## Contents
 
-- [Tutorial](#tutorial)
-  - [Install](#install)
-  - [First walk: draft a PR body](#first-walk-draft-a-pr-body)
-- [How-to guides](#how-to-guides)
-  - [Pair with a voice-pack skill](#pair-with-a-voice-pack-skill)
-  - [Update](#update)
-  - [Run the mechanical self-check by hand](#run-the-mechanical-self-check-by-hand)
-  - [Write an EARS requirement](#write-an-ears-requirement)
-  - [Write a Conventional Comments review](#write-a-conventional-comments-review)
-- [Reference](#reference)
-  - [File map](#file-map)
-  - [Token budget](#token-budget)
-  - [Versioning](#versioning)
-- [Explanation](#explanation)
-  - [Why split framework from voice](#why-split-framework-from-voice)
-  - [The frameworks it enforces](#the-frameworks-it-enforces)
-
-# Tutorial
+- [Install](#install)
+- [Update](#update)
+- [File map](#file-map)
+- [Token budget](#token-budget)
+- [Versioning](#versioning)
+- [Further docs](#further-docs)
 
 ## Install
 
@@ -41,37 +29,6 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 `-g` installs into your user directory so the skill loads in every project. Drop it to install into the current project only.
 
-## First walk: draft a PR body
-
-1. Make a small code change on a branch in any repo with a remote on GitHub.
-2. Ask your agent: "open a draft PR for this branch."
-3. Watch the skill activate before the PR call. The `description` frontmatter names `create_pull_request` as a trigger, and `SKILL.md` routes the agent to `references/pr-writing.md` before it drafts.
-4. The body fills the repo's PR template, or the skill's fallback of a `## Summary` heading over 1-3 sentences on why the change exists, then what changed.
-5. The body carries a closing reference in the full `owner/repo#123` form. If no issue exists yet, the skill has the agent file one scoped to the change first, per `references/pr-writing.md`.
-6. A `## Testing` section states what ran and what didn't. An untested path stays visible as an unchecked box or a `> [!WARNING]` admonition.
-7. Before the PR call, the skill has the agent write the body to a temp file and run the mechanical checks from `references/self-check.md` against it. A bare `#123`, a backticked issue reference, a `Part of` phrasing, or a missing `<!--:robot:-->` watermark fails the check and gets fixed before anything reaches GitHub.
-
-# How-to guides
-
-## Pair with a voice-pack skill
-
-"Voice pack" isn't a term from the Agent Skills spec or a wider convention, it's this repo's own name for a separately installed Agent Skill that governs tone, punctuation, and phrasing for the same artifacts this skill structures: PR and issue bodies, review comments, docs, code comments. This skill decides what goes where; the voice pack decides how it reads. Neither skill names the other.
-
-The Agent Skills spec has no dependency or `extends` mechanism, so an agent matches a request against every installed skill's `description` and loads whichever fit. Pairing two skills means making both `description` fields match the same requests, nothing more.
-
-To install an existing voice pack:
-
-1. Install it the same way as this skill: `npx skills add <owner>/<voice-pack-repo> -g`.
-2. Open its `SKILL.md` and confirm its `description` lists the same artifacts and tool calls as this repo's (PR body, issue body, discussion post/comment/answer, review comment, doc prose, code comment, requirement, and `create_pull_request` through `reply_and_resolve_review_thread`). If it doesn't, a request that triggers this skill may not trigger the voice pack, or vice versa.
-3. Ask your agent to draft something covered by both (a PR body is the easiest test) and confirm the output reads in the voice pack's style while still following this skill's structure (template filled, closing reference present, watermark at the end).
-
-To write your own voice pack:
-
-1. Scaffold a new skill directory with its own `SKILL.md`.
-2. Copy this repo's `description` line into it verbatim, then edit only the sentence after "BLOCKING REQUIREMENT" if your voice pack narrows the artifact list. Keep the artifact and tool-call lists identical to this skill's, or the two won't co-activate.
-3. Fill the body with tone, punctuation, and phrasing rules only. Don't restate anything from this skill's Scope section (body structure, issue-closing rules, EARS, Conventional Comments labels, present tense) or it'll fight this skill's rules instead of layering on top.
-4. Whenever this repo's `description` line changes, update your copy to match.
-
 ## Update
 
 ```sh
@@ -79,31 +36,6 @@ npx skills update lowly-writing-framework
 ```
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
-
-## Run the mechanical self-check by hand
-
-Write the artifact to a file, then run the checks from `references/self-check.md`. On Linux or macOS:
-
-```sh
-grep -inE '(removed|used to|previously|no longer|was updated|a scan found|as of #)' body.md
-grep -nE '(^|[^a-zA-Z0-9_./-])#[0-9]+' body.md
-grep -nE '`#[0-9]+|#[0-9]+`' body.md
-grep -inE '(part of|relate[sd]? to).*#[0-9]+' body.md
-grep -nP '(?<!\]\()https?://' body.md
-grep -c '<!--:robot:-->$' body.md
-```
-
-On Windows PowerShell, `Select-String` takes the same patterns; the file lists both forms per check. Zero hits on every check (and exactly one on the watermark count) means the mechanical pass is clean. The judgment checks in the same file still need a read.
-
-## Write an EARS requirement
-
-Full syntax, the five patterns, and document vs. inline mode live in `references/requirements-ears.md`. The short version: one sentence, one `SHALL`, one observable trigger; `should` and `may` mean it isn't a requirement yet.
-
-## Write a Conventional Comments review
-
-Full label list and decoration rules live in `references/review-comments.md`. The short version: open every comment with a plain-text label (`praise:`, `issue:`, `suggestion:`, and the rest), one comment per point, `<!--:robot:-->` on its own line at the end.
-
-# Reference
 
 ## File map
 
@@ -122,6 +54,10 @@ Full label list and decoration rules live in `references/review-comments.md`. Th
 - `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations (answers, closing, upvotes, reactions)
 - `evals/`: evaluation scenarios, one JSON file each (`query` plus an `expected_behavior` list), run by hand before trimming a rule
 - `.github/scripts/token-badges.mjs`: regenerates the [Token budget](#token-budget) badges and table, run with `npm run tokens`
+- `docs/`: the tutorial, how-to guides, and explanation that don't need to load with the README:
+  - `docs/tutorial.md`: a first walk from install to a checked PR body
+  - `docs/how-to.md`: pairing with or writing a voice pack, running the self-check by hand, EARS and Conventional Comments quick starts
+  - `docs/explanation.md`: why framework and voice are separate skills, and the external frameworks the rules come from
 - `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
 
 ## Token budget
@@ -138,31 +74,16 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.
 
-Counts use the `o200k_base` encoding from [gpt-tokenizer](https://github.com/niieani/gpt-tokenizer). Claude's tokenizer isn't public, so treat them as estimates. The badges are static shields.io images and don't update themselves. After changing `SKILL.md` or anything under `references/`, regenerate the badges and this table:
-
-```sh
-npm install
-npm run tokens
-```
-
-`.github/scripts/token-badges.mjs` rewrites the content between the `token-badges` and `token-table` comment markers in this README.
+Counts use the `o200k_base` encoding from [gpt-tokenizer](https://github.com/niieani/gpt-tokenizer). Claude's tokenizer isn't public, so treat them as estimates. The badges are static shields.io images; `npm run tokens` rewrites them and this table between their comment markers, per the Workflow section in `AGENTS.md`.
 
 ## Versioning
 
 Tagged with git tags in semver form (`v1.0.0`). A change to `SKILL.md`'s `description` frontmatter is a major/breaking release: it's the line a voice-pack skill copies verbatim to co-activate, so a diff there means every voice pack needs to update its own copy to keep matching. A structural rule change inside `SKILL.md`'s body or any `references/*.md` file is minor or patch, it doesn't require a voice pack to change anything.
 
-# Explanation
+## Further docs
 
-## Why split framework from voice
+The docs under `docs/` follow [Diátaxis](https://diataxis.fr/), one file per kind of question:
 
-Two facts about Agent Skills force the split. First, the spec has no `extends` or `depends` field, so one skill can't declare that it builds on another. Second, `npx skills update` deletes and recreates the skill directory, so a personalization subfolder inside a single skill is wiped on every update. A voice layer either lives in a fork that diverges from upstream or in a separate skill.
-
-Separate skills are the only clean composition. Both skills list the same triggers, an agent that loads every matching skill loads both, and each governs a different axis of the same artifact: this one decides what goes where, the voice pack decides how it reads. The scope section in `SKILL.md` and the rule in `AGENTS.md` about not adding taste rules here exist to keep that boundary from drifting.
-
-## The frameworks it enforces
-
-- [EARS](https://ieeexplore.ieee.org/document/5211796) (Easy Approach to Requirements Syntax, Mavin et al., IEEE RE 2009) constrains every requirement to one of five testable sentence patterns. Mavin's own summary on [alistairmavin.com](https://alistairmavin.com/ears/): "The Easy Approach to Requirements Syntax (EARS) is a mechanism to gently constrain textual requirements"
-- [Conventional Comments](https://conventionalcomments.org/) labels every review comment so the author knows at a glance what's blocking and what isn't. From the spec: "Adhering to a consistent format improves reader's expectations and machine readability"
-- Stack Overflow's [How do I ask a good question?](https://stackoverflow.com/help/how-to-ask) and [How do I write a good answer?](https://stackoverflow.com/help/how-to-answer) shape the question rules in `references/discussions.md`: search before posting, a specific question as the title, and upvoting instead of "thanks" comments. From the answer guide: "Saying “thanks” is appreciated, but it doesn't answer the question. Instead, vote up the answers that helped you the most!"
-- [My Mother Was StackExchange](https://lowlysre.substack.com/p/my-mother-was-stackexchange) refines those rules with answering the problem behind the question and editing an answer in place when it's corrected. From the post: "Being technically right isn't always enough, what matters more is being usefully right"
-- [Diátaxis](https://diataxis.fr/) organizes documentation into four quadrants by the reader's need: tutorials, how-to guides, reference, explanation. This README uses it, and `references/docs-and-comments.md` inherits its present-tense, describe-the-system-as-it-is stance
+- Learning: [docs/tutorial.md](docs/tutorial.md) walks through drafting a first PR body
+- Doing: [docs/how-to.md](docs/how-to.md) pairs a voice pack, runs the self-check by hand, and starts an EARS requirement or a Conventional Comments review
+- Understanding: [docs/explanation.md](docs/explanation.md) explains the framework/voice split and the frameworks the rules enforce
