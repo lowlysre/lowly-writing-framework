@@ -39,26 +39,43 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 ## File map
 
-- `SKILL.md`: always-loaded entry point; scope, formatting mechanics, never-trim list, boundaries, workflow triggers, structural anti-patterns, and the routing table below
-- `references/body-writing.md`: body structure shared by PR and issue bodies (fill the template, why over how, Context section, 3-paragraph and 3,000-character ceilings, `Bonus` split, mermaid diagrams)
-- `references/pr-writing.md`: PR titles, issue-closing rules, `## Testing` honesty, `## Pre-merge`/`## Post-merge` sections, AI watermark
-- `references/issue-writing.md`: issue titles, template selection, YAML form rendering, related-work references
-- `references/discussions.md`: kinds of post (question, proposal, announcement, show and tell, poll, conversation), category selection from the repo's own categories, threading and answer-marking mechanics, closing summaries, upvotes and reactions instead of "+1" comments
-- `references/review-comments.md`: Conventional Comments labels and decorations for reviewing someone else's PR
-- `references/docs-and-comments.md`: present-tense rule for README, doc, and code-comment prose; when an issue number belongs in a comment
-- `references/requirements-ears.md`: the five EARS patterns, document mode vs. inline mode, requirement self-check
-- `references/self-check.md`: mechanical checks (run the command) and judgment checks (read the text) for every finished artifact
-- `references/banned-phrases.md`: AI-era phrases to cut, grouped by failure mode
-- `references/calibration-examples.md`: before/after pairs for the judgment-call rules in PR, issue, and discussion bodies, the PR Testing section, and meat proxy mode
-- `references/meat-proxy-mode.md`: extra rules for artifacts a human signs but another AI executes
-- `references/gh-cli.md`: fetch-before-edit, `--body-file`, `-f` vs `-F`, length gating, re-fetch-to-verify, `gh discussion` and the GraphQL-only discussion mutations (answers, closing, upvotes, reactions)
-- `evals/`: evaluation scenarios, one JSON file each (`query` plus an `expected_behavior` list), run by hand before trimming a rule
-- `.github/scripts/token-badges.mjs`: regenerates the [Token budget](#token-budget) badges and table, run with `npm run tokens`
-- `docs/`: the tutorial, how-to guides, and explanation that don't need to load with the README:
-  - `docs/tutorial.md`: a first walk from install to a checked PR body
-  - `docs/how-to.md`: pairing with or writing a voice pack, running the self-check by hand, EARS and Conventional Comments quick starts
-  - `docs/explanation.md`: why framework and voice are separate skills, and the external frameworks the rules come from
-- `assets/hero.svg`: the README banner; `assets/hero-og.svg` and `assets/hero-og.png` are the 1200x630 social-preview variant for the repo's Open Graph image
+`SKILL.md` is the always-loaded entry point: scope, formatting mechanics, never-trim list, boundaries, and a routing table that sends you to one or two of the `references/` files below on demand, grouped here by the artifact each one governs.
+
+### PR and issue bodies
+
+- `references/body-writing.md`: the shape every PR and issue body follows, filling in the repo's template instead of writing free-form, leading with *why* over *how*, keeping a body short enough that reviewers actually read it
+- `references/pr-writing.md`: how to title a PR, link it to the issue it closes, and write a `## Testing` section that says what you actually ran, not what you assume passed
+- `references/issue-writing.md`: how to title an issue, pick the right issue template, and point at related work without padding the body with it
+- `references/diagrams.md`: how to add a mermaid diagram that survives GitHub's rendering quirks and stays readable to someone who's colorblind
+
+### GitHub Discussions
+
+- `references/discussions.md`: which kind of post fits a Discussion (question, proposal, announcement, show and tell, poll), how to pick its category, and how to wrap one up once it's answered
+
+### Reviewing someone else's PR
+
+- `references/review-comments.md`: labeling review comments with Conventional Comments so the author can tell a blocking issue from a nitpick at a glance
+
+### Docs, code comments, and requirements
+
+- `references/docs-and-comments.md`: writing docs and code comments in present tense, describing the system as it works today instead of narrating how it got there
+- `references/requirements-ears.md`: phrasing a requirement in EARS syntax so it reads as one unambiguous, testable sentence
+
+### Finishing checks
+
+- `references/self-check.md`: the pass to run over any finished PR body, doc, or comment before calling it done
+- `references/banned-phrases.md`: the stock AI-sounding phrases that self-check greps for and cuts
+
+### Special cases
+
+- `references/meat-proxy-mode.md`: extra rules for the rare case where a human signs off on an artifact but another AI actually wrote it
+- `references/calibration-examples.md`: worked before/after examples for the judgment calls in the rules above, so you can see one applied instead of just described
+
+### Posting through the `gh` CLI
+
+- `references/gh-cli.md`: the CLI mechanics for editing something already live on GitHub, fetching the current text before you edit it, escaping shell arguments correctly, and re-fetching to confirm the post actually landed
+
+The tutorial, how-to guides, and explanation live under `docs/`, see [Further docs](#further-docs) below. Evaluation scenarios live under `evals/`, one JSON file per scenario.
 
 ## Token budget
 
