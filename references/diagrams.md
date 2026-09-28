@@ -21,6 +21,8 @@ Don't drop `padding` below 14: wide multi-line `<br/>` labels combined with the 
 
 Don't define a node inline with a `:::` class shorthand as the target of a dotted edge: `A -.-> T[Target]:::risk` fails on GitHub with "Unable to render rich display" even though mermaid 11 parses it fine locally. Declare the node first (`T[Target]:::risk`), then draw the edge with the bare id (`A -.-> T`).
 
+Don't point an edge at a subgraph's own id: `consumers --> Backend` fails on GitHub with "Unable to render rich display" when `Backend` is `subgraph Backend[...]`, not a node, even though mermaid.live renders it fine. GitHub's Mermaid build only allows an edge endpoint to be an actual node. Point the edge at a real node declared inside the subgraph instead, `consumers --> ingest` where `ingest` is a node inside `subgraph Backend[...]`.
+
 `theme: dark` forces box contrast to hold regardless of the viewer's own GitHub light/dark mode setting, and `nodeBorder` matches GitHub's own accent blue (the same one used for usernames and links). Skip fighting for per-link arrowhead colors, Mermaid arrowheads always inherit the line's color with no themeVariable or linkStyle to set them separately. Skip `font-weight` too, GitHub's font stack only has regular/bold weight files, so any numeric value in between snaps to one or the other rather than landing on a true medium weight.
 
 ## Legends for color-coded diagrams
