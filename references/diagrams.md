@@ -19,10 +19,6 @@ flowchart TD
 
 Don't drop `padding` below 14: wide multi-line `<br/>` labels crowd the rounded border at 8px and below.
 
-Don't define a node inline with a `:::` class shorthand as the target of a dotted edge: `A -.-> T[Target]:::risk` fails on GitHub with "Unable to render rich display" though mermaid 11 parses it locally. Declare the node first (`T[Target]:::risk`), then draw the edge with the bare id (`A -.-> T`).
-
-Don't point an edge at a subgraph's own id: `consumers --> Backend` fails on GitHub with "Unable to render rich display" when `Backend` is `subgraph Backend[...]`, though mermaid.live renders it. GitHub's build only allows a real node as an edge endpoint, so use `consumers --> ingest` where `ingest` is a node inside the subgraph.
-
 `theme: dark` holds box contrast in either GitHub light/dark mode, and `nodeBorder` matches GitHub's accent blue. Skip per-link arrowhead colors, arrowheads always inherit the line's color. Skip `font-weight` too, GitHub's fonts only ship regular and bold, so in-between values snap to one of them.
 
 ## Legends for color-coded diagrams
@@ -72,12 +68,15 @@ GitHub's [known issues for Mermaid](https://docs.github.com/en/repositories/work
 - **Sequence diagrams render with extra padding below the chart**, growing with chart size. GitHub attributes this to the Mermaid library. Keep sequence diagrams short, or use a `flowchart`.
 - **Popover menus on sequence-diagram actor nodes don't work.** Don't rely on actor links or menus to carry information; put it in the node label.
 - **Not every chart type is accessible to screen readers.** Never let the diagram be the only place a fact lives: the lead-in above it states the takeaway in prose.
-- **Some valid syntax fails only on GitHub.** Subgraph-id edge targets and `:::` on a dotted edge's target (see `Theme and styling`), and nested subgraphs, cluster-to-cluster invisible links, or HTML-sized labels (see the section below), all render in mermaid.live but not on GitHub.
+- **Two edge patterns fail with "Unable to render rich display", though mermaid.live renders both.** Use the fix shown for each:
+  - A dotted edge whose target is defined inline with `:::`: `A -.-> T[Target]:::risk`. Declare the node first (`T[Target]:::risk`), then draw the edge with the bare id (`A -.-> T`)
+  - An edge pointed at a subgraph's own id: `consumers --> Backend` where `Backend` is `subgraph Backend[...]`. GitHub's build only allows a real node as an edge endpoint, so use `consumers --> ingest`, where `ingest` is a node inside the subgraph
+- **Layout tricks diverge between builds.** Nested subgraphs, cluster-to-cluster invisible links, and HTML labels forcing node size differ from mermaid.live too, see the section below.
 
 Report a persistent difference in a [GitHub Community discussion](https://github.com/orgs/community/discussions/categories/general) with the `Mermaid` label, as GitHub's docs direct.
 
 ## Verifying a diagram actually renders right on GitHub
 
-A diagram that looks right in an editor preview, a CLI chat preview, or a third-party renderer isn't proof it renders on GitHub: each is a different Mermaid build, and fragile patterns (nested subgraphs, cluster-to-cluster invisible links, HTML labels forcing node size) are where they diverge. GitHub renders Mermaid in its own sandboxed `viewscreen.githubusercontent.com` iframe, so only a live PR/issue preview or comment shows what a reader sees.
+A diagram that looks right in an editor preview, a CLI chat preview, or a third-party renderer isn't proof it renders on GitHub: each is a different Mermaid build, and the layout tricks under Known GitHub limitations are where they diverge. GitHub renders Mermaid in its own sandboxed `viewscreen.githubusercontent.com` iframe, so only a live PR/issue preview or comment shows what a reader sees.
 
-Before shipping a diagram that leans on a fragile pattern, paste it into a scratch gist (`gh gist create scratch.md`; secret by default, never `--public`, since node labels can name internal systems) and open it, which renders through the same pipeline as a PR or issue body. Delete the gist once confirmed. A plain flowchart without nested subgraphs or invisible links doesn't need this.
+Before shipping a diagram that leans on a layout trick, paste it into a scratch gist (`gh gist create scratch.md`; secret by default, never `--public`, since node labels can name internal systems) and open it, which renders through the same pipeline as a PR or issue body. Delete the gist once confirmed. A plain flowchart without nested subgraphs or invisible links doesn't need this.
