@@ -8,6 +8,17 @@
 
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits.
 
+## Contents
+
+- [What you get](#what-you-get)
+- [What it does and doesn't do](#what-it-does-and-doesnt-do)
+- [Install](#install)
+- [Update](#update)
+- [File map](#file-map)
+- [Token budget](#token-budget)
+- [Versioning](#versioning)
+- [Further docs](#further-docs)
+
 ## What you get
 
 Left alone, a coding agent writes PR bodies that restate the diff file by file, testing sections that claim "all tests pass" without evidence, and issue links wrapped in backticks that never autolink. This skill replaces those defaults with rules a reviewer can check:
@@ -50,17 +61,6 @@ The skill is a foundation, not a template pack. It states principles an artifact
 A small set of rules is fixed everywhere because they protect the reader: closing keywords in the `owner/repo#123` form, breaking changes and risks never trimmed, and the `<!--:robot:-->` watermark on AI-authored PR bodies and review comments. Everything else adapts.
 
 A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
-
-## Contents
-
-- [What you get](#what-you-get)
-- [What it does and doesn't do](#what-it-does-and-doesnt-do)
-- [Install](#install)
-- [Update](#update)
-- [File map](#file-map)
-- [Token budget](#token-budget)
-- [Versioning](#versioning)
-- [Further docs](#further-docs)
 
 ## Install
 
