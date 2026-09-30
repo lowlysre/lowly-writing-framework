@@ -19,7 +19,7 @@ Left alone, a coding agent writes PR bodies that restate the diff file by file, 
 - Mermaid diagrams written around GitHub's known rendering failures, so they show up as diagrams instead of "Unable to render rich display"
 - A self-check with greps for the slips that survive proofreading, and a `gh` CLI guide for posting without mangling the text
 
-A PR summary before and after:
+A PR summary before and after, in a repo with no PR template:
 
 ```markdown
 Updated config.py, client.py, and test_client.py. Changed the timeout. All tests pass.
@@ -37,13 +37,24 @@ CI runs the existing unit suite on every push; no manual steps.
 <!--:robot:-->
 ```
 
-It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
+## What it does and doesn't do
+
+The skill is a foundation, not a template pack. It states principles an artifact has to satisfy, and the agent applies them to whatever the repo already uses.
+
+- **Works with any template.** A repo's PR or issue template always wins: the skill fills its sections in and adds none. Its own lightweight layout (one `##` heading, why first) applies only when no template exists
+- **Defers to local conventions.** Title style, labels, and commit format follow what the repo's CONTRIBUTING file and recent merged PRs show. Conventional commits is only the fallback
+- **Doesn't dictate a house style.** No required sections, no mandatory checklist, no fixed vocabulary. Rules constrain structure (why before how, one point per sentence, honest testing claims), so different repos get different-looking artifacts that share the same bones
+- **Doesn't reshape the change.** It governs the writing, never the diff, the commit history, or the scope
+- **Doesn't set voice.** Tone, humor, and phrasing belong to a separately installed voice-pack skill
+
+A small set of rules is fixed everywhere because they protect the reader: closing keywords in the `owner/repo#123` form, breaking changes and risks never trimmed, and the `<!--:robot:-->` watermark on AI-authored PR bodies and review comments. Everything else adapts.
 
 A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
 
 ## Contents
 
 - [What you get](#what-you-get)
+- [What it does and doesn't do](#what-it-does-and-doesnt-do)
 - [Install](#install)
 - [Update](#update)
 - [File map](#file-map)
