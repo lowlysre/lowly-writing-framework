@@ -40,7 +40,7 @@ Closing-keyword text isn't proof GitHub linked the issue either. Once a PR is pu
 
 ## Suggested edits
 
-`gh pr review` and `gh pr comment` can't anchor to a line, so a suggested edit (see `Suggested edits` in `references/review-comments.md`) goes through the review-comments REST endpoint. Write the comment, `suggestion` fence included, to a temp file and post it with `-F body=@path`. The `-f` trap from `Writing text safely` applies: `-f body=@path` posts the literal string.
+`gh pr review` and `gh pr comment` can't anchor to a line, so a suggested edit (see `Suggested edits` in `references/review-comments.md`) goes through the review-comments REST endpoint. Write the comment, `suggestion` fence included, to a temp file and post it with `-F body=@path`. The `-f` trap from `Writing text safely` applies: `-f body=@path` posts the literal string. On PowerShell, build the comment in a single-quoted here-string (`@'...'@`): a double-quoted one treats the backtick as an escape and silently mangles the `suggestion` fence and any inline code.
 
 ```bash
 gh api repos/{owner}/{repo}/pulls/<n>/comments \
