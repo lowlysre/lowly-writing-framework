@@ -75,7 +75,7 @@ What needs `gh api graphql`:
 - Close or reopen: `gh api graphql -f query='mutation($id:ID!,$why:DiscussionCloseReason!){closeDiscussion(input:{discussionId:$id,reason:$why}){discussion{closed}}}' -f id=<discussion-node-id> -f why=RESOLVED` (`OUTDATED` and `DUPLICATE` are the other reasons); `reopenDiscussion(input:{discussionId})` reverses it
 - Upvote a discussion or top-level comment, using its node ID (`D_...` or `DC_...`): `gh api graphql -f query='mutation($id:ID!){addUpvote(input:{subjectId:$id}){subject{upvoteCount}}}' -f id=<node-id>`; `removeUpvote` takes the same input. Replies can't be upvoted, check `viewerCanUpvote` on the node first when unsure
 - React to any discussion, comment, or reply: `gh api graphql -f query='mutation($id:ID!,$c:ReactionContent!){addReaction(input:{subjectId:$id,content:$c}){reaction{content}}}' -f id=<node-id> -f c=THUMBS_UP`; `removeReaction` reverses it
-- Polls can't be created through the API, `createDiscussion` has no poll field. Voting on an existing poll is `addDiscussionPollVote`
+- `createDiscussion` has no poll field, so polls can't be created through the API. Voting on an existing poll is `addDiscussionPollVote`
 - Re-fetch a comment body to verify what landed, since `gh discussion view` has no single-comment `--json body`: `gh api graphql -f query='query($id:ID!){node(id:$id){... on DiscussionComment{body}}}' -f id=<comment-node-id> --jq .data.node.body`. For the opening post, `gh discussion view <n> --json body --jq .body` is enough
 
 The same `-f`/`-F` trap from `Writing text safely` applies to every mutation above: the body variable has to go through `-F b=@body.md`, a `-f b=@body.md` posts the literal string `@body.md` and exits `0`.

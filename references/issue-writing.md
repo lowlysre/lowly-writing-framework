@@ -22,8 +22,8 @@ The body states the problem or ask, per `references/body-writing.md`'s why-over-
 
 ## Context section
 
-`references/body-writing.md`'s `## Context` section applies to issues, but for an issue specifically don't add it off a hunch that "this feels like part of something bigger." Confirm it mechanically: `gh issue view <this-issue> --json parent --jq .parent.number` finds the parent tracking issue (empty output means there isn't one), then `gh issue view <parent> --json subIssues --jq .subIssues.totalCount` counts how many sibling sub-issues that parent has. Two or more siblings is the actual tell that this issue is one slice of a larger, actively-decomposed effort and earns the section. A parent listing only this one sub-issue is a single "part of X" relationship, not a larger effort with peers, skip the section per body-writing.md's own carve-out for a standalone issue with no wider context. Once the tell fires, write the section itself exactly as body-writing.md describes: the effort and this item's place in the sequence, two short paragraphs max.
+`references/body-writing.md`'s `## Context` section applies to issues, but for an issue specifically don't add it off a hunch that "this feels like part of something bigger." Confirm it mechanically: `gh issue view <this-issue> --json parent --jq .parent.number` finds the parent tracking issue (empty output means there isn't one), then `gh issue view <parent> --json subIssues --jq .subIssues.totalCount` counts how many sibling sub-issues that parent has. Two or more siblings is the actual tell that this issue is one slice of a larger, actively-decomposed effort and earns the section. A parent listing only this one sub-issue isn't a larger effort with peers, skip the section.
 
 ## AI watermark
 
-Skip it. The `## AI watermark` rule in `references/pr-writing.md` applies to PR bodies and PR/review comments only, not issue bodies.
+Skip it: `references/pr-writing.md`'s watermark covers PR bodies and PR/review comments only.
