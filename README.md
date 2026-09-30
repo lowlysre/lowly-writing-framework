@@ -6,12 +6,44 @@
 [![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~21k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~21k%20tokens-informational)](#token-budget)
 <!-- token-badges:end -->
 
-An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
+An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits.
+
+## What you get
+
+Left alone, a coding agent writes PR bodies that restate the diff file by file, testing sections that claim "all tests pass" without evidence, and issue links wrapped in backticks that never autolink. This skill replaces those defaults with rules a reviewer can check:
+
+- PR and issue bodies that lead with why, fill in the repo's template, and stay short enough to be read
+- Closing keywords in the `owner/repo#123` form, verified against the API instead of assumed to have linked
+- A `## Testing` section that names only what CI doesn't already cover, with real gaps flagged instead of hidden
+- Review comments labeled with Conventional Comments, plus GitHub suggested edits for few-line fixes
+- Mermaid diagrams written around GitHub's known rendering failures, so they show up as diagrams instead of "Unable to render rich display"
+- A self-check with greps for the slips that survive proofreading, and a `gh` CLI guide for posting without mangling the text
+
+A PR summary before and after:
+
+```markdown
+Updated config.py, client.py, and test_client.py. Changed the timeout. All tests pass.
+```
+
+```markdown
+Raises the default HTTP timeout from 5s to 30s, fixing acme/sdk#77.
+
+## Why
+Slow regions hit the 5s limit and surfaced as `ReadTimeout`. The default lives in `sdk/config.py` because `sdk/generated/client.py` is regenerated on every release.
+
+## Testing
+CI runs the existing unit suite on every push; no manual steps.
+
+<!--:robot:-->
+```
+
+It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
 
 A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
 
 ## Contents
 
+- [What you get](#what-you-get)
 - [Install](#install)
 - [Update](#update)
 - [File map](#file-map)
@@ -46,7 +78,7 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 - `references/body-writing.md`: the shape every PR and issue body follows, filling in the repo's template instead of writing free-form, leading with *why* over *how*, keeping a body short enough that reviewers actually read it
 - `references/pr-writing.md`: how to title a PR, link it to the issue it closes, and write a `## Testing` section that says what you actually ran, not what you assume passed
 - `references/issue-writing.md`: how to title an issue, pick the right issue template, and point at related work without padding the body with it
-- `references/diagrams.md`: how to add a mermaid diagram that survives GitHub's rendering quirks and stays readable to someone who's colorblind
+- `references/diagrams.md`: how to add a mermaid diagram that survives GitHub's rendering quirks and known limitations, and stays readable to someone who's colorblind
 
 ### GitHub Discussions
 
@@ -73,7 +105,7 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 ### Posting through the `gh` CLI
 
-- `references/gh-cli.md`: the CLI mechanics for editing something already live on GitHub, fetching the current text before you edit it, escaping shell arguments correctly, and re-fetching to confirm the post actually landed
+- `references/gh-cli.md`: the CLI mechanics for editing something already live on GitHub, fetching the current text before you edit it, escaping shell arguments correctly, posting line-anchored suggested edits, and re-fetching to confirm the post actually landed
 
 The tutorial, how-to guides, and explanation live under `docs/`, see [Further docs](#further-docs) below. Evaluation scenarios live under `evals/`, one JSON file per scenario.
 
@@ -86,7 +118,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
 | On activation | `SKILL.md` body | ~2,500 |
-| On demand | Every file under `references/` | ~20,700 |
+| On demand | Every file under `references/` | ~20,800 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.
