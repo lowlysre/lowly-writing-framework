@@ -3,7 +3,7 @@
 # lowly-writing-framework
 
 <!-- token-badges:start -->
-[![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~19k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~19k%20tokens-informational)](#token-budget)
+[![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~21k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~21k%20tokens-informational)](#token-budget)
 <!-- token-badges:end -->
 
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits. It has no opinion on how the sentences sound; a separately installed voice-pack skill can supply that.
@@ -54,7 +54,7 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 ### Reviewing someone else's PR
 
-- `references/review-comments.md`: labeling review comments with Conventional Comments so the author can tell a blocking issue from a nitpick at a glance
+- `references/review-comments.md`: labeling review comments with Conventional Comments so the author can tell a blocking issue from a nitpick at a glance, and writing GitHub suggested edits
 
 ### Docs, code comments, and requirements
 
@@ -86,7 +86,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
 | On activation | `SKILL.md` body | ~2,500 |
-| On demand | Every file under `references/` | ~19,500 |
+| On demand | Every file under `references/` | ~20,700 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.

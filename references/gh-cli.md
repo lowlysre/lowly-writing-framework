@@ -38,6 +38,23 @@ A returned URL and exit code `0` only prove the request succeeded, not that the 
 
 Closing-keyword text isn't proof GitHub linked the issue either. Once a PR is pushed, confirm the link against the API: `gh pr view <n> --json closingIssuesReferences -q '.closingIssuesReferences[].number'`. Empty output usually means a cross-repo reference missing the `owner/repo#123` form, a typo'd number, or a base branch that isn't the repo's default (GitHub only auto-links closing keywords on PRs into the default branch). Fall back to GraphQL if `--json` lacks the field: `gh api graphql -f query='query($o:String!,$r:String!,$n:Int!){repository(owner:$o,name:$r){pullRequest(number:$n){closingIssuesReferences(first:10){nodes{number}}}}}' -f o=<owner> -f r=<repo> -F n=<pr-number>`.
 
+## Suggested edits
+
+`gh pr review` and `gh pr comment` can't anchor to a line, so a suggested edit (see `Suggested edits` in `references/review-comments.md`) goes through the review-comments REST endpoint. Write the comment, `suggestion` fence included, to a temp file and post it with `-F body=@path`. The `-f` trap from `Writing text safely` applies: `-f body=@path` posts the literal string.
+
+```bash
+gh api repos/{owner}/{repo}/pulls/<n>/comments \
+  -F body=@comment.md \
+  -f commit_id="$(gh pr view <n> --json headRefOid -q .headRefOid)" \
+  -f path=src/app.py -F line=42 -f side=RIGHT
+```
+
+- Add `-F start_line=40 -f start_side=RIGHT` to anchor a multi-line range; `line` is then the last line of the range
+- `line` is a line number in the file at `commit_id`, not a position in the diff, and it has to be a line the PR touches or its surrounding context, or the API returns `422`
+- Use the PR's current head SHA, not an older one: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
+- To batch several comments into one notification, create a pending review first (`POST .../pulls/<n>/reviews` with `comments[]`, no `event`) and submit it once, instead of one call per comment
+- Verify with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
+
 ## Discussions
 
 Discussions have no REST endpoint. `gh discussion` (preview in gh 2.98, flagged "subject to change without notice") wraps the common GraphQL calls; anything it doesn't cover goes through `gh api graphql` directly. Confirm the subcommand exists on the installed gh (`gh discussion --help`) before building a script around it, and fall back to the GraphQL forms below when it's missing or a flag has moved.

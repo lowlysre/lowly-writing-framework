@@ -65,6 +65,18 @@ classDef legAutomated fill:#6e7681,stroke-width:0px,font-size:9px
 
 Keep legend labels to one or two words, matching the category name a reader would already infer from context, not a restatement of the whole diagram.
 
+## Known GitHub limitations
+
+Listed in GitHub's own [known issues for Mermaid](https://docs.github.com/en/repositories/working-with-files/using-files/working-with-non-code-files#known-issues), plus the render failures this file documents elsewhere:
+
+- **Sequence diagrams render with extra padding below the chart**, growing with chart size. GitHub attributes this to the Mermaid library. Keep sequence diagrams short, or use a `flowchart` when the padding would push the diagram's caption far from it.
+- **Popover menus on sequence-diagram actor nodes don't work.** GitHub attaches JavaScript events differently when it renders through the Mermaid API. Don't rely on actor links or menus to carry information; put it in the node label.
+- **Not every chart type is accessible to screen readers.** Never let the diagram be the only place a fact lives: the one-line lead-in above it states the takeaway in prose (see `references/body-writing.md`).
+- **Edges can't target a subgraph id, and a `:::` class can't sit on a dotted edge's target.** Both fail with "Unable to render rich display", see `Theme and styling` above.
+- **Layout tricks diverge between Mermaid builds.** Nested subgraphs, cluster-to-cluster invisible links, and HTML labels forcing node size are where GitHub's build differs from mermaid.live, see `Verifying a diagram actually renders right on GitHub` below.
+
+A chart that renders fine in mermaid.live but not on GitHub is a GitHub-side difference, not necessarily invalid syntax. Report a persistent one in a [GitHub Community discussion](https://github.com/orgs/community/discussions/categories/general) with the `Mermaid` label, as GitHub's docs direct.
+
 ## Verifying a diagram actually renders right on GitHub
 
 A diagram that looks right in an editor's live preview, a CLI's chat preview, or a third-party renderer isn't proof it renders right on GitHub itself: every one of those is a different Mermaid build from the one GitHub ships, and a fragile pattern (nested subgraphs, a cluster-to-cluster invisible link, an HTML label forcing node size) is exactly where those builds diverge. GitHub renders Mermaid inside its own sandboxed `viewscreen.githubusercontent.com` iframe, a live PR/issue preview or comment is the only render that reflects what a reader will actually see.
