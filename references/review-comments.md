@@ -23,6 +23,7 @@ A suggested edit is a `suggestion` fenced block inside a line comment on the PR'
 - Write the full replacement lines, indentation included. The block's content is swapped in verbatim, so a dropped leading space or tab lands in the file
 - An empty `suggestion` block deletes the anchored lines
 - Keep the `suggestion:` label and its one-sentence why above the block. The block shows what, the sentence says why
+- Keep a suggestion to about 5 anchored lines. Past that, the block is hard to review inline, easy to apply wrongly, and goes stale on the author's next push. Describe a larger change in a plain `suggestion:` comment, or split it into separate comments that each stand alone
 - Only comment lines that appear in the diff can carry one. Code outside the diff, or a point spanning several files, gets a plain `suggestion:` describing the change
 - A suggestion in a pending (unsubmitted) review can't be applied yet, and one on a resolved, outdated, or closed-PR thread can't be applied at all
 - One suggestion block per comment, one point per comment. Two edits to different lines are two comments
