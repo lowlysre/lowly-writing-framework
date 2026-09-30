@@ -10,20 +10,20 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 
 - `SKILL.md`: the always-loaded entry point, scope/formatting/boundaries rules that apply everywhere, plus a routing table into `references/`
 - `references/body-writing.md`: body structure shared by PR, issue, and discussion bodies (fill-template, Context section, length ceiling, diagrams), loaded alongside whichever of the files below applies
-- `references/diagrams.md`: mermaid diagram mechanics for PR/issue bodies and docs (GitHub rendering quirks, theme/styling, legends for color-coded diagrams)
+- `references/diagrams.md`: mermaid diagram mechanics for PR/issue bodies and docs (GitHub rendering quirks and known limitations, theme/styling, legends for color-coded diagrams)
 - `references/pr-writing.md`: PR titles, issue-closing rules, testing honesty, AI watermark
 - `references/issue-writing.md`: issue titles, template selection, related-work references
 - `references/discussions.md`: GitHub Discussion kinds of post, category selection, threading and answer-marking, wrapping up, upvotes and reactions
-- `references/review-comments.md`: conventional comment labels for reviewing someone else's PR
+- `references/review-comments.md`: conventional comment labels and suggested edits for reviewing someone else's PR
 - `references/docs-and-comments.md`: present-tense rule for README/doc/code-comment prose
 - `references/self-check.md`: the finishing pass run over PR and issue bodies, docs, and comments
 - `references/requirements-ears.md`: EARS-syntax requirements, document mode vs. inline mode
 - `references/banned-phrases.md`: banned AI-era phrases checked during the self-check pass
 - `references/calibration-examples.md`: before/after pairs showing structural rules from other files applied, grouped by artifact; the rule text stays in its home file, this one only illustrates it
 - `references/meat-proxy-mode.md`: artifacts whose real actor is another AI, invoked explicitly
-- `references/gh-cli.md`: `gh` CLI mechanics (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, `gh discussion` and its GraphQL fallbacks) for anything posted directly through the CLI rather than a structured tool
+- `references/gh-cli.md`: `gh` CLI mechanics (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, `gh discussion` and its GraphQL fallbacks) for anything posted directly through the CLI rather than a structured tool
 - `evals/`: evaluation scenarios in Anthropic's [evaluation structure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices#build-evaluations-first) (`skills`, `query`, `files`, `expected_behavior`), one JSON file per scenario
-- `docs/`: the tutorial, how-to guides, and explanation split out of the README by Diátaxis quadrant. The README keeps what an agent needs on every read: install, update, the voice-pack pairing rule, the file map, token budget, and versioning. A new long-form section goes in `docs/`, not the README
+- `docs/`: the tutorial, how-to guides, and explanation split out of the README by Diátaxis quadrant. The README keeps what an agent needs on every read: install, update, the voice-pack pairing rule, a short layout pointer, token budget, and versioning. A new long-form section goes in `docs/`, not the README
 
 ## Editing conventions
 

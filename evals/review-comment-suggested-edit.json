@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Review acme/sdk#88. On lines 41-42 of `sdk/config.py` the diff has `timeout = 30` and `retries = 3` as two separate assignments with a hardcoded 30 that duplicates `DEFAULT_TIMEOUT_S` defined two lines above. Draft the review comment with a one-click fix for the author, and give the gh command to post it.",
+  "files": [],
+  "expected_behavior": [
+    "The comment opens with a plain-text 'suggestion:' label, not bolded or backticked",
+    "A one-sentence why sits above a fenced block whose info string is exactly 'suggestion'",
+    "The block holds the full replacement for both anchored lines with original indentation, and no extra unchanged lines",
+    "The gh command posts to the pulls/<n>/comments endpoint with body passed via -F body=@file, not -f",
+    "The command sets start_line=41 and line=42 with side RIGHT, and a commit_id taken from the PR head SHA",
+    "<!--:robot:--> is the literal last line of the comment"
+  ]
+}
