@@ -73,8 +73,6 @@ GitHub's [known issues for Mermaid](https://docs.github.com/en/repositories/work
   - An edge pointed at a subgraph's own id: `consumers --> Backend` where `Backend` is `subgraph Backend[...]`. GitHub's build only allows a real node as an edge endpoint, so use `consumers --> ingest`, where `ingest` is a node inside the subgraph
 - **Layout tricks diverge between builds.** Nested subgraphs, cluster-to-cluster invisible links, and HTML labels forcing node size differ from mermaid.live too, see the section below.
 
-Report a persistent difference in a [GitHub Community discussion](https://github.com/orgs/community/discussions/categories/general) with the `Mermaid` label, as GitHub's docs direct.
-
 ## Verifying a diagram actually renders right on GitHub
 
 A diagram that looks right in an editor preview, a CLI chat preview, or a third-party renderer isn't proof it renders on GitHub: each is a different Mermaid build, and the layout tricks under Known GitHub limitations are where they diverge. GitHub renders Mermaid in its own sandboxed `viewscreen.githubusercontent.com` iframe, so only a live PR/issue preview or comment shows what a reader sees.
