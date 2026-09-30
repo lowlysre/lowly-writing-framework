@@ -14,7 +14,7 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 - [What it does and doesn't do](#what-it-does-and-doesnt-do)
 - [Install](#install)
 - [Update](#update)
-- [File map](#file-map)
+- [Layout](#layout)
 - [Token budget](#token-budget)
 - [Versioning](#versioning)
 - [Further docs](#further-docs)
@@ -80,45 +80,9 @@ npx skills update lowly-writing-framework
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
 
-## File map
+## Layout
 
-`SKILL.md` is the always-loaded entry point: scope, formatting mechanics, never-trim list, boundaries, and a routing table that sends you to one or two of the `references/` files below on demand, grouped here by the artifact each one governs.
-
-### PR and issue bodies
-
-- `references/body-writing.md`: the shape every PR and issue body follows, filling in the repo's template instead of writing free-form, leading with *why* over *how*, keeping a body short enough that reviewers actually read it
-- `references/pr-writing.md`: how to title a PR, link it to the issue it closes, and write a `## Testing` section that says what you actually ran, not what you assume passed
-- `references/issue-writing.md`: how to title an issue, pick the right issue template, and point at related work without padding the body with it
-- `references/diagrams.md`: how to add a mermaid diagram that survives GitHub's rendering quirks and known limitations, and stays readable to someone who's colorblind
-
-### GitHub Discussions
-
-- `references/discussions.md`: which kind of post fits a Discussion (question, proposal, announcement, show and tell, poll), how to pick its category, and how to wrap one up once it's answered
-
-### Reviewing someone else's PR
-
-- `references/review-comments.md`: labeling review comments with Conventional Comments so the author can tell a blocking issue from a nitpick at a glance, and writing GitHub suggested edits
-
-### Docs, code comments, and requirements
-
-- `references/docs-and-comments.md`: writing docs and code comments in present tense, describing the system as it works today instead of narrating how it got there
-- `references/requirements-ears.md`: phrasing a requirement in EARS syntax so it reads as one unambiguous, testable sentence
-
-### Finishing checks
-
-- `references/self-check.md`: the pass to run over any finished PR body, doc, or comment before calling it done
-- `references/banned-phrases.md`: the stock AI-sounding phrases that self-check greps for and cuts
-
-### Special cases
-
-- `references/meat-proxy-mode.md`: extra rules for the rare case where a human signs off on an artifact but another AI actually wrote it
-- `references/calibration-examples.md`: worked before/after examples for the judgment calls in the rules above, so you can see one applied instead of just described
-
-### Posting through the `gh` CLI
-
-- `references/gh-cli.md`: the CLI mechanics for editing something already live on GitHub, fetching the current text before you edit it, escaping shell arguments correctly, posting line-anchored suggested edits, and re-fetching to confirm the post actually landed
-
-The tutorial, how-to guides, and explanation live under `docs/`, see [Further docs](#further-docs) below. Evaluation scenarios live under `evals/`, one JSON file per scenario.
+`SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
 
 ## Token budget
 
