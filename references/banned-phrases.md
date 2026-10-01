@@ -21,9 +21,7 @@ These make a claim without evidence. Replace with the concrete property.
 
 These pad transitions without adding information. Delete the opener and start the sentence at the subject.
 
-- **Additionally,**: just start the next sentence
-- **Furthermore,**: just start the next sentence
-- **Moreover,**: just start the next sentence
+- **Additionally,** / **Furthermore,** / **Moreover,**: just start the next sentence
 - **Notably,**: the fact is notable enough; the word adds nothing
 - **Importantly,**: if it's important, say why; the word doesn't make it so
 - **Ultimately,**: cut it; say the consequence directly
@@ -33,8 +31,7 @@ These pad transitions without adding information. Delete the opener and start th
 - **It is worth noting that** / **It's worth noting that**: cut the opener, state the fact
 - **worth flagging upfront**: cut the opener, state the fact
 - **Note that** / **Please note**: cut; use `> [!NOTE]` when the callout genuinely needs visual weight, plain prose otherwise
-- **First and foremost,**: cut; lead with the most important thing, no announcement needed
-- **Last but not least,**: cut; just state the item
+- **First and foremost,** / **Last but not least,**: cut; lead with the most important thing, no announcement needed
 - **Needless to say,** / **It goes without saying**: cut; if it's needless, skip it; if it's not, say it straight
 
 ## AI-era tells
@@ -42,8 +39,7 @@ These pad transitions without adding information. Delete the opener and start th
 Phrases that have become de facto signals of LLM output since 2023.
 
 - **delve** / **delves into** / **delving**: say "explains", "covers", "walks through", or be specific
-- **leverage** / **leverages** / **leveraging**: say "uses"; "uses the SDK's config" beats "leverages the SDK's config"
-- **utilize** / **utilizes** / **utilizing**: say "uses"
+- **leverage** / **leverages** / **leveraging** / **utilize** / **utilizes** / **utilizing**: say "uses"; "uses the SDK's config" beats "leverages the SDK's config"
 - **facilitate** / **facilitates**: say the specific action: "routes", "proxies", "triggers"
 - **ensure** / **ensures**: say what breaks if the condition isn't met, or say "checks" / "validates" / "requires"
 - **streamline** / **streamlines** / **streamlined**: say what the old path required and what the new path skips
@@ -69,9 +65,7 @@ Phrases that have become de facto signals of LLM output since 2023.
 
 These belong in email or chat, not PR descriptions.
 
-- **feel free to**: cut; reviewers don't need permission
-- **please feel free to**: cut
-- **don't hesitate to**: cut
+- **feel free to** / **please feel free to** / **don't hesitate to**: cut; reviewers don't need permission
 - **let me know if you have any questions**: cut; that's what review threads are for
 - **happy to** / **excited to** / **pleased to**: cut; the PR already asks for review
 - **take a look at**: say "see" or link directly

@@ -26,7 +26,7 @@ A suggested edit is a `suggestion` fenced block inside a line comment on the PR'
 - Keep a suggestion to about 5 anchored lines. Past that, the block is hard to review inline, easy to apply wrongly, and goes stale on the author's next push. Describe a larger change in a plain `suggestion:` comment, or split it into separate comments that each stand alone
 - Only comment lines that appear in the diff can carry one. Code outside the diff, or a point spanning several files, gets a plain `suggestion:` describing the change
 - A suggestion in a pending (unsubmitted) review can't be applied yet, and one on a resolved, outdated, or closed-PR thread can't be applied at all
-- One suggestion block per comment, one point per comment. Two edits to different lines are two comments
+- One suggestion block per comment; two edits to different lines are two comments
 - To show a code fence inside a suggestion, open and close the block with four backticks so the inner three-backtick fence doesn't end it early
 - Don't suggest an edit to a file the author doesn't control (generated output, a lockfile, vendored code). Fix the source and say so
 

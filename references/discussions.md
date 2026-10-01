@@ -25,7 +25,7 @@ Don't assume a category exists by name. The defaults a repo starts with (General
 - When two categories plausibly fit, or none clearly does, ask the user. Pass the category's `slug` to `--category`, it's stable across renames
 - An Announcement-format category only accepts posts from maintainers and admins, and the API doesn't expose a category's format. A permission error from `gh discussion create` is the likely cause: pick another category or ask, don't retry
 - A category form lives at `.github/DISCUSSION_TEMPLATE/<category-slug>.yml`, check for one after picking. Render it like a YAML issue form per `references/issue-writing.md`'s Template selection section: each field as a `### Label` heading followed by its answer, in the form's field order
-- Polls can't be created through the API (`createDiscussion` has no poll field). Draft the title, question, and options, then hand them to the user to post in the UI
+- Polls can't be created through the API. Draft the title, question, and options, then hand them to the user to post in the UI
 - `hasDiscussionsEnabled: false` from the same query means discussions are off. Say so rather than falling back to an issue unasked
 
 ## Titles
@@ -81,4 +81,4 @@ Discussions share the repo's number sequence with issues and PRs, so `owner/repo
 
 ## AI watermark
 
-Skip it, same as issue bodies. The `## AI watermark` rule in `references/pr-writing.md` applies to PR bodies and PR/review comments only.
+Skip it: `references/pr-writing.md`'s watermark covers PR bodies and PR/review comments only.

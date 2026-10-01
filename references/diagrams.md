@@ -1,10 +1,6 @@
 # Mermaid diagrams in PR/issue bodies and docs
 
-Loaded from `SKILL.md` whenever a diagram is going into a PR body, issue body, or doc. Everything here is GitHub-rendering mechanics for Mermaid, not body structure, see `references/body-writing.md` for where a diagram fits inside a body.
-
-## When to use one
-
-Use mermaid when a picture helps the reader: a change's mechanics, the wider system context, or a bug's reproduction flow. Skip for trivial items. One or two inline, each with a one-line lead-in; more than two go in a collapsible section. Favor `flowchart`/`sequenceDiagram`, short node labels. A diagram of the old vs new flow beats prose describing both.
+Loaded from `SKILL.md` whenever a diagram is going into a PR body, issue body, or doc. Everything here is GitHub-rendering mechanics for Mermaid, not body structure, see `references/body-writing.md` for when to use one and where it fits inside a body.
 
 ## Theme and styling
 
