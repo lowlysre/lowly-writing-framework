@@ -64,6 +64,9 @@ A voice pack co-activates only when its `description` frontmatter lists the same
 
 ## Install
 
+<details>
+<summary><code>npx skills add lowlysre/lowly-writing-framework -g</code></summary>
+
 The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```sh
@@ -72,13 +75,20 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 `-g` installs into your user directory so the skill loads in every project. Drop it to install into the current project only.
 
+</details>
+
 ## Update
+
+<details>
+<summary><code>npx skills update lowly-writing-framework</code></summary>
 
 ```sh
 npx skills update lowly-writing-framework
 ```
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
+
+</details>
 
 ## Layout
 
