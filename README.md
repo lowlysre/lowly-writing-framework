@@ -63,9 +63,6 @@ A voice pack co-activates only when its `description` frontmatter lists the same
 
 ## Install and update
 
-<details>
-<summary>Install or update with the Skills CLI</summary>
-
 The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```sh
@@ -81,8 +78,6 @@ npx skills update lowly-writing-framework
 ```
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
-
-</details>
 
 ## Layout
 
