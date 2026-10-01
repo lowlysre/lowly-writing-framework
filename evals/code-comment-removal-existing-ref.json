@@ -1,0 +1,11 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Remove the legacy publish job from `publish.yaml` now that the consumer cutover (acme/ops#520) is complete. The header comment currently reads: '# Publishes to both the legacy and new registries (acme/ops#466). Skips packages with a version bump, since those release through release.yaml.' Update the comment to match the file after the removal.",
+  "files": [],
+  "expected_behavior": [
+    "The rewritten comment keeps the still-true, non-obvious part: bumped packages are skipped because they release through release.yaml",
+    "The comment drops the registry roll-call and doesn't narrate the migration ('legacy job removed', 'no longer', 'after cutover')",
+    "The comment doesn't cite acme/ops#466, acme/ops#520, or swap in another tracking issue; the existing ref isn't treated as the file's convention",
+    "The comment is 4 lines or fewer"
+  ]
+}

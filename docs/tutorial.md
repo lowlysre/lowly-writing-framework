@@ -1,6 +1,6 @@
 # Tutorial: draft a PR body
 
-A first walk through the skill, from install to a checked PR body. Install the skill first, per the [README](../README.md#install).
+A first walk through the skill, from install to a checked PR body. Install the skill first, per the [README](../README.md#install-and-update).
 
 1. Make a small code change on a branch in any repo with a remote on GitHub.
 2. Ask your agent: "open a draft PR for this branch."

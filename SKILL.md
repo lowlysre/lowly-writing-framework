@@ -67,12 +67,13 @@ This skill governs the writing, never the change. Don't reshape a diff, drop a c
 ## Workflow
 
 - Applies whether or not the user explicitly asked to draft/revise/review something: the trigger is an artifact about to be produced (PR text, a doc, a comment, a requirement), not a request to write one
-- Trigger this skill before every `create_pull_request`/`update_pull_request` call, even when the session's main task was code, infra, or config work rather than "write a PR"
+- Trigger this skill before each of these, even when the session's main task was code, infra, or config work rather than "write a PR":
+  - `create_pull_request`, `update_pull_request`
+  - `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, `reply_and_resolve_review_thread`
+  - Writing or editing any code comment or doc line, the moment you do it, so narrative language doesn't sneak into the diff before the PR step
+  - Defining, clarifying, or implementing a requirement or acceptance criterion, regardless of artifact: use `references/requirements-ears.md`
+- In a long session, don't rely on remembering this rule from the system prompt: treat each trigger above as fresh, regardless of how many turns or unrelated tool calls came before it
 - Before editing an existing PR title/body (or any live comment/doc on GitHub), always fetch the current text first, never edit from an earlier draft in the conversation, per `references/gh-cli.md`
-- Trigger it the moment you write or edit any code comment or doc line, don't wait until the PR step to catch narrative language that snuck into the diff
-- Trigger it before `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, and `reply_and_resolve_review_thread`, not just a generic "write a review comment" ask
-- In a long session, don't rely on remembering this rule from the system prompt: treat every one of the tool calls named above as its own fresh trigger, regardless of how many turns or unrelated tool calls came before it
-- Trigger it whenever a requirement or acceptance criterion is being defined, clarified, or implemented, regardless of artifact: use `references/requirements-ears.md`
 - Run the self-check in `references/self-check.md` over the PR body and every touched comment/doc/prose artifact, right before declaring the task done and again after every later revision, always against the full current text. Every `update_pull_request` call is a later revision: run the self-check on the body you're about to send, structured tools included
 - Posting or editing a PR/issue title, body, or comment directly through `gh` (not a structured tool like `create_pull_request`) has its own failure modes, shell escaping, `-f` vs `-F`, unverified posts, see `references/gh-cli.md`
 - Match commit message style to the title conventions in `references/pr-writing.md`
