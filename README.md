@@ -92,7 +92,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
 | On activation | `SKILL.md` body | ~2,800 |
-| On demand | Every file under `references/` | ~20,000 |
+| On demand | Every file under `references/` | ~20,100 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.
