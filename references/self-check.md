@@ -34,6 +34,7 @@ The commands need a file on disk. For a body headed to `update_pull_request` or 
 - Gauge altitude against diff size: a large PR strung with backticked function and variable names needs rewriting a layer up, per `references/body-writing.md`. Applies to PR bodies.
 - Scan against `references/banned-phrases.md`. Replace a hit with the concrete thing or delete it; a word inside an identifier or quoted error string isn't a hit. Applies to everything.
 - Check the ratio: a comment longer than its code, or a body longer than its diff or ask, usually means a paragraph defending a decision. Clarify the code or cut the explanation. `SKILL.md`'s Never trim these list is exempt. Applies to code comments, PR bodies, and issue bodies.
+- When the PR adds or changes a doc, compare each body paragraph to that doc. A paragraph repeating a section of it becomes a gist plus a named branch-ref link, per `references/body-writing.md`'s Docs the PR already carries. Applies to PR bodies.
 - Confirm any "not covered here" note surfaces something a linked issue doesn't already show, per `references/body-writing.md`. Applies to PR bodies and issue bodies.
 - For every issue/PR number in a code comment, confirm it's an upstream bug or a posterity `TODO`, not planned or in-flight work, per `references/docs-and-comments.md`. Applies to code comments.
 - When there's wider context (a parent effort, a prior decision, an outside constraint), confirm it's in a `## Context` section at the top, per `references/body-writing.md`. Applies to PR bodies and issue bodies.

@@ -19,6 +19,7 @@ Several "before" halves trip the mechanical checks in `references/self-check.md`
   - Altitude on a large diff
   - Context section placement
   - Four paragraphs into headings
+  - Body repeats a doc the PR adds
 - PR Testing section (`references/pr-writing.md`)
   - Manual steps around the merge
 - Meat proxy mode (`references/meat-proxy-mode.md`)
@@ -286,6 +287,39 @@ The script now sets `pipefail` and reads the mount path from the storage config 
 ```
 
 The opening paragraph stays as the lede. The headings mark the divisions the four paragraphs already had, one per topic, not one per paragraph.
+
+</example>
+
+<example>
+
+### Body repeats a doc the PR adds
+
+Shows the Docs the PR already carries rule in `references/body-writing.md`: prose that duplicates a touched doc becomes a gist and a link.
+
+Before, on a PR that adds `docs/retries.md`:
+
+```markdown
+## Summary
+Clients now retry failed requests. Retries use exponential backoff starting at 200ms, doubling up to a 10s cap, with jitter so clients don't stampede. Only idempotent methods retry, and a `Retry-After` header overrides the computed delay.
+
+The retry budget is 3 attempts per request, and the circuit opens after 5 consecutive failures.
+
+Closes acme/sdk#88.
+```
+
+After:
+
+```markdown
+## Summary
+Clients now retry failed requests with backoff. Review the rules in [Retry behavior](https://github.com/acme/sdk/blob/retry-docs/docs/retries.md#retry-behavior); the code follows that doc.
+
+Closes acme/sdk#88.
+
+> [!WARNING]
+> Retries multiply load on a struggling server. Roll out behind the `retries` flag, off by default.
+```
+
+The backoff, budget, and circuit details live in the doc once. The warning stays in the body because risk is never trimmed, even if the doc mentions it.
 
 </example>
 

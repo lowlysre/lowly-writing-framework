@@ -40,6 +40,16 @@ Over-arching context, anything the reader needs before the specifics make sense 
 
 When the repo has a template, don't bolt the heading on top of it: fold the same one or two paragraphs into the template's summary/description section instead, still first. Skip the section when there's no wider context, a standalone issue or PR with no parent effort, the motivation-first rule above already covers those. State progress and placement, not a scope recap.
 
+## Docs the PR already carries
+
+Markdown in the Files changed tab is a per-file click to reach a rendered view, so reviewers often skip it. When the PR adds or changes a doc (README, ADR, design doc, runbook) and the body you're about to write would repeat what that doc says, link the doc and delete the repeated prose. The test is dedupe: if a paragraph says the same thing as a section of a touched doc, the body keeps a one-line gist and the link, and the doc carries the rest.
+
+- Link the rendered doc at its heading, as a named link on the PR's head branch ref: `[Retry behavior](https://github.com/owner/repo/blob/feature-branch/docs/retries.md#retry-behavior)`. A branch ref, not a SHA, so the link shows the latest push without a body edit. This is the exception to the SKILL.md permalink rule, which is for code lines; a doc link in a body is a review aid, not a durable reference
+- Tell the reviewer what to do there: "Review the rationale in the linked section" beats a bare link
+- Keep the one-line gist beside the link, per the link-rot rule in `SKILL.md` Formatting, so the body still stands alone
+- Only dedupe what the doc actually says. Breaking changes, migration and rollback steps, risk, and known gaps stay in the body even when the doc mentions them, per `SKILL.md`'s Never trim these list
+- When the diff has a clear entry point (one file or doc that makes the rest make sense), name it in a sentence: "Start at `docs/design.md`, the code follows its layout". One sentence, not a walkthrough
+
 ## Anticipated reviewer questions
 
 When a change or ask looks wrong at a glance, bends a convention deliberately, or carries a non-obvious tradeoff, quote only the question a skeptical reader would actually ask (as a blockquote) and answer it directly below as plain, unquoted text, no header needed. Only the question gets the `>`, never the answer, blockquoting both makes it read like a transcript instead of a body. This is a shortcut that saves a round-trip, not a hedge, only use it when a reader really would pause, and cap it at 1-2 questions.
