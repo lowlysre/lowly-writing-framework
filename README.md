@@ -12,8 +12,7 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 - [What you get](#what-you-get)
 - [What it does and doesn't do](#what-it-does-and-doesnt-do)
-- [Install](#install)
-- [Update](#update)
+- [Install and update](#install-and-update)
 - [Layout](#layout)
 - [Token budget](#token-budget)
 - [Versioning](#versioning)
@@ -62,10 +61,10 @@ A small set of rules is fixed everywhere because they protect the reader: closin
 
 A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
 
-## Install
+## Install and update
 
 <details>
-<summary><code>npx skills add lowlysre/lowly-writing-framework -g</code></summary>
+<summary>Install or update with the Skills CLI</summary>
 
 The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills):
 
@@ -75,12 +74,7 @@ npx skills add lowlysre/lowly-writing-framework -g
 
 `-g` installs into your user directory so the skill loads in every project. Drop it to install into the current project only.
 
-</details>
-
-## Update
-
-<details>
-<summary><code>npx skills update lowly-writing-framework</code></summary>
+To update:
 
 ```sh
 npx skills update lowly-writing-framework
