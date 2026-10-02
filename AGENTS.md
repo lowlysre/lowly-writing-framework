@@ -22,6 +22,9 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - `references/calibration-examples.md`: before/after pairs showing structural rules from other files applied, grouped by artifact; the rule text stays in its home file, this one only illustrates it
 - `references/meat-proxy-mode.md`: artifacts whose real actor is another AI, invoked explicitly
 - `references/gh-cli.md`: `gh` CLI mechanics (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, `gh discussion` and its GraphQL fallbacks) for anything posted directly through the CLI rather than a structured tool
+- `scripts/check-artifact.ps1`: PowerShell 7 implementation of the mechanical checks in `references/self-check.md`; change a check's regex in both places, and `tests/hooks.Tests.ps1` carries a bad/clean fixture per check so drift fails CI
+- `hooks/` and `.claude-plugin/`: Claude Code plugin that gates GitHub write tools on the skill having loaded and runs the checker on the body (`gate.ps1` is the only dispatcher). Claude Code only; Copilot gets the script through the skill's instructions
+- `tests/` and `.github/workflows/hooks.yml`: Pester tests for the checker and gate, run in CI
 - `evals/`: evaluation scenarios in Anthropic's [evaluation structure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices#build-evaluations-first) (`skills`, `query`, `files`, `expected_behavior`), one JSON file per scenario
 - `docs/`: the tutorial, how-to guides, and explanation split out of the README by Diátaxis quadrant. The README keeps what an agent needs on every read: install, update, the voice-pack pairing rule, a short layout pointer, token budget, and versioning. A new long-form section goes in `docs/`, not the README
 

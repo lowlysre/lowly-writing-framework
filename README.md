@@ -3,7 +3,7 @@
 # lowly-writing-framework
 
 <!-- token-badges:start -->
-[![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~21k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~21k%20tokens-informational)](#token-budget)
+[![always loaded: ~140 tokens](https://img.shields.io/badge/always%20loaded-~140%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~21k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~21k%20tokens-informational)](#token-budget)
 <!-- token-badges:end -->
 
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits.
@@ -79,6 +79,34 @@ npx skills update lowly-writing-framework
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
 
+### Optional: enforcement hooks (Claude Code, Copilot CLI)
+
+Skills load when the model decides to load them. On Claude Code and Copilot CLI, the repo is also a plugin whose `PreToolUse` hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then denies any PR, issue, or review body with a mechanical `ERROR` from `scripts/check-artifact.ps1`. Requires [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) (`pwsh`); without it the skill falls back to the grep commands in `references/self-check.md`. If the script itself crashes it fails open with a warning.
+
+> [!WARNING]
+> Claude Code treats a missing `pwsh` as a non-blocking hook error, but Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) on a crashed or non-zero `preToolUse` command and would deny every matching `Bash` call. Don't install the plugin hooks on Copilot without `pwsh`. Copilot reads the PascalCase `PreToolUse` event with Claude-format payloads and names its skill tool `skill`, which the matcher covers. Neither is tested in a live Copilot session yet.
+
+```sh
+claude --plugin-dir <path-to-this-checkout>
+```
+
+## Compatibility
+
+The skill works at three levels, and each needs more from the environment than the one before. A missing level degrades to the one above it, never to nothing.
+
+| Level | What it is | Needs | Claude Code | Copilot CLI | Cursor, Codex, Gemini CLI |
+|---|---|---|---|---|---|
+| 1. Instructions | `SKILL.md` plus `references/`, loaded when the model decides to | An agent that reads [Agent Skills](https://agentskills.io/) | Yes | Yes | Not tested |
+| 2. Script checks | `scripts/check-artifact.ps1`, run by the model per `references/self-check.md` | PowerShell 7 (`pwsh`) on any OS; without it, the grep commands in the same file | Yes | Yes | Not tested |
+| 3. Enforcement hooks | `hooks/gate.ps1` denies a GitHub write until the skill loaded, then on `ERROR` findings | A harness with `PreToolUse` hooks, plus `pwsh` | Yes, tested | Documented, not tested live | Not wired |
+
+OS notes:
+- **Windows:** developed and tested here (Pester, PowerShell 7). Windows PowerShell 5.1 can't run the scripts.
+- **Linux:** the Pester suite runs in CI on `ubuntu-latest`.
+- **macOS:** `pwsh` isn't preinstalled. Level 1 and the grep fallback in level 2 work without it. Don't enable level 3 on Copilot CLI there, see the warning above.
+
+"Not wired" means the harness has hooks but this repo ships no config for it: Cursor and Codex use their own `hooks.json`, and Gemini CLI uses different event names. Model differences aren't tracked yet; the `evals/` scenarios are the place to record them.
+
 ## Layout
 
 `SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
@@ -90,9 +118,9 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 <!-- token-table:start -->
 | Tier | What loads | Tokens |
 |---|---|---|
-| Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
+| Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~140 |
 | On activation | `SKILL.md` body | ~2,800 |
-| On demand | Every file under `references/` | ~20,800 |
+| On demand | Every file under `references/` | ~20,900 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.

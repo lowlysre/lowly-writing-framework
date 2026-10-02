@@ -1,6 +1,7 @@
 ---
 name: lowly-writing-framework
 description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, GitHub Discussion post/comment/answer, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, or reply_and_resolve_review_thread.
+compatibility: Optional script checks need PowerShell 7.
 ---
 
 # Writing framework for dev artifacts

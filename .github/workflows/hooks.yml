@@ -1,0 +1,25 @@
+name: hooks
+
+on:
+  pull_request:
+    paths:
+      - "hooks/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".claude-plugin/**"
+      - ".github/workflows/hooks.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  pester:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run Pester
+        shell: pwsh
+        run: |
+          Install-Module Pester -MinimumVersion 5.5 -Scope CurrentUser -Force -SkipPublisherCheck
+          Invoke-Pester -Path tests -CI
