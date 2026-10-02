@@ -15,7 +15,7 @@ Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope
 
 **Formatting**, **Never trim these**, **Boundaries**, and **Anti-patterns** below apply everywhere. For anything PR-specific, review-comment-specific, or doc/comment-specific, open the matching reference file when you're actually about to write that artifact:
 
-- Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, AI watermark)
+- Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, author annotations on the diff, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
 - Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (kinds of post, category selection from the repo's actual categories, threading and answer-marking mechanics, wrapping up with a written outcome, upvotes instead of "+1" comments)
 - Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, linking docs the PR already carries, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
@@ -28,7 +28,7 @@ Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
 - Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, `gh discussion` and GraphQL-only discussion mutations)
-- Drafting a PR, issue, or discussion body → also read the `Bodies` sections of `references/calibration-examples.md`, plus its `PR Testing section` for a PR (before/after pairs for the judgment-call rules; skip the file for review comments, code comments, and docs). In meat proxy mode, read its `Meat proxy mode` section too
+- Drafting a PR, issue, or discussion body → also read the `Bodies` sections of `references/calibration-examples.md`, plus its `PR Testing section` and `PR author annotations` section for a PR (before/after pairs for the judgment-call rules; skip the file for review comments, code comments, and docs). In meat proxy mode, read its `Meat proxy mode` section too
 
 ## Formatting
 

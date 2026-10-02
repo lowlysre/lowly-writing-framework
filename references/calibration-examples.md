@@ -22,6 +22,8 @@ Several "before" halves trip the mechanical checks in `references/self-check.md`
   - Body repeats a doc the PR adds
 - PR Testing section (`references/pr-writing.md`)
   - Manual steps around the merge
+- PR author annotations (`references/pr-writing.md`)
+  - Line-anchored aside out of the body
 - Meat proxy mode (`references/meat-proxy-mode.md`)
   - Prose ask into executable steps
 
@@ -320,6 +322,54 @@ Closes acme/sdk#88.
 ```
 
 The backoff, budget, and circuit details live in the doc once. The warning stays in the body because risk is never trimmed, even if the doc mentions it.
+
+</example>
+
+</examples>
+
+## PR author annotations: `references/pr-writing.md` rules
+
+<examples>
+
+<example>
+
+### Line-anchored aside out of the body
+
+Shows `Author annotations` in `references/pr-writing.md`: an aside about specific lines becomes a comment on those lines, and the body stays on the primary change.
+
+Before (PR body):
+
+```markdown
+## Summary
+Bumps the client timeout to 30s because large exports were cut off at 5s.
+
+### Bonus
+- Reordered the imports in `client.py` so the linter stops flagging them
+- The `retries` value in `settings.yaml` is a placeholder until the backend team publishes real limits
+```
+
+After (PR body):
+
+```markdown
+## Summary
+Bumps the client timeout to 30s because large exports were cut off at 5s.
+```
+
+After (comment on the `retries` line in `settings.yaml`):
+
+```markdown
+note: Placeholder until the backend team publishes real limits.
+<!--:robot:-->
+```
+
+After (comment on the first changed import in `client.py`):
+
+```markdown
+note: Import reorder only, so the linter stops flagging this file.
+<!--:robot:-->
+```
+
+Each aside is still on the record, and a reviewer reading either line finds it there. The timeout fix is the only thing the body asks them to weigh.
 
 </example>
 
