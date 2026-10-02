@@ -1,4 +1,4 @@
-# PR titles, issue-closing rules, testing, AI watermark
+# PR titles, issue-closing rules, testing, author annotations, AI watermark
 
 Loaded from `SKILL.md` when drafting or editing a PR title or body. Body-structure rules shared with issue bodies (fill-template, Context section, length ceiling, diagrams) live in `references/body-writing.md`, read both before drafting a substantial PR body.
 
@@ -25,6 +25,21 @@ A claim can be true when written and stale by the time the PR is pushed; the sel
 A gap that carries real risk, an untested rollback path, a manual step that has to run in the right order, earns a `> [!WARNING]` or `> [!CAUTION]` admonition instead of a footnote sentence. A gap that's just inconvenient (no fixture for an edge case) stays a plain sentence.
 
 Manual steps someone must run around the merge get their own short section (`## Pre-merge` / `## Post-merge (manual)`, heading not a bolded label) with an unchecked box per step for the operator to tick, not prose buried in Testing.
+
+## Author annotations
+
+A small aside about a specific line or file, one that doesn't change a reviewer's verdict, goes in a review comment the author leaves on that line instead of in the body. The body stays on the primary change, and a reviewer who lands on the line still finds the explanation. It also keeps a tiny edit from reading as accidental or sloppy to a human or AI reviewer.
+
+- The test is whether the aside explains a place or the PR. A line-anchored aside is an annotation, a PR-wide point stays in the body
+- Typical fits: a mechanical edit repeated across files, an incidental tweak (a pinned version, a renamed variable, a reordered block), a value that's temporary until something lands. A one-line `Bonus` bullet that names a specific line moves here once the body is crowded; in a short body it can stay as the bullet
+- A detail trimmed from the body to meet the length ceiling in `references/body-writing.md` moves to an annotation when it's line-anchored, rather than disappearing
+- Never move anything from the `Never trim these` list in `SKILL.md`. Breaking changes, migration steps, risk, and known gaps stay in the body, a reviewer who skips the Files changed tab would miss them
+- A lasting explanation of why the code looks the way it does belongs in a code comment, per `references/docs-and-comments.md`. An annotation carries what only matters while this PR is under review
+- One annotation per distinct point. A repeated change gets one comment on the first occurrence saying how many other places match, not a comment per file
+- Anchor it on the changed line, or the first line of a range. Only lines in the diff can carry a comment
+- Start it with `note:` and keep it to a sentence or two. The reviewer labels from `references/review-comments.md` aren't needed otherwise
+- Append the `<!--:robot:-->` watermark per the rule below, on its own last line
+- Post them after the PR exists and its head is pushed, as one pending review submitted once so reviewers get one notification. Through `add_pr_review_comment`, stage each; through `gh`, see `Suggested edits` in `references/gh-cli.md` for the anchoring mechanics
 
 ## AI watermark
 
