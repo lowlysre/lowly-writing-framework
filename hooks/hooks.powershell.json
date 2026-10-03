@@ -4,7 +4,7 @@
       {
         "matcher": "Bash|(mcp__.*__)?(create_pull_request|update_pull_request|add_pr_review_comment|edit_pr_review_comment|reply_to_comment|reply_and_resolve_review_thread)",
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.sh\"" }
+          { "type": "command", "command": "pwsh -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.ps1\"" }
         ]
       }
     ],
@@ -12,7 +12,7 @@
       {
         "matcher": "Skill|skill",
         "hooks": [
-          { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.sh\"" }
+          { "type": "command", "command": "pwsh -NoProfile -File \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.ps1\"" }
         ]
       }
     ]

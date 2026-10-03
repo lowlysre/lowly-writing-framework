@@ -1,4 +1,5 @@
 {
   "name": "lowly-writing-framework",
-  "description": "Hooks that gate GitHub write tools on the lowly-writing-framework skill and its mechanical checks"
+  "description": "Hooks that deny GitHub write tools until the lowly-writing-framework skill has loaded"
 }
+

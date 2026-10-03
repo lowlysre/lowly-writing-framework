@@ -4,7 +4,6 @@ on:
   pull_request:
     paths:
       - "hooks/**"
-      - "scripts/**"
       - "tests/**"
       - ".claude-plugin/**"
       - ".github/workflows/hooks.yml"
@@ -14,7 +13,10 @@ permissions:
 
 jobs:
   pester:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 

@@ -8,8 +8,6 @@ A grep either matches or it doesn't, so run it as an actual command against the 
 
 Use the OS's own tools: `grep -E` on Linux/macOS, `Select-String` on Windows PowerShell. Not `rg`, it isn't preinstalled. Applies to everything unless noted.
 
-Where `pwsh` 7 is available, run `pwsh -NoProfile -File scripts/check-artifact.ps1 -Kind <pr|issue|review|doc|comment> [-Path file]` (draft on stdin when `-Path` is omitted) instead of the commands below. It covers the reference, URL, watermark, label, length, hard-wrap, narrative-tell, comment-block, and banned-phrase checks, prints `ERROR`/`WARN` lines, and exits 1 on any `ERROR`. If `pwsh` isn't installed (common on macOS), use the commands below. They remain the fallback and the spec for what each check means.
-
 The commands need a file on disk. For a body headed to `update_pull_request` or another structured tool, write the draft to a temp file first.
 
 - Narrative/historical tells: `grep -inE '(removed|used to|previously|no longer|was updated|a scan found|as of #)' file` / `Select-String -Pattern '(?i)\b(removed|used to|previously|no longer|was updated|a scan found|as of #)\b' file`. Rewrite a hit to describe the system as it is now, or delete the line, per `references/docs-and-comments.md`. Applies to docs and code comments, even when this skill wasn't the reason you opened the file.
