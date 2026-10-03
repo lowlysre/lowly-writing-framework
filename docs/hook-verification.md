@@ -1,8 +1,8 @@
 # Activation hook verification
 
-What has been tested, by functionality and surface. The [README](../README.md#optional-activation-hook-claude-code-copilot-cli) covers what the hook does and how to install it.
+What has been tested, by functionality and surface. The [README](../README.md) and [activation-hook.md](activation-hook.md) cover what the hook does and how to install it.
 
-What's verified, by functionality and surface. ✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't apply.
+✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't apply.
 
 | Functionality | Claude Code Linux | Claude Code macOS | Claude Code Windows | Copilot CLI Linux | Copilot CLI macOS | Copilot CLI Windows |
 |---|---|---|---|---|---|---|

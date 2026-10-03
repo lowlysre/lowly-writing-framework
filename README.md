@@ -11,7 +11,7 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 ## Contents
 
 - [What you get](#what-you-get)
-- [What it does and doesn't do](#what-it-does-and-doesnt-do)
+- [How it behaves](#how-it-behaves)
 - [Install and update](#install-and-update)
 - [Layout](#layout)
 - [Token budget](#token-budget)
@@ -47,19 +47,11 @@ CI runs the existing unit suite on every push; no manual steps.
 <!--:robot:-->
 ```
 
-## What it does and doesn't do
+## How it behaves
 
-The skill is a foundation, not a template pack. It states principles an artifact has to satisfy, and the agent applies them to whatever the repo already uses.
-
-- **Works with any template.** A repo's PR or issue template always wins: the skill fills its sections in and adds none. Its own lightweight layout (one `##` heading, why first) applies only when no template exists
-- **Defers to local conventions.** Title style, labels, and commit format follow what the repo's CONTRIBUTING file and recent merged PRs show. Conventional commits is only the fallback
-- **Doesn't dictate a house style.** No required sections, no mandatory checklist, no fixed vocabulary. Rules constrain structure (why before how, one point per sentence, honest testing claims), so different repos get different-looking artifacts that share the same bones
-- **Doesn't reshape the change.** It governs the writing, never the diff, the commit history, or the scope
-- **Doesn't set voice.** Tone, humor, and phrasing belong to a separately installed voice-pack skill
-
-A small set of rules is fixed everywhere because they protect the reader: closing keywords in the `owner/repo#123` form, breaking changes and risks never trimmed, and the `<!--:robot:-->` watermark on AI-authored PR bodies and review comments. Everything else adapts.
-
-A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
+- **The repo's conventions win.** A PR or issue template is filled in, never extended. Title style, labels, and commit format follow CONTRIBUTING and recent merged PRs. The skill's own layout and conventional commits apply only when the repo has neither
+- **A few rules never bend.** Closing keywords in `owner/repo#123` form, breaking changes and risks never trimmed, and the `<!--:robot:-->` watermark on AI-authored PR bodies and review comments
+- **Structure only.** It governs what goes where, never the diff, the commit history, or the scope. Tone and phrasing belong to a separate voice-pack skill that co-activates; [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing one, and a change to this skill's `description` is a breaking release ([Versioning](#versioning))
 
 ## Install and update
 
@@ -79,39 +71,10 @@ npx skills update lowly-writing-framework
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
 
-### Optional: activation hook (Claude Code, Copilot CLI)
+### Optional: activation hook
 
-Skills load when the model decides to load them. On Claude Code and Copilot CLI, the repo is also a plugin whose `PreToolUse` hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then gets out of the way. It checks nothing about the body; the mechanical checks in `references/self-check.md` stay the model's job. If the hook itself errors it fails open with a warning.
+Skills load when the model decides to. On Claude Code and Copilot CLI, the repo is also a plugin whose hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then gets out of the way. It doesn't check the body. Install, per-OS behavior, and test coverage are in [docs/activation-hook.md](docs/activation-hook.md).
 
-The gate ships twice with identical logic, and `hooks/hooks.json` picks the right one:
-
-| Host | Runs | Needs |
-|---|---|---|
-| Claude Code | `hooks/gate.sh` through the `command` field | `bash` (Git for Windows on Windows, which Claude Code already requires by default) |
-| Copilot CLI on macOS, Linux | `hooks/gate.sh` through the `bash` field | `bash` |
-| Copilot CLI on Windows | `hooks/gate.ps1` through the `powershell` field | nothing extra; it runs on the Windows PowerShell 5.1 that ships with Windows, and on PowerShell 7 |
-
-Neither gate needs `jq`.
-
-Claude Code on Windows without Git for Windows has no `bash` to run `gate.sh`, so the plugin's hook errors without blocking and the gate never runs. Claude Code falls back to PowerShell there, so register the PowerShell gate yourself in `~/.claude/settings.json`, with the path to your checkout, and don't install the plugin hooks alongside it:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [{ "matcher": "Bash|(.*(__|-))?(create_pull_request|update_pull_request|add_pr_review_comment|edit_pr_review_comment|reply_to_comment|reply_and_resolve_review_thread)", "hooks": [{ "type": "command", "shell": "powershell", "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\path\\to\\lowly-writing-framework\\hooks\\gate.ps1\"" }] }],
-    "PostToolUse": [{ "matcher": "Skill|skill", "hooks": [{ "type": "command", "shell": "powershell", "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\path\\to\\lowly-writing-framework\\hooks\\gate.ps1\"" }] }]
-  }
-}
-```
-
-> [!WARNING]
-> Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) when a `preToolUse` command crashes or exits non-zero, so a missing `bash` there would deny every matching `Bash` call. The gates deny with exit code 2 and also print the `permissionDecision` JSON Copilot reads for the reason. Copilot runs the `powershell` field through `pwsh -c`, which turns any native exit code into 1, so that command ends in `exit $LASTEXITCODE`.
-
-Tested on which OS, harness, and model: [docs/hook-verification.md](docs/hook-verification.md).
-
-```sh
-claude --plugin-dir <path-to-this-checkout>
-```
 ## Layout
 
 `SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
@@ -142,5 +105,5 @@ The docs under `docs/` follow [Diátaxis](https://diataxis.fr/), one file per ki
 
 - Learning: [docs/tutorial.md](docs/tutorial.md) walks through drafting a first PR body
 - Doing: [docs/how-to.md](docs/how-to.md) pairs a voice pack, runs the self-check by hand, and starts an EARS requirement or a Conventional Comments review
-- Checking: [docs/hook-verification.md](docs/hook-verification.md) lists which OS, harness, and model combinations the activation hook has been tested on
+- Hook: [docs/activation-hook.md](docs/activation-hook.md) installs the activation hook, and [docs/hook-verification.md](docs/hook-verification.md) lists what has been tested on which OS, harness, and model
 - Understanding: [docs/explanation.md](docs/explanation.md) explains the framework/voice split and the frameworks the rules enforce
