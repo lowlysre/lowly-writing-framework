@@ -6,29 +6,22 @@
 [![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~22k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~22k%20tokens-informational)](#token-budget)
 <!-- token-badges:end -->
 
-An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits.
+An [Agent Skill](https://agentskills.io/) that stops your coding agent from writing PRs, issues, review comments, and docs that reviewers have to decode. It sets what each artifact contains and where it sits, and leaves the voice to you.
 
-## Contents
+## Why
 
-- [What you get](#what-you-get)
-- [How it behaves](#how-it-behaves)
-- [Install and update](#install-and-update)
-- [Layout](#layout)
-- [Token budget](#token-budget)
-- [Versioning](#versioning)
-- [Further docs](#further-docs)
+Left alone, an agent restates the diff file by file, writes "all tests pass" with no evidence, and wraps issue links in backticks so they never autolink. Reviewers spend their time reverse-engineering intent instead of reviewing it.
 
-## What you get
+With this skill installed, the agent:
 
-Left alone, a coding agent writes PR bodies that restate the diff file by file, testing sections that claim "all tests pass" without evidence, and issue links wrapped in backticks that never autolink. This skill replaces those defaults with rules a reviewer can check:
+- Leads with why, fills in your repo's template, and stops at a length a reviewer will read
+- Closes issues with `owner/repo#123` keywords it has checked actually linked
+- Lists in `## Testing` only what CI doesn't cover, and flags real gaps instead of hiding them
+- Labels review comments with Conventional Comments and uses suggested edits for small fixes
+- Draws mermaid diagrams that avoid GitHub's rendering failures
+- Runs grep-based checks for the slips proofreading misses, and posts through `gh` without mangling the text
 
-- PR and issue bodies that lead with why, fill in the repo's template, and stay short enough to be read
-- Closing keywords in the `owner/repo#123` form, verified against the API instead of assumed to have linked
-- A `## Testing` section that names only what CI doesn't already cover, with real gaps flagged instead of hidden
-- Review comments labeled with Conventional Comments, plus GitHub suggested edits for few-line fixes
-- Mermaid diagrams written around GitHub's known rendering failures, so they show up as diagrams instead of "Unable to render rich display"
-- A self-check with greps for the slips that survive proofreading, and a `gh` CLI guide for posting without mangling the text
-
+It costs about 120 tokens until an artifact is being written ([Token budget](#token-budget)), and it defers to your repo's templates and conventions rather than imposing its own.
 A PR summary before and after, in a repo with no PR template:
 
 ```markdown
