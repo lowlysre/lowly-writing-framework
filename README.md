@@ -22,6 +22,7 @@ With this skill installed, the agent:
 - Runs grep-based checks for the slips proofreading misses, and posts through `gh` without mangling the text
 
 It costs about 120 tokens until an artifact is being written ([Token budget](#token-budget)), and it defers to your repo's templates and conventions rather than imposing its own.
+
 A PR summary before and after, in a repo with no PR template:
 
 ```markdown
