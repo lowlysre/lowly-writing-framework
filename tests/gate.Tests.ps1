@@ -26,6 +26,12 @@ Describe '<gate>' -ForEach @(@{ gate = 'gate.ps1' }, @{ gate = 'gate.sh' }) {
     It 'matches MCP-prefixed tool names' {
         (Invoke-Gate $gate (New-Event PreToolUse $script:sid 'mcp__github__add_pr_review_comment' @{ body = 'x' })).Code | Should -Be 2
     }
+    It 'matches Copilot-style hyphen-prefixed tool names' {
+        (Invoke-Gate $gate (New-Event PreToolUse $script:sid 'github-mcp-server-reply_to_comment' @{ response = 'x' })).Code | Should -Be 2
+    }
+    It 'emits a Copilot-readable deny reason on stdout' {
+        (Invoke-Gate $gate (New-Event PreToolUse $script:sid 'create_pull_request' @{ title = 't' })).Output | Should -Match 'permissionDecision.:.deny'
+    }
     It 'denies gh write commands through Bash' {
         (Invoke-Gate $gate (New-Event PreToolUse $script:sid 'Bash' @{ command = 'gh pr create --title t' })).Code | Should -Be 2
     }

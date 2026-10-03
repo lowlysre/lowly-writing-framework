@@ -27,7 +27,7 @@ if [ "$event" = "PostToolUse" ]; then
   exit 0
 fi
 
-tool=${tool##*__}
+tool=${tool##*__}; tool=${tool##*-}
 case "$tool" in
   create_pull_request|update_pull_request|add_pr_review_comment|edit_pr_review_comment|reply_to_comment|reply_and_resolve_review_thread) ;;
   Bash) printf '%s' "$input" | grep -Eq '\bgh[[:space:]]+(pr|issue|discussion)[[:space:]]+(create|edit|comment|review)\b' || exit 0 ;;
@@ -36,7 +36,10 @@ esac
 
 if [ ! -e "$loaded" ] && [ ! -e "$nudged" ]; then
   : >"$nudged"
-  echo 'Load the lowly-writing-framework skill before writing this artifact, then retry. This reminder fires once per session.' >&2
+  msg='Load the lowly-writing-framework skill before writing this artifact, then retry. This reminder fires once per session.'
+  # Copilot CLI reads the reason from stdout JSON; Claude Code reads stderr on exit 2.
+  printf '{"permissionDecision":"deny","permissionDecisionReason":"%s"}\n' "$msg"
+  echo "$msg" >&2
   exit 2
 fi
 exit 0

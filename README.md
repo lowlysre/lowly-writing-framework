@@ -83,17 +83,18 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 Skills load when the model decides to load them. On Claude Code and Copilot CLI, the repo is also a plugin whose `PreToolUse` hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then gets out of the way. It checks nothing about the body; the mechanical checks in `references/self-check.md` stay the model's job. If the hook itself errors it fails open with a warning.
 
-The gate ships twice with identical logic, so the host's shell decides which you need:
+The gate ships twice with identical logic, and `hooks/hooks.json` picks the right one:
 
-| Host | Use | Why |
+| Host | Runs | Needs |
 |---|---|---|
-| macOS, Linux | `hooks/hooks.json` (bash, the default) | `bash` is always there |
-| Windows with Claude Code | `hooks/hooks.json` (bash) | Claude Code already requires Git for Windows |
-| Windows without `bash` on `PATH` | Copy `hooks/hooks.powershell.json` over `hooks/hooks.json` | needs [PowerShell 7](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) (`pwsh`) |
+| Claude Code | `hooks/gate.sh` through the `command` field | `bash` (Git for Windows on Windows, which Claude Code already requires by default) |
+| Copilot CLI on macOS, Linux | `hooks/gate.sh` through the `bash` field | `bash` |
+| Copilot CLI on Windows | `hooks/gate.ps1` through the `powershell` field | nothing extra; it runs on the Windows PowerShell 5.1 that ships with Windows, and on PowerShell 7 |
+
+Neither gate needs `jq`. Claude Code on Windows without Git for Windows has no bash to run `gate.sh`, so the hook fails open there and the skill falls back to loading on its own.
 
 > [!WARNING]
-> Claude Code treats a missing interpreter as a non-blocking hook error, but Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) on a crashed or non-zero `preToolUse` command and would deny every matching `Bash` call. On Copilot, install the hook only where the matching interpreter exists. Copilot reads the PascalCase `PreToolUse` event with Claude-format payloads and names its skill tool `skill`, which the matcher covers. Neither is tested in a live Copilot session yet.
-
+> Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) when a `preToolUse` command crashes or exits non-zero, so a missing `bash` there would deny every matching `Bash` call. The gates deny with exit code 2 and also print the `permissionDecision` JSON Copilot reads for the reason. Copilot reads the PascalCase `PreToolUse` event with Claude-format payloads, names its skill tool `skill`, and may prefix MCP tool names with `github-mcp-server-`; the matcher and gates cover all three. None of this is tested in a live Copilot session yet.
 ```sh
 claude --plugin-dir <path-to-this-checkout>
 ```

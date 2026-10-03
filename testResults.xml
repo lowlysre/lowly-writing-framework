@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="16" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-10-03" time="12:46:15">
+  <environment nunit-version="2.5.8.0" cwd="C:\Users\Jonny\copilot-worktrees\lowly-writing-framework\lowlydba-literate-fortnight" user-domain="DESKTOP-MCVCCA1" platform="Microsoft Windows 11 Home|C:\WINDOWS|\Device\Harddisk0\Partition3" user="Jonny" os-version="10.0.26300" clr-version="10.0.12" machine-name="DESKTOP-MCVCCA1" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="7.8421" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Users\Jonny\copilot-worktrees\lowly-writing-framework\lowlydba-literate-fortnight\tests\gate.Tests.ps1" executed="True" result="Success" success="True" time="7.8421" asserts="0" description="C:\Users\Jonny\copilot-worktrees\lowly-writing-framework\lowlydba-literate-fortnight\tests\gate.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="gate.ps1" executed="True" result="Success" success="True" time="4.4912" asserts="0" description="gate.ps1">
+            <results>
+              <test-case description="denies a GitHub write tool once, then allows the retry" name="gate.ps1.denies a GitHub write tool once, then allows the retry" time="1.1136" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="matches MCP-prefixed tool names" name="gate.ps1.matches MCP-prefixed tool names" time="0.335" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="matches Copilot-style hyphen-prefixed tool names" name="gate.ps1.matches Copilot-style hyphen-prefixed tool names" time="0.374" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="emits a Copilot-readable deny reason on stdout" name="gate.ps1.emits a Copilot-readable deny reason on stdout" time="0.3453" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="denies gh write commands through Bash" name="gate.ps1.denies gh write commands through Bash" time="0.3367" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="ignores unrelated Bash commands and tools" name="gate.ps1.ignores unrelated Bash commands and tools" time="0.6803" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="allows the first write once the skill has loaded" name="gate.ps1.allows the first write once the skill has loaded" time="0.619" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="does not count a different skill as loaded" name="gate.ps1.does not count a different skill as loaded" time="0.6494" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="gate.sh" executed="True" result="Success" success="True" time="7.3906" asserts="0" description="gate.sh">
+            <results>
+              <test-case description="denies a GitHub write tool once, then allows the retry" name="gate.sh.denies a GitHub write tool once, then allows the retry" time="0.4799" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="matches MCP-prefixed tool names" name="gate.sh.matches MCP-prefixed tool names" time="0.2316" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="matches Copilot-style hyphen-prefixed tool names" name="gate.sh.matches Copilot-style hyphen-prefixed tool names" time="0.2361" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="emits a Copilot-readable deny reason on stdout" name="gate.sh.emits a Copilot-readable deny reason on stdout" time="0.2054" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="denies gh write commands through Bash" name="gate.sh.denies gh write commands through Bash" time="0.2561" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="ignores unrelated Bash commands and tools" name="gate.sh.ignores unrelated Bash commands and tools" time="0.4845" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="allows the first write once the skill has loaded" name="gate.sh.allows the first write once the skill has loaded" time="0.5005" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="does not count a different skill as loaded" name="gate.sh.does not count a different skill as loaded" time="0.5006" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
