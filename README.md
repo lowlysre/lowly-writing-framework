@@ -107,26 +107,7 @@ Claude Code on Windows without Git for Windows has no `bash` to run `gate.sh`, s
 > [!WARNING]
 > Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) when a `preToolUse` command crashes or exits non-zero, so a missing `bash` there would deny every matching `Bash` call. The gates deny with exit code 2 and also print the `permissionDecision` JSON Copilot reads for the reason. Copilot runs the `powershell` field through `pwsh -c`, which turns any native exit code into 1, so that command ends in `exit $LASTEXITCODE`.
 
-What's verified, by functionality and surface. ✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't apply.
-
-| Functionality | Claude Code Linux | Claude Code macOS | Claude Code Windows | Copilot CLI Linux | Copilot CLI macOS | Copilot CLI Windows |
-|---|---|---|---|---|---|---|
-| Gate denies once, then allows after the skill loads (`gate.sh` and `gate.ps1` fed fixtures) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `hooks.json` structure, matchers, and tool lists agree | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Each `command`, `bash`, and `powershell` string runs with the right exit code | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Plugin manifest is valid or installs | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
-| Live harness loads the hooks, denies `gh pr create` with the reason, and allows the retry | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
-| Windows without Git Bash, using the `settings.json` snippet above | — | — | ❌ | — | — | — |
-
-Two limits on that table. The CI rows run the hook commands directly under the OS shell, not through a harness. `claude plugin validate` doesn't inspect hooks, so Claude Code's handling of the extra `bash` and `powershell` fields is untested until someone runs it in a logged-in session.
-
-The live Copilot CLI run used 1.0.91. The gate itself doesn't depend on the model, but whether the model loads the skill after a denial does:
-
-| Model | Claude Code | Copilot CLI |
-|---|---|---|
-| `gpt-5-mini` | — | 🖐 Windows only: loaded the skill and retried |
-| Claude models | ❌ | ❌ |
-| Other models | ❌ | ❌ |
+Tested on which OS, harness, and model: [docs/hook-verification.md](docs/hook-verification.md).
 
 ```sh
 claude --plugin-dir <path-to-this-checkout>
@@ -161,4 +142,5 @@ The docs under `docs/` follow [Diátaxis](https://diataxis.fr/), one file per ki
 
 - Learning: [docs/tutorial.md](docs/tutorial.md) walks through drafting a first PR body
 - Doing: [docs/how-to.md](docs/how-to.md) pairs a voice pack, runs the self-check by hand, and starts an EARS requirement or a Conventional Comments review
+- Checking: [docs/hook-verification.md](docs/hook-verification.md) lists which OS, harness, and model combinations the activation hook has been tested on
 - Understanding: [docs/explanation.md](docs/explanation.md) explains the framework/voice split and the frameworks the rules enforce
