@@ -91,10 +91,32 @@ The gate ships twice with identical logic, and `hooks/hooks.json` picks the righ
 | Copilot CLI on macOS, Linux | `hooks/gate.sh` through the `bash` field | `bash` |
 | Copilot CLI on Windows | `hooks/gate.ps1` through the `powershell` field | nothing extra; it runs on the Windows PowerShell 5.1 that ships with Windows, and on PowerShell 7 |
 
-Neither gate needs `jq`. Claude Code on Windows without Git for Windows has no bash to run `gate.sh`, so the hook fails open there and the skill falls back to loading on its own.
+Neither gate needs `jq`.
+
+Claude Code on Windows without Git for Windows has no `bash` to run `gate.sh`, so the plugin's hook errors without blocking and the gate never runs. Claude Code falls back to PowerShell there, so register the PowerShell gate yourself in `~/.claude/settings.json`, with the path to your checkout, and don't install the plugin hooks alongside it:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [{ "matcher": "Bash|(.*(__|-))?(create_pull_request|update_pull_request|add_pr_review_comment|edit_pr_review_comment|reply_to_comment|reply_and_resolve_review_thread)", "hooks": [{ "type": "command", "shell": "powershell", "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\path\\to\\lowly-writing-framework\\hooks\\gate.ps1\"" }] }],
+    "PostToolUse": [{ "matcher": "Skill|skill", "hooks": [{ "type": "command", "shell": "powershell", "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:\\path\\to\\lowly-writing-framework\\hooks\\gate.ps1\"" }] }]
+  }
+}
+```
 
 > [!WARNING]
-> Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) when a `preToolUse` command crashes or exits non-zero, so a missing `bash` there would deny every matching `Bash` call. The gates deny with exit code 2 and also print the `permissionDecision` JSON Copilot reads for the reason. Copilot reads the PascalCase `PreToolUse` event with Claude-format payloads, names its skill tool `skill`, and may prefix MCP tool names with `github-mcp-server-`; the matcher and gates cover all three. None of this is tested in a live Copilot session yet.
+> Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) when a `preToolUse` command crashes or exits non-zero, so a missing `bash` there would deny every matching `Bash` call. The gates deny with exit code 2 and also print the `permissionDecision` JSON Copilot reads for the reason. Copilot runs the `powershell` field through `pwsh -c`, which turns any native exit code into 1, so that command ends in `exit $LASTEXITCODE`.
+
+What's verified, and where:
+
+| Check | Where |
+|---|---|
+| Both gates deny once, then allow after the skill loads, on Linux, macOS, and Windows | Pester in CI |
+| `hooks.json` structure, matchers, and the gates' tool lists agree, and each `command`, `bash`, and `powershell` string runs as the harness would run it, exit code included | Pester in CI |
+| Copilot CLI installs the plugin | `copilot plugin install` in CI |
+| The Claude Code manifest is valid | `claude plugin validate` in CI. It doesn't inspect hooks |
+| Copilot CLI on Windows loads the hooks, denies `gh pr create` with the reason, accepts the skill load, and allows the retry | Run by hand against Copilot CLI 1.0.91 |
+| Claude Code loads the hooks, including the extra `bash` and `powershell` fields; the Windows `settings.json` snippet above | Not tested. Needs a logged-in Claude Code session |
 ```sh
 claude --plugin-dir <path-to-this-checkout>
 ```

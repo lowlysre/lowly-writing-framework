@@ -8,7 +8,7 @@
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.sh\"",
             "bash": "bash \"${PLUGIN_ROOT}/hooks/gate.sh\"",
-            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}/hooks/gate.ps1\""
+            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}/hooks/gate.ps1\"; exit $LASTEXITCODE"
           }
         ]
       }
@@ -21,7 +21,7 @@
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.sh\"",
             "bash": "bash \"${PLUGIN_ROOT}/hooks/gate.sh\"",
-            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}/hooks/gate.ps1\""
+            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}/hooks/gate.ps1\"; exit $LASTEXITCODE"
           }
         ]
       }
