@@ -107,16 +107,27 @@ Claude Code on Windows without Git for Windows has no `bash` to run `gate.sh`, s
 > [!WARNING]
 > Copilot CLI [fails closed](https://docs.github.com/en/copilot/reference/hooks-reference) when a `preToolUse` command crashes or exits non-zero, so a missing `bash` there would deny every matching `Bash` call. The gates deny with exit code 2 and also print the `permissionDecision` JSON Copilot reads for the reason. Copilot runs the `powershell` field through `pwsh -c`, which turns any native exit code into 1, so that command ends in `exit $LASTEXITCODE`.
 
-What's verified, and where:
+What's verified, by functionality and surface. ✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't apply.
 
-| Check | Where |
-|---|---|
-| Both gates deny once, then allow after the skill loads, on Linux, macOS, and Windows | Pester in CI |
-| `hooks.json` structure, matchers, and the gates' tool lists agree, and each `command`, `bash`, and `powershell` string runs as the harness would run it, exit code included | Pester in CI |
-| Copilot CLI installs the plugin | `copilot plugin install` in CI |
-| The Claude Code manifest is valid | `claude plugin validate` in CI. It doesn't inspect hooks |
-| Copilot CLI on Windows loads the hooks, denies `gh pr create` with the reason, accepts the skill load, and allows the retry | Run by hand against Copilot CLI 1.0.91 |
-| Claude Code loads the hooks, including the extra `bash` and `powershell` fields; the Windows `settings.json` snippet above | Not tested. Needs a logged-in Claude Code session |
+| Functionality | Claude Code Linux | Claude Code macOS | Claude Code Windows | Copilot CLI Linux | Copilot CLI macOS | Copilot CLI Windows |
+|---|---|---|---|---|---|---|
+| Gate denies once, then allows after the skill loads (`gate.sh` and `gate.ps1` fed fixtures) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `hooks.json` structure, matchers, and tool lists agree | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Each `command`, `bash`, and `powershell` string runs with the right exit code | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Plugin manifest is valid or installs | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Live harness loads the hooks, denies `gh pr create` with the reason, and allows the retry | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
+| Windows without Git Bash, using the `settings.json` snippet above | — | — | ❌ | — | — | — |
+
+Two limits on that table. The CI rows run the hook commands directly under the OS shell, not through a harness. `claude plugin validate` doesn't inspect hooks, so Claude Code's handling of the extra `bash` and `powershell` fields is untested until someone runs it in a logged-in session.
+
+The live Copilot CLI run used 1.0.91. The gate itself doesn't depend on the model, but whether the model loads the skill after a denial does:
+
+| Model | Claude Code | Copilot CLI |
+|---|---|---|
+| `gpt-5-mini` | — | 🖐 Windows only: loaded the skill and retried |
+| Claude models | ❌ | ❌ |
+| Other models | ❌ | ❌ |
+
 ```sh
 claude --plugin-dir <path-to-this-checkout>
 ```
