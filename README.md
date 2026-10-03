@@ -73,12 +73,12 @@ Tested so far (✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't app
 
 | Functionality | Claude Code Linux | Claude Code macOS | Claude Code Windows | Copilot CLI Linux | Copilot CLI macOS | Copilot CLI Windows |
 |---|---|---|---|---|---|---|
-| Gate denies once, then allows after the skill loads (`gate.sh` and `gate.ps1` fed fixtures) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| `hooks.json` structure, matchers, and tool lists agree | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Each `command`, `bash`, and `powershell` string runs with the right exit code | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Plugin manifest is valid or installs | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
-| Live harness loads the hooks, denies `gh pr create` with the reason, and allows the retry | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
-| Windows without Git Bash, using the `settings.json` override | — | — | ❌ | — | — | — |
+| Gate logic | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Config consistency | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Hook commands | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Plugin install | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Live deny, then allow | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
+| No-Git-Bash override | — | — | ❌ | — | — | — |
 
 ## Layout
 
