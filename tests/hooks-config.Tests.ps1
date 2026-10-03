@@ -11,9 +11,9 @@ BeforeAll {
     $script:post = $script:hooks.PostToolUse[0]
     $script:writeTools = 'create_pull_request', 'update_pull_request', 'add_pr_review_comment', 'edit_pr_review_comment', 'reply_to_comment', 'reply_and_resolve_review_thread'
 
-    # Both harnesses substitute the plugin-root placeholders in the command text before running it.
+    # Users replace ${SKILL_DIR} with the install path when they copy the hooks into their harness config.
     function script:Expand($Command) {
-        $Command.Replace('${PLUGIN_ROOT}', $script:root).Replace('${CLAUDE_PLUGIN_ROOT}', $script:root)
+        $Command.Replace('${SKILL_DIR}', $script:root)
     }
     function script:Invoke-Hook($Shell, $Command, $Payload) {
         $json = $Payload | ConvertTo-Json -Depth 5 -Compress
@@ -37,15 +37,13 @@ Describe 'hooks.json structure' {
         $h.powershell | Should -Match 'gate\.ps1'
     }
     It 'references scripts that exist' {
-        foreach ($rel in 'hooks/gate.sh', 'hooks/gate.ps1', '.claude-plugin/plugin.json') {
+        foreach ($rel in 'hooks/gate.sh', 'hooks/gate.ps1') {
             Test-Path (Join-Path $script:root $rel) | Should -BeTrue -Because $rel
         }
     }
-    It 'keeps the placeholder names each harness substitutes' {
+    It 'uses the SKILL_DIR placeholder in every command' {
         $h = $script:pre.hooks[0]
-        $h.command | Should -Match '\$\{CLAUDE_PLUGIN_ROOT\}'
-        $h.bash | Should -Match '\$\{PLUGIN_ROOT\}'
-        $h.powershell | Should -Match '\$\{PLUGIN_ROOT\}'
+        foreach ($f in 'command', 'bash', 'powershell') { $h.$f | Should -Match '\$\{SKILL_DIR\}' }
     }
     It 'forwards the gate exit code from the powershell command' {
         # Copilot runs this through `pwsh -c`, which reports 1 for any failed native command and would lose exit code 2.

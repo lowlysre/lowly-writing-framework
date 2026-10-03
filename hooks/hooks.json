@@ -6,9 +6,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.sh\"",
-            "bash": "bash \"${PLUGIN_ROOT}/hooks/gate.sh\"",
-            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}/hooks/gate.ps1\"; exit $LASTEXITCODE"
+            "command": "bash \"${SKILL_DIR}/hooks/gate.sh\"",
+            "bash": "bash \"${SKILL_DIR}/hooks/gate.sh\"",
+            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${SKILL_DIR}/hooks/gate.ps1\"; exit $LASTEXITCODE"
           }
         ]
       }
@@ -19,9 +19,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/gate.sh\"",
-            "bash": "bash \"${PLUGIN_ROOT}/hooks/gate.sh\"",
-            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${PLUGIN_ROOT}/hooks/gate.ps1\"; exit $LASTEXITCODE"
+            "command": "bash \"${SKILL_DIR}/hooks/gate.sh\"",
+            "bash": "bash \"${SKILL_DIR}/hooks/gate.sh\"",
+            "powershell": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${SKILL_DIR}/hooks/gate.ps1\"; exit $LASTEXITCODE"
           }
         ]
       }

@@ -1,5 +1,0 @@
-{
-  "name": "lowly-writing-framework",
-  "description": "Hooks that deny GitHub write tools until the lowly-writing-framework skill has loaded"
-}
-

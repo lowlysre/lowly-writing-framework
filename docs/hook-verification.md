@@ -11,11 +11,10 @@ Rows: gate logic is deny-once-then-allow in both gates; config consistency is ho
 | Gate logic | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Config consistency | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Hook commands | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Plugin install | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
 | Live deny, then allow | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
 | No-Git-Bash override | — | — | ❌ | — | — | — |
 
-Two limits on that table. The CI rows run the hook commands directly under the OS shell, not through a harness. `claude plugin validate` doesn't inspect hooks, so Claude Code's handling of the extra `bash` and `powershell` fields is untested until someone runs it in a logged-in session.
+Two limits on that table. The CI rows run the hook commands directly under the OS shell, not through a harness. Claude Code isn't covered at all beyond that, because it needs a logged-in session; the Claude snippets in [activation-hook.md](activation-hook.md) are untested. The live Copilot run loaded the Copilot snippet from a user-level hooks file on Windows.
 
 The live Copilot CLI run used 1.0.91. The gate itself doesn't depend on the model, but whether the model loads the skill after a denial does:
 

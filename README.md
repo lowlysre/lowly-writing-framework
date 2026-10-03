@@ -67,7 +67,7 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 ### Optional: activation hook
 
-Skills load when the model decides to. On Claude Code and Copilot CLI, the repo is also a plugin whose hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then gets out of the way. It doesn't check the body. Install and per-OS behavior are in [docs/activation-hook.md](docs/activation-hook.md).
+Skills load when the model decides to. On Claude Code and Copilot CLI, a hook can deny the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then get out of the way. It doesn't check the body. Setup for each harness and OS is in [docs/activation-hook.md](docs/activation-hook.md).
 
 Tested so far (✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't apply; models and caveats in [docs/hook-verification.md](docs/hook-verification.md)):
 
@@ -76,7 +76,6 @@ Tested so far (✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't app
 | Gate logic | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Config consistency | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Hook commands | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Plugin install | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
 | Live deny, then allow | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
 | No-Git-Bash override | — | — | ❌ | — | — | — |
 

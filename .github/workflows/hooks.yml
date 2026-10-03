@@ -25,19 +25,3 @@ jobs:
         run: |
           Install-Module Pester -MinimumVersion 5.5 -Scope CurrentUser -Force -SkipPublisherCheck
           Invoke-Pester -Path tests -CI
-
-  manifests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Validate the plugin manifest with Claude Code
-        run: npx --yes @anthropic-ai/claude-code@2.1.288 plugin validate .
-
-      - name: Install the plugin into Copilot CLI
-        env:
-          COPILOT_HOME: ${{ runner.temp }}/copilot-home
-        run: |
-          npm install --global @github/copilot@1.0.91
-          copilot plugin install "$GITHUB_WORKSPACE"
-          copilot plugin list --json | jq -e 'map(select(.name == "lowly-writing-framework" and .enabled)) | length == 1'
