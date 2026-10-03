@@ -67,7 +67,18 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 ### Optional: activation hook
 
-Skills load when the model decides to. On Claude Code and Copilot CLI, the repo is also a plugin whose hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then gets out of the way. It doesn't check the body. Install, per-OS behavior, and test coverage are in [docs/activation-hook.md](docs/activation-hook.md).
+Skills load when the model decides to. On Claude Code and Copilot CLI, the repo is also a plugin whose hook denies the first GitHub write tool call (`create_pull_request`, `gh pr create`, and similar) until the skill has loaded, then gets out of the way. It doesn't check the body. Install and per-OS behavior are in [docs/activation-hook.md](docs/activation-hook.md).
+
+Tested so far (✅ runs in CI, 🖐 run by hand, ❌ not tested, — doesn't apply; models and caveats in [docs/hook-verification.md](docs/hook-verification.md)):
+
+| Functionality | Claude Code Linux | Claude Code macOS | Claude Code Windows | Copilot CLI Linux | Copilot CLI macOS | Copilot CLI Windows |
+|---|---|---|---|---|---|---|
+| Gate denies once, then allows after the skill loads (`gate.sh` and `gate.ps1` fed fixtures) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| `hooks.json` structure, matchers, and tool lists agree | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Each `command`, `bash`, and `powershell` string runs with the right exit code | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Plugin manifest is valid or installs | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Live harness loads the hooks, denies `gh pr create` with the reason, and allows the retry | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
+| Windows without Git Bash, using the `settings.json` override | — | — | ❌ | — | — | — |
 
 ## Layout
 

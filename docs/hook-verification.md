@@ -11,7 +11,7 @@ What has been tested, by functionality and surface. The [README](../README.md) a
 | Each `command`, `bash`, and `powershell` string runs with the right exit code | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Plugin manifest is valid or installs | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
 | Live harness loads the hooks, denies `gh pr create` with the reason, and allows the retry | ❌ | ❌ | ❌ | ❌ | ❌ | 🖐 |
-| Windows without Git Bash, using the `settings.json` snippet above | — | — | ❌ | — | — | — |
+| Windows without Git Bash, using the `settings.json` override in [activation-hook.md](activation-hook.md) | — | — | ❌ | — | — | — |
 
 Two limits on that table. The CI rows run the hook commands directly under the OS shell, not through a harness. `claude plugin validate` doesn't inspect hooks, so Claude Code's handling of the extra `bash` and `powershell` fields is untested until someone runs it in a logged-in session.
 
