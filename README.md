@@ -11,7 +11,6 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 ## Contents
 
 - [What you get](#what-you-get)
-- [What it does and doesn't do](#what-it-does-and-doesnt-do)
 - [Install and update](#install-and-update)
 - [Layout](#layout)
 - [Token budget](#token-budget)
@@ -20,16 +19,16 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 ## What you get
 
-Left alone, a coding agent writes PR bodies that restate the diff file by file, testing sections that claim "all tests pass" without evidence, and issue links wrapped in backticks that never autolink. This skill replaces those defaults with rules a reviewer can check:
+A template gives a PR its headings. It can't make what sits under them worth reading, so this skill leaves your templates alone and works on the part they can't:
 
-- PR and issue bodies that lead with why, fill in the repo's template, and stay short enough to be read
-- Closing keywords in the `owner/repo#123` form, verified against the API instead of assumed to have linked
-- A `## Testing` section that names only what CI doesn't already cover, with real gaps flagged instead of hidden
-- Review comments labeled with Conventional Comments, plus GitHub suggested edits for few-line fixes
-- Mermaid diagrams written around GitHub's known rendering failures, so they show up as diagrams instead of "Unable to render rich display"
-- A self-check with greps for the slips that survive proofreading, and a `gh` CLI guide for posting without mangling the text
+- Every artifact opens with why it exists, then the least a reader needs to act. Breaking changes, risks, and migration steps are never trimmed, whatever the length target
+- A `## Testing` section names what CI doesn't cover and flags the real gaps. Closing keywords are verified against the API instead of assumed to have linked
+- Conventional Comments labels say what blocks and what doesn't, and few-line fixes ship as one-click suggested edits
+- Issue references that autolink, permalinks that expand into code previews, and Mermaid diagrams that avoid the constructs GitHub fails to render
+- A closing pass of greps catches the slips proofreading misses, and a `gh` guide covers posting without mangling the text
+- Your template, title style, labels, and commit format win, and tone belongs to a separately installed voice-pack skill. The rules constrain structure and honesty, so different repos get different-looking artifacts with the same bones
 
-A PR summary before and after, in a repo with no PR template:
+Same change, no PR template in the repo:
 
 ```markdown
 Updated config.py, client.py, and test_client.py. Changed the timeout. All tests pass.
@@ -47,19 +46,9 @@ CI runs the existing unit suite on every push; no manual steps.
 <!--:robot:-->
 ```
 
-## What it does and doesn't do
+The skill governs the writing, never the change: the diff, the commit history, and the scope stay yours. AI-authored PR bodies and review comments carry a `<!--:robot:-->` watermark. Pairing with a voice pack is covered in [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill), and why the two are separate skills in [docs/explanation.md](docs/explanation.md).
 
-The skill is a foundation, not a template pack. It states principles an artifact has to satisfy, and the agent applies them to whatever the repo already uses.
-
-- **Works with any template.** A repo's PR or issue template always wins: the skill fills its sections in and adds none. Its own lightweight layout (one `##` heading, why first) applies only when no template exists
-- **Defers to local conventions.** Title style, labels, and commit format follow what the repo's CONTRIBUTING file and recent merged PRs show. Conventional commits is only the fallback
-- **Doesn't dictate a house style.** No required sections, no mandatory checklist, no fixed vocabulary. Rules constrain structure (why before how, one point per sentence, honest testing claims), so different repos get different-looking artifacts that share the same bones
-- **Doesn't reshape the change.** It governs the writing, never the diff, the commit history, or the scope
-- **Doesn't set voice.** Tone, humor, and phrasing belong to a separately installed voice-pack skill
-
-A small set of rules is fixed everywhere because they protect the reader: closing keywords in the `owner/repo#123` form, breaking changes and risks never trimmed, and the `<!--:robot:-->` watermark on AI-authored PR bodies and review comments. Everything else adapts.
-
-A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
+A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's, so a change to that `description` is a breaking release; see [Versioning](#versioning).
 
 ## Install and update
 
@@ -78,6 +67,20 @@ npx skills update lowly-writing-framework
 ```
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
+
+### Plugin with an activation reminder
+
+[lowly-writing-framework-plugin](https://github.com/lowlysre/lowly-writing-framework-plugin) bundles this skill and adds a hook that reminds the agent to load it before a GitHub write. It targets Claude Code, Copilot CLI, and Codex CLI. To install on Claude Code or Copilot CLI:
+
+```
+/plugin marketplace add lowlysre/lowly-writing-framework-plugin
+/plugin install lowly-writing-framework@lowly-writing-framework
+```
+
+> [!IMPORTANT]
+> Install the plugin or the skill, not both. Both register the skill, and the agent then sees it twice.
+
+Codex CLI and Windows setup are covered in the [plugin README](https://github.com/lowlysre/lowly-writing-framework-plugin#install).
 
 ## Layout
 
