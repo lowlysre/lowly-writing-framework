@@ -70,7 +70,17 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 ### Plugin with an activation reminder
 
-[lowly-writing-framework-plugin](https://github.com/lowlysre/lowly-writing-framework-plugin) bundles this skill and adds a hook that reminds the agent to load it before a GitHub write. It targets Claude Code, Copilot CLI, and Codex CLI. Install the plugin or the skill, not both, or the agent sees the skill twice.
+[lowly-writing-framework-plugin](https://github.com/lowlysre/lowly-writing-framework-plugin) bundles this skill and adds a hook that reminds the agent to load it before a GitHub write. It targets Claude Code, Copilot CLI, and Codex CLI. To install on Claude Code or Copilot CLI:
+
+```
+/plugin marketplace add lowlysre/lowly-writing-framework-plugin
+/plugin install lowly-writing-framework@lowly-writing-framework
+```
+
+> [!IMPORTANT]
+> Install the plugin or the skill, not both. Both register the skill, and the agent then sees it twice.
+
+Codex CLI and Windows setup are covered in the [plugin README](https://github.com/lowlysre/lowly-writing-framework-plugin#install).
 
 ## Layout
 
