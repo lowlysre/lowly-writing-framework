@@ -20,16 +20,16 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 ## What you get
 
-Left alone, a coding agent writes PR bodies that restate the diff file by file, testing sections that claim "all tests pass" without evidence, and issue links wrapped in backticks that never autolink. This skill replaces those defaults with rules a reviewer can check:
+Ask an agent for a PR and you get a file-by-file recap of the diff, "all tests pass" with nothing behind it, and an issue link that never links. This skill makes the agent write the PR a reviewer wants to open:
 
-- PR and issue bodies that lead with why, fill in the repo's template, and stay short enough to be read
-- Closing keywords in the `owner/repo#123` form, verified against the API instead of assumed to have linked
-- A `## Testing` section that names only what CI doesn't already cover, with real gaps flagged instead of hidden
-- Review comments labeled with Conventional Comments, plus GitHub suggested edits for few-line fixes
-- Mermaid diagrams written around GitHub's known rendering failures, so they show up as diagrams instead of "Unable to render rich display"
-- A self-check with greps for the slips that survive proofreading, and a `gh` CLI guide for posting without mangling the text
+- **Why before what.** Bodies lead with motivation, follow your template, and stop before they pad
+- **Links that land.** Closing keywords and `owner/repo#123` references checked against the API, not assumed
+- **Honest testing.** Only what CI doesn't already cover, with real gaps said out loud
+- **Reviews you can act on.** Conventional Comments labels say what blocks, and few-line fixes ship as one-click suggested edits
+- **Diagrams that render.** Mermaid written around the constructs GitHub fails on, so you get a diagram instead of "Unable to render rich display"
+- **A closing pass that catches the rest.** Greps for the slips proofreading misses, and a `gh` guide for posting without mangling the text
 
-A PR summary before and after, in a repo with no PR template:
+Same change, same repo, no PR template:
 
 ```markdown
 Updated config.py, client.py, and test_client.py. Changed the timeout. All tests pass.
