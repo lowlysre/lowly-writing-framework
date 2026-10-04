@@ -11,7 +11,6 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 ## Contents
 
 - [What you get](#what-you-get)
-- [Why this one](#why-this-one)
 - [Install and update](#install-and-update)
 - [Layout](#layout)
 - [Token budget](#token-budget)
@@ -20,16 +19,16 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 ## What you get
 
-Ask an agent for a PR and you get a file-by-file recap of the diff, "all tests pass" with nothing behind it, and an issue link that never links. This skill makes the agent write the PR a reviewer wants to open:
+A template gives a PR its headings. It can't make what sits under them worth reading, so this skill leaves your templates alone and works on the part they can't:
 
-- **Why before what.** Bodies lead with motivation, follow your template, and stop before they pad
-- **Links that land.** Closing keywords and `owner/repo#123` references checked against the API, not assumed
-- **Honest testing.** Only what CI doesn't already cover, with real gaps said out loud
-- **Reviews you can act on.** Conventional Comments labels say what blocks, and few-line fixes ship as one-click suggested edits
-- **Diagrams that render.** Mermaid written around the constructs GitHub fails on, so you get a diagram instead of "Unable to render rich display"
-- **A closing pass that catches the rest.** Greps for the slips proofreading misses, and a `gh` guide for posting without mangling the text
+- **Substance first.** Every artifact opens with why it exists, then the least a reader needs to act. Breaking changes, risks, and migration steps are never trimmed, whatever the length target
+- **Claims you can trust.** A `## Testing` section names what CI doesn't cover and flags the real gaps. Closing keywords are verified against the API instead of assumed to have linked
+- **Reviews with a clear ask.** Conventional Comments labels say what blocks and what doesn't, and few-line fixes ship as one-click suggested edits
+- **GitHub mechanics that hold.** Issue references that autolink, permalinks that expand into code previews, and Mermaid diagrams that avoid the constructs GitHub fails to render
+- **Checks, not vibes.** A closing pass of greps catches the slips proofreading misses, and a `gh` guide covers posting without mangling the text
+- **Your conventions, kept.** Your template, title style, labels, and commit format win, and tone belongs to a separately installed voice-pack skill. The rules constrain structure and honesty, so different repos get different-looking artifacts with the same bones
 
-Same change, same repo, no PR template:
+Same change, no PR template in the repo:
 
 ```markdown
 Updated config.py, client.py, and test_client.py. Changed the timeout. All tests pass.
@@ -47,19 +46,10 @@ CI runs the existing unit suite on every push; no manual steps.
 <!--:robot:-->
 ```
 
-## Why this one
-
-Most writing guidance is a template or a style guide. This skill is neither: it states the structure an artifact has to satisfy and lets the agent apply it to whatever your repo already does.
-
-- **Your template wins.** A repo's PR or issue template is filled in, never extended. The skill's own layout (one `##` heading, why first) applies only when no template exists, and title style, labels, and commit format follow CONTRIBUTING and recent merged PRs
-- **Rules a reviewer can check.** Closing keywords verified against the API, testing claims limited to what CI doesn't cover, and greps in the self-check for the slips that survive proofreading. Each rule is a yes or no, not a taste call
-- **Built around GitHub's actual behavior.** Autolinking, line-anchored permalinks, suggested edits, and the Mermaid constructs GitHub fails to render are documented as mechanics, not folklore
-- **Backed by evals.** Scenarios under `evals/` grade a changed rule against expected behavior before it gets trimmed or reworded
-- **Pairs with your voice.** It governs structure only. Tone and phrasing belong to a separately installed voice-pack skill, and the two co-activate on the same triggers. See [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) and [docs/explanation.md](docs/explanation.md)
-
-It never reshapes the change: the diff, the commit history, and the scope stay yours. A few rules hold everywhere because they protect the reader: breaking changes and risks are never trimmed, and AI-authored PR bodies and review comments carry the `<!--:robot:-->` watermark.
+The skill governs the writing, never the change: the diff, the commit history, and the scope stay yours. AI-authored PR bodies and review comments carry a `<!--:robot:-->` watermark. Pairing with a voice pack is covered in [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill), and why the two are separate skills in [docs/explanation.md](docs/explanation.md).
 
 A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's, so a change to that `description` is a breaking release; see [Versioning](#versioning).
+
 ## Install and update
 
 The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills):
@@ -81,6 +71,7 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 ### Plugin with an activation reminder
 
 [lowly-writing-framework-plugin](https://github.com/lowlysre/lowly-writing-framework-plugin) bundles this skill and adds a hook that reminds the agent to load it before a GitHub write. It targets Claude Code, Copilot CLI, and Codex CLI. Install the plugin or the skill, not both, or the agent sees the skill twice.
+
 ## Layout
 
 `SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
