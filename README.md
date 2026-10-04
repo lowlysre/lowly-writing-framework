@@ -21,12 +21,12 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 A template gives a PR its headings. It can't make what sits under them worth reading, so this skill leaves your templates alone and works on the part they can't:
 
-- **Substance first.** Every artifact opens with why it exists, then the least a reader needs to act. Breaking changes, risks, and migration steps are never trimmed, whatever the length target
-- **Claims you can trust.** A `## Testing` section names what CI doesn't cover and flags the real gaps. Closing keywords are verified against the API instead of assumed to have linked
-- **Reviews with a clear ask.** Conventional Comments labels say what blocks and what doesn't, and few-line fixes ship as one-click suggested edits
-- **GitHub mechanics that hold.** Issue references that autolink, permalinks that expand into code previews, and Mermaid diagrams that avoid the constructs GitHub fails to render
-- **Checks, not vibes.** A closing pass of greps catches the slips proofreading misses, and a `gh` guide covers posting without mangling the text
-- **Your conventions, kept.** Your template, title style, labels, and commit format win, and tone belongs to a separately installed voice-pack skill. The rules constrain structure and honesty, so different repos get different-looking artifacts with the same bones
+- Every artifact opens with why it exists, then the least a reader needs to act. Breaking changes, risks, and migration steps are never trimmed, whatever the length target
+- A `## Testing` section names what CI doesn't cover and flags the real gaps. Closing keywords are verified against the API instead of assumed to have linked
+- Conventional Comments labels say what blocks and what doesn't, and few-line fixes ship as one-click suggested edits
+- Issue references that autolink, permalinks that expand into code previews, and Mermaid diagrams that avoid the constructs GitHub fails to render
+- A closing pass of greps catches the slips proofreading misses, and a `gh` guide covers posting without mangling the text
+- Your template, title style, labels, and commit format win, and tone belongs to a separately installed voice-pack skill. The rules constrain structure and honesty, so different repos get different-looking artifacts with the same bones
 
 Same change, no PR template in the repo:
 
