@@ -11,7 +11,7 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 ## Contents
 
 - [What you get](#what-you-get)
-- [What it does and doesn't do](#what-it-does-and-doesnt-do)
+- [Why this one](#why-this-one)
 - [Install and update](#install-and-update)
 - [Layout](#layout)
 - [Token budget](#token-budget)
@@ -47,20 +47,19 @@ CI runs the existing unit suite on every push; no manual steps.
 <!--:robot:-->
 ```
 
-## What it does and doesn't do
+## Why this one
 
-The skill is a foundation, not a template pack. It states principles an artifact has to satisfy, and the agent applies them to whatever the repo already uses.
+Most writing guidance is a template or a style guide. This skill is neither: it states the structure an artifact has to satisfy and lets the agent apply it to whatever your repo already does.
 
-- **Works with any template.** A repo's PR or issue template always wins: the skill fills its sections in and adds none. Its own lightweight layout (one `##` heading, why first) applies only when no template exists
-- **Defers to local conventions.** Title style, labels, and commit format follow what the repo's CONTRIBUTING file and recent merged PRs show. Conventional commits is only the fallback
-- **Doesn't dictate a house style.** No required sections, no mandatory checklist, no fixed vocabulary. Rules constrain structure (why before how, one point per sentence, honest testing claims), so different repos get different-looking artifacts that share the same bones
-- **Doesn't reshape the change.** It governs the writing, never the diff, the commit history, or the scope
-- **Doesn't set voice.** Tone, humor, and phrasing belong to a separately installed voice-pack skill
+- **Your template wins.** A repo's PR or issue template is filled in, never extended. The skill's own layout (one `##` heading, why first) applies only when no template exists, and title style, labels, and commit format follow CONTRIBUTING and recent merged PRs
+- **Rules a reviewer can check.** Closing keywords verified against the API, testing claims limited to what CI doesn't cover, and greps in the self-check for the slips that survive proofreading. Each rule is a yes or no, not a taste call
+- **Built around GitHub's actual behavior.** Autolinking, line-anchored permalinks, suggested edits, and the Mermaid constructs GitHub fails to render are documented as mechanics, not folklore
+- **Backed by evals.** Scenarios under `evals/` grade a changed rule against expected behavior before it gets trimmed or reworded
+- **Pairs with your voice.** It governs structure only. Tone and phrasing belong to a separately installed voice-pack skill, and the two co-activate on the same triggers. See [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) and [docs/explanation.md](docs/explanation.md)
 
-A small set of rules is fixed everywhere because they protect the reader: closing keywords in the `owner/repo#123` form, breaking changes and risks never trimmed, and the `<!--:robot:-->` watermark on AI-authored PR bodies and review comments. Everything else adapts.
+It never reshapes the change: the diff, the commit history, and the scope stay yours. A few rules hold everywhere because they protect the reader: breaking changes and risks are never trimmed, and AI-authored PR bodies and review comments carry the `<!--:robot:-->` watermark.
 
-A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's. That's why a change to this skill's `description` is a breaking release; see [Versioning](#versioning). [docs/how-to.md](docs/how-to.md#pair-with-a-voice-pack-skill) covers pairing with one or writing your own, and [docs/explanation.md](docs/explanation.md) covers why the two are separate skills.
-
+A voice pack co-activates only when its `description` frontmatter lists the same artifacts and tool calls as this skill's, so a change to that `description` is a breaking release; see [Versioning](#versioning).
 ## Install and update
 
 The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills):
@@ -79,6 +78,9 @@ npx skills update lowly-writing-framework
 
 The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
 
+### Plugin with an activation reminder
+
+[lowly-writing-framework-plugin](https://github.com/lowlysre/lowly-writing-framework-plugin) bundles this skill and adds a hook that reminds the agent to load it before a GitHub write. It targets Claude Code, Copilot CLI, and Codex CLI. Install the plugin or the skill, not both, or the agent sees the skill twice.
 ## Layout
 
 `SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
