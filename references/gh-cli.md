@@ -14,17 +14,17 @@ Never inline markdown as a shell string. Each shell's escaping (backtick, `$`, c
 
 ## Gating the post on length
 
-Don't eyeball the length ceiling from `references/self-check.md` right before a `gh` call, measure the temp file and branch on the result, so an over-length body never reaches the API in the first place. The ceiling defaults to 3,000 characters; a user can override it by setting the `BODY_LENGTH_CEILING` environment variable:
+Don't eyeball the length ceiling from `references/self-check.md` right before a `gh` call, measure the temp file and branch on the result, so an over-length body never reaches the API in the first place. The ceiling defaults to 3,000 characters; a user can override it by setting the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable:
 
 ```powershell
-$max = if ($env:BODY_LENGTH_CEILING) { [int]$env:BODY_LENGTH_CEILING } else { 3000 }
+$max = if ($env:LOWLY_WRITING_BODY_LENGTH_CEILING) { [int]$env:LOWLY_WRITING_BODY_LENGTH_CEILING } else { 3000 }
 $len = (Get-Content -Raw body.md).Length
 if ($len -gt $max) { throw "body.md is $len chars, over the $max ceiling; restructure per body-writing.md before posting" }
 gh pr edit <n> --body-file body.md
 ```
 
 ```bash
-max=${BODY_LENGTH_CEILING:-3000}
+max=${LOWLY_WRITING_BODY_LENGTH_CEILING:-3000}
 len=$(wc -c < body.md)
 [ "$len" -gt "$max" ] && { echo "body.md is $len chars, over the $max ceiling; restructure per body-writing.md before posting" >&2; exit 1; }
 gh pr edit <n> --body-file body.md
