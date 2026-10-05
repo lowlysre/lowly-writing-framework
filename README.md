@@ -12,6 +12,7 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 - [What you get](#what-you-get)
 - [Install and update](#install-and-update)
+- [Configuration](#configuration)
 - [Layout](#layout)
 - [Token budget](#token-budget)
 - [Versioning](#versioning)
@@ -81,6 +82,18 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 > Install the plugin or the skill, not both. Both register the skill, and the agent then sees it twice.
 
 Codex CLI and Windows setup are covered in the [plugin README](https://github.com/lowlysre/lowly-writing-framework-plugin#install).
+
+## Configuration
+
+The skill's body length ceiling is 3,000 characters. Set the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable to a number of characters to change it for the `gh` length gate in `references/gh-cli.md`:
+
+```powershell
+$env:LOWLY_WRITING_BODY_LENGTH_CEILING = 4000
+```
+
+```bash
+export LOWLY_WRITING_BODY_LENGTH_CEILING=4000
+```
 
 ## Layout
 
