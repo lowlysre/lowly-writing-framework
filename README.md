@@ -12,6 +12,7 @@ An [Agent Skill](https://agentskills.io/) that gives a coding agent the structur
 
 - [What you get](#what-you-get)
 - [Install and update](#install-and-update)
+- [Configuration](#configuration)
 - [Layout](#layout)
 - [Token budget](#token-budget)
 - [Versioning](#versioning)
@@ -82,6 +83,18 @@ The CLI deletes and recreates the skill directory on update, so don't keep local
 
 Codex CLI and Windows setup are covered in the [plugin README](https://github.com/lowlysre/lowly-writing-framework-plugin#install).
 
+## Configuration
+
+The skill's body length ceiling is 3,000 characters. Set the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable to a number of characters to change it for the `gh` length gate in `references/gh-cli.md`:
+
+```powershell
+$env:LOWLY_WRITING_BODY_LENGTH_CEILING = 4000
+```
+
+```bash
+export LOWLY_WRITING_BODY_LENGTH_CEILING=4000
+```
+
 ## Layout
 
 `SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
@@ -95,7 +108,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
 | On activation | `SKILL.md` body | ~2,800 |
-| On demand | Every file under `references/` | ~21,600 |
+| On demand | Every file under `references/` | ~21,700 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.
