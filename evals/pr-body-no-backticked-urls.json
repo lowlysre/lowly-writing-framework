@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR body for this change in acme/web. It points the health check at http://localhost:8080/healthz instead of the old staging host, and the README now links the upstream docs at https://example.com/docs/health and www.example.com/status. Reviewers can verify by running curl http://localhost:8080/healthz after make dev. Closes acme/web#7. No PR template exists.",
+  "files": [],
+  "expected_behavior": [
+    "No URL (http://localhost:8080/healthz, https://example.com/docs/health, www.example.com/status) is wrapped in single backticks in prose",
+    "The upstream docs URL appears as a named markdown link, never bare and never in inline code",
+    "The curl command, if shown, is in a fenced code block where the URL stays literal",
+    "Other literal text the reader types, such as make dev, may stay in backticks",
+    "acme/web#7 is plain text with no backticks and follows a closing keyword",
+    "<!--:robot:--> is the literal last line"
+  ]
+}

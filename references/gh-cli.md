@@ -6,6 +6,16 @@ Loaded from `SKILL.md` whenever posting or editing a PR title/body, PR/issue com
 
 Before editing an existing PR title/body, issue body, or any other live GitHub text, always fetch the current text first (`gh pr view <n> --json title,body`, `gh issue view <n> --json body`, `gh discussion view <n> --json title,body`), never edit from an earlier draft still sitting in the conversation. The user may have hand-tweaked it since, and writing from a stale copy silently reverts their edits. Apply the adjustment to the fetched text, preserving everything not being changed.
 
+## Looking up a person's name
+
+When the user refers to a person by anything other than their GitHub username (a first name, a full name, an email, or a handle from another system), for example "tag Dana" or "reply to Sam", resolve who they mean before writing the name or an @mention into a body or comment. Don't guess a username or a surname.
+
+- Name for a known username: `gh api users/<login> --jq '.name // .login'`. `name` is null when the profile has none, so fall back to the login
+- Username for a name or email: `gh api -X GET search/users -f q='<first last> in:fullname' --jq '.items[:5][].login'`, or `-f q='<email> in:email'`, which only matches public emails. Then confirm each candidate with the call above
+- Narrow an ambiguous name to the repo's people: `gh api repos/{owner}/{repo}/contributors --paginate --jq '.[].login'`, or the item's own people: `gh pr view <n> --json author,reviews,assignees` for a PR, `gh issue view <n> --json author,assignees,comments` for an issue (issues have no `reviews` field; check which one the number is first)
+- Commit authors carry a real name even when the profile doesn't: `git log --format='%an <%ae>' | sort -u`
+- Several matches or none: say so and ask, never pick one. Credit by name in prose and `@username` only when a notification is wanted
+
 ## Writing text safely
 
 Never inline markdown as a shell string. Each shell's escaping (backtick, `$`, caret) mangles a body unpredictably the moment it contains backticks, code fences, or `$` references. Write the body to a temp file instead and pass `--body-file <path>` (`gh pr comment`, `gh pr edit`, `gh issue comment`, `gh discussion create`/`edit`/`comment`) or `-F body=@path` (`gh api`), then delete the temp file.
