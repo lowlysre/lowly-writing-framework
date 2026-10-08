@@ -406,21 +406,21 @@ Each aside is still on the record, and a reviewer reading either line finds it t
 
 <example>
 
-### Annotating a deleted block
+### Annotating a block with a range
 
-Shows the deletion-anchoring bullet in `references/pr-writing.md`: a removed block has no right-side line, so the note sits on the neighboring context line and points at the block.
+Shows the anchoring bullet in `references/pr-writing.md`: a note about a block covers the whole block, so the UI highlights what it explains, and a deleted block anchors on its deleted lines.
 
-Before (comment attempted on a deleted line, rejected with `422`):
-
-```markdown
-note: Dead code, nothing calls it.
-<!--:robot:-->
-```
-
-After (comment on the context line just above the deleted hunk in `jobs/run.py`):
+Before (single comment on the line above the block, so the UI highlights none of it):
 
 ```markdown
 note: The block below is the unused Batch/Bedrock path, removed here because nothing calls it.
+<!--:robot:-->
+```
+
+After (range comment, `start_line=40`, `line=88`, `side=LEFT`, on the deleted lines in `jobs/run.py`):
+
+```markdown
+note: Unused Batch/Bedrock path, removed because nothing calls it.
 <!--:robot:-->
 ```
 

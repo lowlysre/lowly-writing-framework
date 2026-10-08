@@ -38,8 +38,8 @@ A small aside about a specific line or file, one that doesn't change a reviewer'
 - Never move anything from the `Never trim these` list in `SKILL.md`. Breaking changes, migration steps, risk, and known gaps stay in the body, a reviewer who skips the Files changed tab would miss them
 - A lasting explanation of why the code looks the way it does belongs in a code comment, per `references/docs-and-comments.md`. An annotation carries what only matters while this PR is under review
 - One annotation per distinct point. A repeated change gets one comment on the first occurrence saying how many other places match, not a comment per file
-- Anchor it on the changed line, or the first line of a range. Only lines in the diff can carry a comment
-  - A pure deletion has no right-side line. Anchor on the context line next to the deleted hunk and say "the block below" or "the block above" in the note
+- Anchor it on the lines the note explains: a multi-line range (`start_line` through `line`) when it's about a block, so the UI highlights what it references. Never the line above it. Only lines in the diff can carry a comment, and both ends of a range must sit in the same hunk
+  - A deleted block has no right-side lines. Anchor on the deleted lines themselves with `side=LEFT` (and `start_side=LEFT`), using their line numbers in the base file. Fall back to an adjacent context line only when the API rejects it, and then say "the block below" or "the block above" in the note
 - Start it with `note:` and keep it to a sentence or two. The reviewer labels from `references/review-comments.md` aren't needed otherwise
 - Append the `<!--:robot:-->` watermark per the rule below, on its own last line
 - Post them after the PR exists and its head is pushed, as standalone line comments, one per annotation. An author doesn't leave a review, so never a pending review, and never `add_pr_review_comment`: that tool stages into a pending review and is for reviewing someone else's PR. Post through `gh api`, see `Author annotations` in `references/gh-cli.md`
