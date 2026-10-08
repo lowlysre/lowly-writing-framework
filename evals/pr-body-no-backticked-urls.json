@@ -4,7 +4,7 @@
   "files": [],
   "expected_behavior": [
     "No URL (http://localhost:8080/healthz, https://example.com/docs/health, www.example.com/status) is wrapped in single backticks in prose",
-    "The upstream docs URL appears as a named markdown link or plain text, never in inline code",
+    "The upstream docs URL appears as a named markdown link, never bare and never in inline code",
     "The curl command, if shown, is in a fenced code block where the URL stays literal",
     "Other literal text the reader types, such as make dev, may stay in backticks",
     "acme/web#7 is plain text with no backticks and follows a closing keyword",

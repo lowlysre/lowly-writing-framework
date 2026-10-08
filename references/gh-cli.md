@@ -12,7 +12,7 @@ When the user refers to a person by anything other than their GitHub username (a
 
 - Name for a known username: `gh api users/<login> --jq '.name // .login'`. `name` is null when the profile has none, so fall back to the login
 - Username for a name or email: `gh api -X GET search/users -f q='<first last> in:fullname' --jq '.items[:5][].login'`, or `-f q='<email> in:email'`, which only matches public emails. Then confirm each candidate with the call above
-- Narrow an ambiguous name to the repo's people: `gh api repos/{owner}/{repo}/contributors --paginate --jq '.[].login'`, or the PR/issue's own `author`, `reviews`, and `assignees` from `gh pr view <n> --json author,reviews,assignees`
+- Narrow an ambiguous name to the repo's people: `gh api repos/{owner}/{repo}/contributors --paginate --jq '.[].login'`, or the item's own people: `gh pr view <n> --json author,reviews,assignees` for a PR, `gh issue view <n> --json author,assignees,comments` for an issue (issues have no `reviews` field; check which one the number is first)
 - Commit authors carry a real name even when the profile doesn't: `git log --format='%an <%ae>' | sort -u`
 - Several matches or none: say so and ask, never pick one. Credit by name in prose and `@username` only when a notification is wanted
 
