@@ -15,7 +15,7 @@ Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope
 
 **Formatting**, **Never trim these**, **Boundaries**, and **Anti-patterns** below apply everywhere. For anything PR-specific, review-comment-specific, or doc/comment-specific, open the matching reference file when you're actually about to write that artifact:
 
-- Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, author annotations on the diff, AI watermark)
+- Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, author annotations on the diff posted by default as standalone line comments, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
 - Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (kinds of post, category selection from the repo's actual categories, threading and answer-marking mechanics, wrapping up with a written outcome, upvotes instead of "+1" comments)
 - Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, linking docs the PR already carries, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
@@ -76,6 +76,7 @@ This skill governs the writing, never the change. Don't reshape a diff, drop a c
   - Defining, clarifying, or implementing a requirement or acceptance criterion, regardless of artifact: use `references/requirements-ears.md`
 - In a long session, don't rely on remembering this rule from the system prompt: treat each trigger above as fresh, regardless of how many turns or unrelated tool calls came before it
 - Before editing an existing PR title/body (or any live comment/doc on GitHub), always fetch the current text first, never edit from an earlier draft in the conversation, per `references/gh-cli.md`
+- Before `create_pull_request`/`update_pull_request`, check who authored the PR and scan the diff for line-anchored asides and scope beyond the linked issue. When the user is the author, draft annotations by default, without being asked, and post them as standalone line comments, never a pending review or `add_pr_review_comment`, per `Author annotations` in `references/pr-writing.md`
 - Run the self-check in `references/self-check.md` over the PR body and every touched comment/doc/prose artifact, right before declaring the task done and again after every later revision, always against the full current text. Every `update_pull_request` call is a later revision: run the self-check on the body you're about to send, structured tools included
 - Posting or editing a PR/issue title, body, or comment directly through `gh` (not a structured tool like `create_pull_request`) has its own failure modes, shell escaping, `-f` vs `-F`, unverified posts, see `references/gh-cli.md`
 - Match commit message style to the title conventions in `references/pr-writing.md`

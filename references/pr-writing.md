@@ -30,16 +30,19 @@ Manual steps someone must run around the merge get their own short section (`## 
 
 A small aside about a specific line or file, one that doesn't change a reviewer's verdict, goes in a review comment the author leaves on that line instead of in the body. The body stays on the primary change, and a reviewer who lands on the line still finds the explanation. It also keeps a tiny edit from reading as accidental or sloppy to a human or AI reviewer.
 
+- Annotations are the default, not an opt-in. Before every `create_pull_request`/`update_pull_request`, read the diff for line-anchored asides and for scope beyond the linked issue (bundled cleanups, dead-code removal, a changed default, a dropped workflow step), and draft an annotation for each. When the user is the PR author, propose them in the same turn as the body, or post them when the PR is pushed; don't wait to be asked
+- Determine authorship first: `gh pr view <n> --json author -q .author.login` against `gh api user -q .login`. Same login means these rules apply. A different login means you're reviewing, so use `references/review-comments.md` instead
 - The test is whether the aside explains a place or the PR. A line-anchored aside is an annotation, a PR-wide point stays in the body
-- Typical fits: a mechanical edit repeated across files, an incidental tweak (a pinned version, a renamed variable, a reordered block), a value that's temporary until something lands. A one-line `Bonus` bullet that names a specific line moves here once the body is crowded; in a short body it can stay as the bullet
+- Typical fits: a mechanical edit repeated across files, an incidental tweak (a pinned version, a renamed variable, a reordered block), a value that's temporary until something lands, a change bundled in beyond the linked issue. A one-line `Bonus` bullet that names a specific line moves here once the body is crowded; in a short body it can stay as the bullet, but a bundled change in a file the issue never mentions gets its annotation either way
 - A detail trimmed from the body to meet the length ceiling in `references/body-writing.md` moves to an annotation when it's line-anchored, rather than disappearing
 - Never move anything from the `Never trim these` list in `SKILL.md`. Breaking changes, migration steps, risk, and known gaps stay in the body, a reviewer who skips the Files changed tab would miss them
 - A lasting explanation of why the code looks the way it does belongs in a code comment, per `references/docs-and-comments.md`. An annotation carries what only matters while this PR is under review
 - One annotation per distinct point. A repeated change gets one comment on the first occurrence saying how many other places match, not a comment per file
 - Anchor it on the changed line, or the first line of a range. Only lines in the diff can carry a comment
+  - A pure deletion has no right-side line. Anchor on the context line next to the deleted hunk and say "the block below" or "the block above" in the note
 - Start it with `note:` and keep it to a sentence or two. The reviewer labels from `references/review-comments.md` aren't needed otherwise
 - Append the `<!--:robot:-->` watermark per the rule below, on its own last line
-- Post them after the PR exists and its head is pushed, as one pending review submitted once so reviewers get one notification. Through `add_pr_review_comment`, stage each; through `gh`, see `Suggested edits` in `references/gh-cli.md` for the anchoring mechanics
+- Post them after the PR exists and its head is pushed, as standalone line comments, one per annotation. An author doesn't leave a review, so never a pending review, and never `add_pr_review_comment`: that tool stages into a pending review and is for reviewing someone else's PR. Post through `gh api`, see `Author annotations` in `references/gh-cli.md`
 
 ## AI watermark
 

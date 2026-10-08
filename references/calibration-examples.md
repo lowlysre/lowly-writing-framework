@@ -404,6 +404,28 @@ Each aside is still on the record, and a reviewer reading either line finds it t
 
 </example>
 
+<example>
+
+### Annotating a deleted block
+
+Shows the deletion-anchoring bullet in `references/pr-writing.md`: a removed block has no right-side line, so the note sits on the neighboring context line and points at the block.
+
+Before (comment attempted on a deleted line, rejected with `422`):
+
+```markdown
+note: Dead code, nothing calls it.
+<!--:robot:-->
+```
+
+After (comment on the context line just above the deleted hunk in `jobs/run.py`):
+
+```markdown
+note: The block below is the unused Batch/Bedrock path, removed here because nothing calls it.
+<!--:robot:-->
+```
+
+</example>
+
 </examples>
 
 ## PR Testing section

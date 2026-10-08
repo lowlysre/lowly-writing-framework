@@ -54,8 +54,26 @@ gh api repos/{owner}/{repo}/pulls/<n>/comments \
 - Add `-F start_line=40 -f start_side=RIGHT` to anchor a multi-line range; `line` is then the last line of the range
 - `line` is a line number in the file at `commit_id`, not a position in the diff, and it has to be a line the PR touches or its surrounding context, or the API returns `422`
 - Use the PR's current head SHA, not an older one: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
-- To batch several comments into one notification, create a pending review first (`POST .../pulls/<n>/reviews` with `comments[]`, no `event`) and submit it once, instead of one call per comment
+- To batch several reviewer comments on someone else's PR into one notification, create a pending review first (`POST .../pulls/<n>/reviews` with `comments[]`, no `event`) and submit it once, instead of one call per comment. Not for the PR author's own annotations, see `Author annotations` below
 - Verify with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
+
+## Author annotations
+
+When the current user authored the PR (`gh api user -q .login` equals `gh pr view <n> --json author -q .author.login`), post each annotation from `references/pr-writing.md` as a standalone line comment with the same `gh api .../pulls/<n>/comments` call as `Suggested edits` above, one call per annotation, `-F body=@path`, current head SHA. Each posts immediately as its own single-comment review; nothing is left pending. Don't use `add_pr_review_comment` here, it stages into a pending review.
+
+- Only lines in the diff can carry a comment. A pure deletion has no right-side line, so anchor `line` on the context line beside the deleted hunk with `side=RIGHT`, and word the note "the block below" or "the block above"
+- Keep each target as plain variables, and cast the line to `[int]` before the call. In PowerShell, `-F line=$item[1]` inside a native command doesn't index the array, it expands the whole array followed by a literal `[1]`:
+
+```powershell
+foreach ($a in $annotations) {
+  $path = $a.Path
+  [int]$line = $a.Line
+  $bodyArg = "body=@$($a.File)"
+  gh api repos/<owner>/<repo>/pulls/<n>/comments -F $bodyArg -f commit_id=$sha -f path=$path -F line=$line -f side=RIGHT
+}
+```
+
+- Verify each with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
 
 ## Discussions
 
