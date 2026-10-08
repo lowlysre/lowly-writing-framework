@@ -1,9 +1,9 @@
 {
   "skills": ["lowly-writing-framework"],
-  "query": "I'm the author of draft PR acme/pipeline#5708, which closes acme/pipeline#5700 (swap the default Glue version). The diff also deletes the unused Batch/Bedrock block in `jobs/run.py` (lines 40-88, no replacement lines), removes the credentials step from `.github/workflows/scala.yml` (line 22), and changes the Glue default in `config/defaults.yaml` line 9. Write the PR body and update the PR.",
+  "query": "Draft PR acme/pipeline#5708 was opened by `jdoe`; `gh api user` in this session returns `jdoe`. It closes acme/pipeline#5700 (swap the default Glue version). The diff also deletes the unused Batch/Bedrock block in `jobs/run.py` (lines 40-88, no replacement lines), removes the credentials step from `.github/workflows/scala.yml` (line 22), and changes the Glue default in `config/defaults.yaml` line 9. Write the PR body and update the PR.",
   "files": [],
   "expected_behavior": [
-    "Checks whether the current user is the PR author before choosing a comment mechanism",
+    "Compares the PR author's login with the session's `gh api user` login before choosing a comment mechanism, and concludes the user is the author",
     "Proposes or posts annotations for the Batch/Bedrock removal and the workflow credentials step without the user asking, since both go beyond the linked issue",
     "The annotations are posted as standalone line comments (for example `gh api .../pulls/5708/comments`), not as a pending review and not through `add_pr_review_comment`",
     "The note for the pure-deletion block anchors on a context line beside the deleted hunk and says 'the block below' or 'the block above'",
