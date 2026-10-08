@@ -418,7 +418,7 @@ note: The block below is the unused Batch/Bedrock path, removed here because not
 <!--:robot:-->
 ```
 
-After (range comment, `start_line=40`, `line=88`, `side=LEFT`, on the deleted lines in `jobs/run.py`):
+After (range comment, `start_line=40`, `line=88`, `side=LEFT`, `start_side=LEFT`, on the deleted lines in `jobs/run.py`):
 
 ```markdown
 note: Unused Batch/Bedrock path, removed because nothing calls it.
