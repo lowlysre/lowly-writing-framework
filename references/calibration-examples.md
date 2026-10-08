@@ -12,6 +12,7 @@ Several "before" halves trip the mechanical checks in `references/self-check.md`
   - Issue references and scope notes
   - One point per sentence
   - Roll-call bullets
+  - Backticks on names
   - Summary that restates the diff
 - Bodies: `references/body-writing.md` rules
   - Anticipated reviewer question
@@ -112,6 +113,36 @@ All five service handlers move to the new client. The refunds handler also retri
 ```
 
 The four identical bullets collapse into a count. The one bullet that differed is the only one still named, because it's the only one a reviewer needs to look at separately.
+
+</example>
+
+<example>
+
+### Backticks on names
+
+Shows the backtick rules in `SKILL.md` Formatting: tick literal text the reader would copy, not the names of repos, apps, or roles, and not every repeat.
+
+Before:
+
+```markdown
+Lets `acme-worker` read the `acme-bot` app's key through the `ci-secrets-reader` role, so its new `release.yml` can create releases. A `GITHUB_TOKEN`-created release doesn't fire `release: published`, which `publish.yml` there triggers on.
+The change is one entry in `reader_repos` in `oidc.tf`.
+
+- [x] `acme-bot` is installed on `acme-worker`.
+- Merge acme/acme-worker#101 after this applies, so its first `release.yml` run can assume the role.
+```
+
+After:
+
+```markdown
+Lets acme-worker read the acme-bot app's key through the ci-secrets-reader role, so its new release workflow can create releases. A release created with `GITHUB_TOKEN` doesn't fire `release: published`, which the publish workflow there triggers on.
+The change is one entry in `reader_repos` in `oidc.tf`.
+
+- [x] acme-bot is installed on acme-worker.
+- Merge acme/acme-worker#101 after this applies, so its first release run can assume the role.
+```
+
+The repo, app, and role names lost their ticks because nobody types them into a terminal. `GITHUB_TOKEN`, the `release: published` event, `reader_repos`, and `oidc.tf` keep theirs: they're literal text the reader has to match or open. The repeated `release.yml` went plain once the prose named the workflow instead.
 
 </example>
 

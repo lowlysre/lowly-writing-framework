@@ -32,7 +32,9 @@ Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope
 
 ## Formatting
 
-- Backticks for every inline code reference: function names, parameters, file paths, config keys. Exception: issue/PR references (`owner/repo#123`), backticking those disables GitHub's autolinking, see the Issue references rule below
+- Backticks are for literal text the reader will type, paste, grep, or that a tool parses verbatim: commands, flags, config keys and values, env vars, code identifiers, exact error text, and a file path the reader has to open. Test each one: would the reader copy it into a terminal, editor, or search box? If not, leave it plain. Exception: issue/PR references (`owner/repo#123`), backticking those disables GitHub's autolinking, see the Issue references rule below
+- Names of things aren't code: repos, orgs, GitHub Apps, teams, services, cloud roles and accounts, products, and workflow or job names as proper nouns stay plain, even when they're hyphenated or lowercase. A file name mentioned only to say what the change is about stays plain too; tick the path where the reader must open or edit it
+- Tick a term at its first mention, or where precision matters (a path in a command, a value that must match exactly), not on every repeat. Past roughly three ticks in a paragraph or eight in a body, re-run the test on each
 - Don't let backticks pile up: four or more comma-separated identifiers in a row is as hard to scan as no formatting. Use a nested sub-bullet per item, or name the resource type once in prose and backtick only what a reviewer would otherwise have to guess at
 - Prefer nested unordered lists (two levels max) over flat lists with multi-line items
 - Link authoritative sources inline as named markdown links, never bare URLs (exceptions: a bare GitHub issue/PR URL, which GitHub renders as a rich `owner/repo#123` reference on its own, and a bare line-anchored code permalink, which only expands to a code preview when pasted bare); credit people by name when their work shaped the change

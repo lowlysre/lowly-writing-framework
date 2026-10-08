@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR body for this change in acme/infra, closing acme/infra#12. It adds the repo acme-worker to the reader_repos list in oidc.tf so the ci-secrets-reader IAM role can be assumed from it. acme-worker's new release.yml workflow uses the acme-bot GitHub App's key to create releases, because a release created with GITHUB_TOKEN doesn't fire the release: published event that publish.yml triggers on. acme-bot must be installed on acme-worker first. acme/acme-worker#101 should merge after this applies. No PR template exists. CI runs terraform plan on every push.",
+  "files": [],
+  "expected_behavior": [
+    "Repo names (acme-worker, acme/infra), the GitHub App name (acme-bot), and the IAM role name (ci-secrets-reader) are plain text, not backticked",
+    "Literal text the reader would match or open stays in backticks: GITHUB_TOKEN, the release: published event, reader_repos, oidc.tf",
+    "A term already ticked at its first mention, such as release.yml, isn't ticked again on every later mention",
+    "The body has no more than about 3 backticked spans per paragraph and about 8 overall",
+    "Issue references (acme/infra#12, acme/acme-worker#101) are plain full owner/repo#123 text with no backticks, and acme/infra#12 follows a closing keyword",
+    "<!--:robot:--> is the literal last line"
+  ]
+}
