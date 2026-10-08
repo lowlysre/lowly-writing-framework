@@ -1,0 +1,10 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Reply on acme/web#40 and tag Dana so she sees the fix. I only know her as Dana from the Slack thread; she reviewed acme/web#38. Reply: the retry cap is now 5, see the new test.",
+  "files": [],
+  "expected_behavior": [
+    "Resolves Dana through gh (for example gh pr view 38 --json reviews, then gh api users/<login> --jq '.name // .login') instead of guessing a username",
+    "Tags her with a real @username only after resolving it, and asks instead of picking one if several candidates match",
+    "acme/web#40 style references stay plain text with no backticks"
+  ]
+}

@@ -8,7 +8,7 @@ Before editing an existing PR title/body, issue body, or any other live GitHub t
 
 ## Looking up a person's name
 
-When a person is referred to by something other than their GitHub username (a first name, a full name, an email, or a handle from another system), resolve it before writing their name into a body or comment. Don't guess a username or a surname.
+When the user refers to a person by anything other than their GitHub username (a first name, a full name, an email, or a handle from another system), for example "tag Dana" or "reply to Sam", resolve who they mean before writing the name or an @mention into a body or comment. Don't guess a username or a surname.
 
 - Name for a known username: `gh api users/<login> --jq '.name // .login'`. `name` is null when the profile has none, so fall back to the login
 - Username for a name or email: `gh api -X GET search/users -f q='<first last> in:fullname' --jq '.items[:5][].login'`, or `-f q='<email> in:email'`, which only matches public emails. Then confirm each candidate with the call above
