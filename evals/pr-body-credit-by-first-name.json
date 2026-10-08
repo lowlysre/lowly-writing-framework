@@ -1,0 +1,11 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR body for acme/web#40's fix and credit Dana for the original repro. I only know her as Dana from the Slack thread; she reviewed acme/web#38. Closes acme/web#39. No PR template exists.",
+  "files": [],
+  "expected_behavior": [
+    "Resolves Dana through gh (for example gh pr view 38 --json reviews, then gh api users/<login> --jq '.name // .login') instead of guessing a surname or username",
+    "Credits her by the resolved name in prose, and says so instead of picking one if several candidates match",
+    "acme/web#39 is plain text with no backticks and follows a closing keyword",
+    "<!--:robot:--> is the literal last line"
+  ]
+}
