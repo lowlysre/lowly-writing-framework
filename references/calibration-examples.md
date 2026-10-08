@@ -25,6 +25,7 @@ Several "before" halves trip the mechanical checks in `references/self-check.md`
   - Manual steps around the merge
 - PR author annotations (`references/pr-writing.md`)
   - Line-anchored aside out of the body
+  - Annotating a block with a range
 - Meat proxy mode (`references/meat-proxy-mode.md`)
   - Prose ask into executable steps
 
