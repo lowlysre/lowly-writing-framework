@@ -1,12 +1,12 @@
 {
   "skills": ["lowly-writing-framework"],
-  "query": "The PR for acme/sdk#88 is already open and pushed. Its body is long because the change adds a retry layer. Two small things are left out of the body so far: in `sdk/http.py` line 31 the `User-Agent` string was bumped to match the new version, and in `settings.yaml` line 12 the `max_retries: 3` value is a placeholder until the platform team publishes real limits. Also, the PR is a breaking change: the `Client.send` return type changed from `dict` to `Response`. Decide where each of these three things goes and write whatever artifacts that implies.",
+  "query": "The PR for acme/sdk#88 is already open and pushed, opened by `jdoe`; `gh api user` in this session returns `jdoe`. Its body is long because the change adds a retry layer. Two small things are left out of the body so far: in `sdk/http.py` line 31 the `User-Agent` string was bumped to match the new version, and in `settings.yaml` line 12 the `max_retries: 3` value is a placeholder until the platform team publishes real limits. Also, the PR is a breaking change: the `Client.send` return type changed from `dict` to `Response`. Decide where each of these three things goes and write whatever artifacts that implies.",
   "files": [],
   "expected_behavior": [
     "The `User-Agent` bump and the `max_retries` placeholder are each written as a separate line-anchored review comment on the stated line, not added to the PR body",
     "Each annotation starts with `note:` and is one to two sentences",
     "Each annotation ends with <!--:robot:--> as its literal last line",
     "The breaking `Client.send` return type change stays in the PR body, with what a consumer has to do about it, and is not moved into a line comment",
-    "The annotations are staged or posted as one pending review rather than one notification per comment"
+    "Each annotation is posted as a standalone line comment (for example `gh api .../pulls/88/comments`) after the agent compares the PR author with the session's user, not as a pending review and not through `add_pr_review_comment`"
   ]
 }

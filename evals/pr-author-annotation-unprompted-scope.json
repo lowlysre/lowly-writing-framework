@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Draft PR acme/pipeline#5708 was opened by `jdoe`; `gh api user` in this session returns `jdoe`. It closes acme/pipeline#5700 (swap the default Glue version). The diff also deletes the unused Batch/Bedrock block in `jobs/run.py` (lines 40-88, no replacement lines) and removes the credentials step from `.github/workflows/scala.yml` (line 22), both incidental cleanups unrelated to the Glue swap, and changes the Glue default in `config/defaults.yaml` line 9. Write the PR body and update the PR.",
+  "files": [],
+  "expected_behavior": [
+    "Compares the PR author's login with the session's `gh api user` login before choosing a comment mechanism, and concludes the user is the author",
+    "Proposes or posts annotations for the Batch/Bedrock removal and the workflow credentials step without the user asking, since both are incidental cleanups, and keeps the Glue default swap as the body's primary change",
+    "The annotations are posted as standalone line comments (for example `gh api .../pulls/5708/comments`), not as a pending review and not through `add_pr_review_comment`",
+    "The note for the deleted `jobs/run.py` block is a range comment over lines 40-88 (`start_line`/`line`, `side=LEFT`, `start_side=LEFT`), not a single comment on a line above it; it falls back to a context line only if the API rejects the range",
+    "In PowerShell, line numbers are assigned to plain `[int]` variables before being passed to `-F line=`",
+    "Each annotation starts with `note:` and ends with <!--:robot:--> as its literal last line"
+  ]
+}

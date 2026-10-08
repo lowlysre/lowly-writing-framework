@@ -25,6 +25,7 @@ Several "before" halves trip the mechanical checks in `references/self-check.md`
   - Manual steps around the merge
 - PR author annotations (`references/pr-writing.md`)
   - Line-anchored aside out of the body
+  - Annotating a block with a range
 - Meat proxy mode (`references/meat-proxy-mode.md`)
   - Prose ask into executable steps
 
@@ -401,6 +402,28 @@ note: Import reorder only, so the linter stops flagging this file.
 ```
 
 Each aside is still on the record, and a reviewer reading either line finds it there. The timeout fix is the only thing the body asks them to weigh.
+
+</example>
+
+<example>
+
+### Annotating a block with a range
+
+Shows the anchoring bullet in `references/pr-writing.md`: a note about a block covers the whole block, so the UI highlights what it explains, and a deleted block anchors on its deleted lines.
+
+Before (single comment on the line above the block, so the UI highlights none of it):
+
+```markdown
+note: The block below is the unused Batch/Bedrock path, removed here because nothing calls it.
+<!--:robot:-->
+```
+
+After (range comment, `start_line=40`, `line=88`, `side=LEFT`, `start_side=LEFT`, on the deleted lines in `jobs/run.py`):
+
+```markdown
+note: Unused Batch/Bedrock path, removed because nothing calls it.
+<!--:robot:-->
+```
 
 </example>
 
