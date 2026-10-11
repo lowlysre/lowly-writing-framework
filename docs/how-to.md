@@ -39,6 +39,10 @@ grep -c '<!--:robot:-->$' body.md
 
 On Windows PowerShell, `Select-String` takes the same patterns; the file lists both forms per check. Zero hits on every check (and exactly one on the watermark count) means the mechanical pass is clean. The judgment checks in the same file still need a read.
 
+## Reply to review feedback on your own PR
+
+Full reply shapes, the disagreement rules, and when to resolve a thread live in `references/review-replies.md`. The short version: push first, reply inside each thread starting with the outcome (`Done in <sha>`, the answer, the decision with its evidence, or a link to the follow-up issue), resolve only threads that are done, and re-request review once the replies are in.
+
 ## Write an EARS requirement
 
 Full syntax, the five patterns, and document vs. inline mode live in `references/requirements-ears.md`. The short version: one sentence, one `SHALL`, one observable trigger; `should` and `may` mean it isn't a requirement yet.

@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm the author of acme/sdk#94. Thread PRRT_mno (first comment id 7001): 'issue: json.loads on the webhook body will raise on duplicate keys, you need to reject those.' I'm not sure that's true, and I'd rather not guess. A second thread, PRRT_pqr (first comment id 7002), says: 'suggestion: split build_report into fetch + format, it does too much.' I agree and pushed the split in commit 4c7e9a21, which makes build_report's formatting testable without the network. Draft both replies and say what you'd verify first.",
+  "files": [],
+  "expected_behavior": [
+    "Before drafting the first reply, the agent looks up how the pinned Python version's json.loads treats duplicate keys in the official docs instead of answering from memory, and opens the page rather than relying on a snippet",
+    "The first reply states the finding first, links the official docs as a named markdown link with the one relevant sentence quoted beside it, and does not use a bare URL or a backticked URL",
+    "If the docs show the reviewer is right, the first reply says Done or what will change and credits the check; if they show the reviewer is wrong, it declines with that quote and names what would change the answer; if the docs are silent, it says what is unverified instead of picking a side",
+    "The second reply is Done in 4c7e9a21 with the SHA unticked, ties the single-responsibility idea to the concrete consequence that formatting is now testable without the network, and does not rely on naming the principle alone",
+    "At most one or two links appear in each reply",
+    "<!--:robot:--> is the literal last line of each reply"
+  ]
+}

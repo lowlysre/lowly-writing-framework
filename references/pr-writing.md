@@ -46,4 +46,4 @@ A small aside about a specific line or file, one that doesn't change a reviewer'
 
 ## AI watermark
 
-Append `<!--:robot:-->` as its own line at the very end of every PR body, after any `<details>` block or trailer, GitHub renders an HTML comment as nothing, so it marks the body as AI-authored without costing the reader any attention. Applies to PR bodies and PR/review comments only, not README/doc prose, code comments, or issue bodies/comments, those aren't in scope. Same rule for review comments lives in `references/review-comments.md`.
+Append `<!--:robot:-->` as its own line at the very end of every PR body, after any `<details>` block or trailer, GitHub renders an HTML comment as nothing, so it marks the body as AI-authored without costing the reader any attention. Applies to PR bodies and PR/review comments only, not README/doc prose, code comments, or issue bodies/comments, those aren't in scope. Same rule for review comments lives in `references/review-comments.md`; replies to review threads follow `references/review-replies.md`.

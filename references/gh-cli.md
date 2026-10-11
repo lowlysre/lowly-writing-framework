@@ -87,6 +87,22 @@ foreach ($a in $annotations) {
 
 - Verify each with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
 
+## Replying to review threads
+
+For the PR author answering reviewer comments, per `references/review-replies.md`. Replies, resolving, and reactions each need a different call.
+
+- List unresolved threads with the thread ID (`PRRT_...`) and the first comment's `databaseId`. Past 100 threads, page with `pageInfo.endCursor`:
+
+```bash
+gh api graphql -f query='query($o:String!,$r:String!,$n:Int!){repository(owner:$o,name:$r){pullRequest(number:$n){reviewThreads(first:100){pageInfo{hasNextPage endCursor} nodes{id isResolved isOutdated path line comments(first:50){nodes{databaseId author{login} body}}}}}}}' -f o=<owner> -f r=<repo> -F n=<pr-number> --jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved | not)'
+```
+
+- Reply with `gh api repos/{owner}/{repo}/pulls/<n>/comments/<root-id>/replies -F body=@reply.md`. `<root-id>` is the thread's first comment; the API rejects the ID of a reply. The `-f` trap from `Writing text safely` applies
+- Resolve with `gh api graphql -f query='mutation($id:ID!){resolveReviewThread(input:{threadId:$id}){thread{isResolved}}}' -f id=<PRRT_id>`. A reply doesn't resolve its thread, and resolving doesn't post a reply, so a Done reply is two calls
+- React instead of replying to a `praise:` comment: `gh api repos/{owner}/{repo}/pulls/comments/<id>/reactions -f content='+1'`
+- Re-request review with `gh api repos/{owner}/{repo}/pulls/<n>/requested_reviewers -f 'reviewers[]=<login>'`, one `-f` per reviewer
+- Verify each reply with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`, and confirm the thread state by re-running the list query
+
 ## Discussions
 
 Discussions have no REST endpoint. `gh discussion` (preview in gh 2.98, flagged "subject to change without notice") wraps the common GraphQL calls; anything it doesn't cover goes through `gh api graphql` directly. Confirm the subcommand exists on the installed gh (`gh discussion --help`) before building a script around it, and fall back to the GraphQL forms below when it's missing or a flag has moved.
