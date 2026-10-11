@@ -1,0 +1,15 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm the author of acme/sdk#88 and the fix is pushed. A reviewer left two comments. Thread PRRT_abc (first comment id 5001): 'issue: paginate() has no guard for page_size > 100.' paginate() is only called from fetch_all in sdk/client.py lines 88-91, which already caps page_size at 100. Thread PRRT_def (first comment id 5002): 'nitpick: rename tmp to buffer.' I renamed it in commit 3f9a1c2e. Draft both replies, resolve what should be resolved, and give the gh commands.",
+  "files": [],
+  "expected_behavior": [
+    "Both replies are posted inside their threads through the pulls/<n>/comments/<root-id>/replies endpoint with ids 5001 and 5002, not as a top-level PR comment",
+    "The first reply opens with the decision not to add the guard, then cites the caller cap with a line-anchored permalink on a full commit SHA, and names what would change the answer",
+    "The first thread is left unresolved because the reply declines",
+    "The second reply is one line starting with 'Done in 3f9a1c2e' with the SHA unticked, and its thread is resolved through the resolveReviewThread mutation using the PRRT_ id",
+    "The reply body goes in with -F body=@file, not -f",
+    "The agent checks that the pushed head SHA matches the commit it cites and re-fetches each reply to verify it landed",
+    "The agent presents each drafted reply with its thread and resolve decision for the user to approve, and runs no posting or resolving command until the user approves",
+    "<!--:robot:--> is the literal last line of each reply"
+  ]
+}

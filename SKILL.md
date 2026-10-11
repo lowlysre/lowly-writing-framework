@@ -1,6 +1,6 @@
 ---
 name: lowly-writing-framework
-description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, GitHub Discussion post/comment/answer, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, or reply_and_resolve_review_thread.
+description: BLOCKING REQUIREMENT. Invoke before writing or editing any PR title/body, issue body, GitHub Discussion post/comment/answer, PR review comment, README/docs prose, inline code comment, design doc/RFC/retrospective, or requirement/acceptance-criterion, including requests to edit, copy edit, revise, rewrite, reword, redo, polish, or refactor any of those artifacts, and before calling create_pull_request, update_pull_request, add_pr_review_comment, edit_pr_review_comment, reply_to_comment, reply_to_review_thread, or reply_and_resolve_review_thread.
 ---
 
 # Writing framework for dev artifacts
@@ -21,13 +21,14 @@ Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope
 - Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, linking docs the PR already carries, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
 - Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, known GitHub limitations, theme/styling, legends for color-coded diagrams)
 - Reviewing someone else's PR → `references/review-comments.md` (conventional comment labels, suggested edits)
+- Replying to reviewer feedback on your own PR, resolving a thread, or re-requesting review → `references/review-replies.md` (reply shapes, matching the reviewer's label, user review before posting, researching claims before replying, disagreeing with evidence, when to resolve or ask the reviewer, post-round updates)
 - Touching a README, doc, or code comment → `references/docs-and-comments.md` (present-tense rule)
 - Writing a design doc, RFC, or retrospective → `references/body-writing.md` for section structure and `references/docs-and-comments.md` for tense; sentence-level architecture for long-form prose is a voice-pack concern, not covered here
 - Running the finished-artifact self-check on any PR body, doc, or comment → `references/self-check.md`
 - Defining, clarifying, or implementing a requirement or acceptance criterion, in a dedicated requirements doc or inline in a comment/PR/commit → `references/requirements-ears.md` (EARS syntax, document mode vs. inline mode)
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
-- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, `gh discussion` and GraphQL-only discussion mutations)
+- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, review-thread replies and resolving, `gh discussion` and GraphQL-only discussion mutations)
 - Drafting a PR, issue, or discussion body → also read the `Bodies` sections of `references/calibration-examples.md`, plus its `PR Testing section` and `PR author annotations` section for a PR (before/after pairs for the judgment-call rules; skip the file for review comments, code comments, and docs). In meat proxy mode, read its `Meat proxy mode` section too
 
 ## Formatting
@@ -72,7 +73,7 @@ This skill governs the writing, never the change. Don't reshape a diff, drop a c
 - Applies whether or not the user explicitly asked to draft/revise/review something: the trigger is an artifact about to be produced (PR text, a doc, a comment, a requirement), not a request to write one
 - Trigger this skill before each of these, even when the session's main task was code, infra, or config work rather than "write a PR":
   - `create_pull_request`, `update_pull_request`
-  - `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, `reply_and_resolve_review_thread`
+  - `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, `reply_to_review_thread`, `reply_and_resolve_review_thread`
   - Writing or editing any code comment or doc line, the moment you do it, so narrative language doesn't sneak into the diff before the PR step
   - Defining, clarifying, or implementing a requirement or acceptance criterion, regardless of artifact: use `references/requirements-ears.md`
 - In a long session, don't rely on remembering this rule from the system prompt: treat each trigger above as fresh, regardless of how many turns or unrelated tool calls came before it

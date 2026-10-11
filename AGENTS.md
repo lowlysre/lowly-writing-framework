@@ -15,6 +15,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - `references/issue-writing.md`: issue titles, template selection, related-work references
 - `references/discussions.md`: GitHub Discussion kinds of post, category selection, threading and answer-marking, wrapping up, upvotes and reactions
 - `references/review-comments.md`: conventional comment labels and suggested edits for reviewing someone else's PR
+- `references/review-replies.md`: the PR author's side of review, reply shapes per thread, researching objective claims and abstract principles before replying, disagreeing with evidence, when to resolve or ask the reviewer, re-requesting review
 - `references/docs-and-comments.md`: present-tense rule for README/doc/code-comment prose
 - `references/self-check.md`: the finishing pass run over PR and issue bodies, docs, and comments
 - `references/requirements-ears.md`: EARS-syntax requirements, document mode vs. inline mode

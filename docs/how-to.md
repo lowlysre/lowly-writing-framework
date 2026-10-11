@@ -2,8 +2,6 @@
 
 - [Pair with a voice-pack skill](#pair-with-a-voice-pack-skill)
 - [Run the mechanical self-check by hand](#run-the-mechanical-self-check-by-hand)
-- [Write an EARS requirement](#write-an-ears-requirement)
-- [Write a Conventional Comments review](#write-a-conventional-comments-review)
 
 ## Pair with a voice-pack skill
 
@@ -38,11 +36,3 @@ grep -c '<!--:robot:-->$' body.md
 ```
 
 On Windows PowerShell, `Select-String` takes the same patterns; the file lists both forms per check. Zero hits on every check (and exactly one on the watermark count) means the mechanical pass is clean. The judgment checks in the same file still need a read.
-
-## Write an EARS requirement
-
-Full syntax, the five patterns, and document vs. inline mode live in `references/requirements-ears.md`. The short version: one sentence, one `SHALL`, one observable trigger; `should` and `may` mean it isn't a requirement yet.
-
-## Write a Conventional Comments review
-
-Full label list and decoration rules live in `references/review-comments.md`. The short version: open every comment with a plain-text label (`praise:`, `issue:`, `suggestion:`, and the rest), one comment per point, `<!--:robot:-->` on its own line at the end.

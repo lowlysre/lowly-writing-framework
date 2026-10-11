@@ -1,0 +1,14 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm the author of acme/sdk#91 and the fix is pushed. Thread PRRT_ghi (first comment id 6001): 'issue (security): the token is logged at debug level in sdk/auth.py.' I fixed it in commit 9b2d4e1f by redacting the token inside the logger's formatter, so every call site is covered, instead of removing the one log line. Thread PRRT_jkl (first comment id 6002): 'nitpick: typo, recieve -> receive.' I fixed it in commit 9b2d4e1f. Draft both replies, say which threads to resolve, and give the gh commands.",
+  "files": [],
+  "expected_behavior": [
+    "The first reply opens 'Done in 9b2d4e1f' with the SHA unticked, says the fix redacts in the formatter instead of removing the log line, and ends with one specific question asking the reviewer whether that covers what they meant",
+    "The first thread is left open: no resolveReviewThread call for PRRT_ghi, because it is a security issue and the author chose between several fixes",
+    "The second reply is one line starting with 'Done in 9b2d4e1f' and its thread is resolved through the resolveReviewThread mutation with the PRRT_jkl id",
+    "Both replies go through the pulls/<n>/comments/<root-id>/replies endpoint with ids 6001 and 6002, body passed via -F body=@file",
+    "The agent re-requests review from the security reviewer after the replies are posted",
+    "The agent presents each drafted reply with its thread and resolve decision for the user to approve, and runs no posting, resolving, or review-request command until the user approves",
+    "<!--:robot:--> is the literal last line of each reply"
+  ]
+}
