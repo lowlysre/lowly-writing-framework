@@ -124,5 +124,5 @@ Tagged with git tags in semver form (`v1.0.0`). A change to `SKILL.md`'s `descri
 The docs under `docs/` follow [Diátaxis](https://diataxis.fr/), one file per kind of question:
 
 - Learning: [docs/tutorial.md](docs/tutorial.md) walks through drafting a first PR body
-- Doing: [docs/how-to.md](docs/how-to.md) pairs a voice pack, runs the self-check by hand, and starts an EARS requirement or a Conventional Comments review
+- Doing: [docs/how-to.md](docs/how-to.md) pairs a voice pack and runs the self-check by hand
 - Understanding: [docs/explanation.md](docs/explanation.md) explains the framework/voice split and the frameworks the rules enforce
