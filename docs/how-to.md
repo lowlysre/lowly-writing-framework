@@ -2,6 +2,7 @@
 
 - [Pair with a voice-pack skill](#pair-with-a-voice-pack-skill)
 - [Run the mechanical self-check by hand](#run-the-mechanical-self-check-by-hand)
+- [Reply to review feedback on your own PR](#reply-to-review-feedback-on-your-own-pr)
 - [Write an EARS requirement](#write-an-ears-requirement)
 - [Write a Conventional Comments review](#write-a-conventional-comments-review)
 
@@ -41,7 +42,14 @@ On Windows PowerShell, `Select-String` takes the same patterns; the file lists b
 
 ## Reply to review feedback on your own PR
 
-Full reply shapes, the disagreement rules, and when to resolve a thread live in `references/review-replies.md`. The short version: push first, reply inside each thread starting with the outcome (`Done in <sha>`, the answer, the decision with its evidence, or a link to the follow-up issue), resolve only threads that are done, and re-request review once the replies are in.
+Use this once you've pushed fixes and want to answer the reviewer's threads. The rules the agent follows live in `references/review-replies.md`.
+
+1. Push your fixes, then ask the agent to reply to the open review threads on your PR.
+2. The agent shows each reviewer comment next to its drafted reply and says whether it would resolve the thread or leave it open. Edit any reply you want worded differently, then approve. Nothing posts before that.
+3. Expect some threads to stay open. When a fix was a judgment call, or answers a correctness or security concern, the reply ends with a question so the reviewer can confirm it themselves.
+4. Replies that decline a suggestion or cite outside sources get a second look from you, since those are the ones a reviewer is most likely to push back on.
+5. If you'd rather skip the review step, say so ("just post them"). That holds for the current session only.
+6. Once the replies are in, the agent re-requests review from anyone with blocking feedback or an open thread.
 
 ## Write an EARS requirement
 
