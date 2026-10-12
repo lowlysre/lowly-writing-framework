@@ -57,9 +57,6 @@ The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills) 
 
 ```sh
 npx skills add lowlysre/lowly-writing-framework -g
-```
-
-```sh
 gh skill install lowlysre/lowly-writing-framework --scope user
 ```
 
@@ -69,9 +66,6 @@ To update:
 
 ```sh
 npx skills update lowly-writing-framework
-```
-
-```sh
 gh skill update lowly-writing-framework
 ```
 
