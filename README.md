@@ -3,7 +3,7 @@
 # lowly-writing-framework
 
 <!-- token-badges:start -->
-[![always loaded: ~120 tokens](https://img.shields.io/badge/always%20loaded-~120%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~27k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~27k%20tokens-informational)](#token-budget)
+[![always loaded: ~130 tokens](https://img.shields.io/badge/always%20loaded-~130%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~27k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~27k%20tokens-informational)](#token-budget)
 <!-- token-badges:end -->
 
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits.
@@ -53,21 +53,23 @@ A voice pack co-activates only when its `description` frontmatter lists the same
 
 ## Install and update
 
-The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills):
+The skill installs with the [Skills CLI](https://github.com/vercel-labs/skills) or with `gh skill`:
 
 ```sh
 npx skills add lowlysre/lowly-writing-framework -g
+gh skill install lowlysre/lowly-writing-framework --scope user
 ```
 
-`-g` installs into your user directory so the skill loads in every project. Drop it to install into the current project only.
+`-g` and `--scope user` install into your user directory so the skill loads in every project. Drop them to install into the current project only.
 
 To update:
 
 ```sh
 npx skills update lowly-writing-framework
+gh skill update lowly-writing-framework
 ```
 
-The CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
+Either CLI deletes and recreates the skill directory on update, so don't keep local edits inside it. Fork the repo instead.
 
 ### Plugin with an activation reminder
 
@@ -85,7 +87,7 @@ Codex CLI and Windows setup are covered in the [plugin README](https://github.co
 
 ## Configuration
 
-The skill's body length ceiling is 3,000 characters. Set the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable to a number of characters to change it for the `gh` length gate in `references/gh-cli.md`:
+The skill's body length ceiling is 3,000 characters. Set the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable to a number of characters to change it for the `gh` length gate in `skills/lowly-writing-framework/references/gh-cli.md`:
 
 ```powershell
 $env:LOWLY_WRITING_BODY_LENGTH_CEILING = 4000
@@ -97,7 +99,7 @@ export LOWLY_WRITING_BODY_LENGTH_CEILING=4000
 
 ## Layout
 
-`SKILL.md` is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
+The skill lives in `skills/lowly-writing-framework/`, the path both `npx skills` and `gh skill` discover. `SKILL.md` there is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
 
 ## Token budget
 
@@ -106,7 +108,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 <!-- token-table:start -->
 | Tier | What loads | Tokens |
 |---|---|---|
-| Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~120 |
+| Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~130 |
 | On activation | `SKILL.md` body | ~3,300 |
 | On demand | Every file under `references/` | ~26,700 |
 <!-- token-table:end -->

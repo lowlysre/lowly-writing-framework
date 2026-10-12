@@ -4,16 +4,17 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { countTokens } from "gpt-tokenizer/encoding/o200k_base";
 
+const skillDir = "skills/lowly-writing-framework";
 const read = (path) => readFileSync(path, "utf8").replace(/\r\n/g, "\n");
 
-const skill = read("SKILL.md");
+const skill = read(join(skillDir, "SKILL.md"));
 const match = skill.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
 if (!match) throw new Error("SKILL.md has no YAML frontmatter");
 const [, frontmatter, body] = match;
 
-const refs = readdirSync("references")
+const refs = readdirSync(join(skillDir, "references"))
   .filter((f) => f.endsWith(".md"))
-  .reduce((sum, f) => sum + countTokens(read(join("references", f))), 0);
+  .reduce((sum, f) => sum + countTokens(read(join(skillDir, "references", f))), 0);
 
 const tiers = [
   { label: "always loaded", what: "`SKILL.md` frontmatter (`name`, `description`)", tokens: countTokens(frontmatter) },
