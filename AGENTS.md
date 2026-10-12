@@ -1,12 +1,14 @@
 # AGENTS.md
 
-This repo is the skill itself, `SKILL.md` plus the files under `references/`. There's no code to build or test, editing these files *is* the product.
+This repo is the skill itself, `skills/lowly-writing-framework/SKILL.md` plus the files under `skills/lowly-writing-framework/references/`. There's no code to build or test, editing these files *is* the product.
 
 ## Scope
 
 This skill owns structure and mechanics: what an artifact contains, where each section sits, whether a reference autolinks, which grep catches a slip. Voice, tone, humor, punctuation preferences, and phrasing taste belong to a separately installed voice-pack skill that co-activates on the same triggers. Before adding a rule here, ask whether it changes the artifact's structure or only how a sentence sounds; the second kind doesn't belong in this repo.
 
 ## Layout
+
+Paths below are relative to `skills/lowly-writing-framework/` unless they start with `evals/` or `docs/`.
 
 - `SKILL.md`: the always-loaded entry point, scope/formatting/boundaries rules that apply everywhere, plus a routing table into `references/`
 - `references/body-writing.md`: body structure shared by PR, issue, and discussion bodies (fill-template, Context section, linking docs the PR already carries, length ceiling, diagrams), loaded alongside whichever of the files below applies
