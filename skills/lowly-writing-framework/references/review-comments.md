@@ -15,6 +15,16 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 - Review comments already carry severity through the label (`issue (security):`); don't also wrap the body in a `> [!WARNING]` admonition, that's marking the same thing twice
 - Append `<!--:robot:-->` as the last line, per the `## AI watermark` rule in `references/pr-writing.md`
 
+## Delivery mode
+
+"Leave comments" means one of three things. Pick the mode before drafting, because it decides the tool and whether a pending review exists:
+
+- Staged review comments: the user asks to review, stage, or leave review comments on a PR the session is linked to. Use `add_pr_review_comment`; the comments sit in a pending review the user submits
+- Annotated line comments: the user says not to stage, or wants comments posted now, or the session has no linked PR. Post each with the `gh api .../pulls/<n>/comments` call in `references/gh-cli.md`; each lands immediately as its own single-comment review
+- PR-level comment: the point isn't tied to a line, or spans several files. Post with `gh pr comment --body-file`, labeled the same way
+
+A missing PR link only rules out `add_pr_review_comment`, not posting. When the user names a PR, fall back to `gh` instead of stopping at drafts; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
+
 ## Suggested edits
 
 A suggested edit is a `suggestion` fenced block inside a line comment on the PR's **Files changed** tab. The author applies it with **Commit suggestion** (or batches several into one commit), and GitHub credits the reviewer as co-author. Reach for one when the fix is mechanical and the exact replacement text is known.

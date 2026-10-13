@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm reviewing acme/sdk#88, which someone else wrote. This session has no PR linked. Leave comments on `sdk/config.py` line 41 (a question about the hardcoded 30) and one general note that the PR has no tests. Don't stage a review, just leave normal comments.",
+  "files": [],
+  "expected_behavior": [
+    "Does not stop at pasteable drafts or say comments can't be posted because no PR is linked",
+    "Does not call add_pr_review_comment and does not create a pending review",
+    "Posts the line 41 comment as a annotated line comment through gh api repos/acme/sdk/pulls/88/comments with -F body=@file, commit_id from the PR head SHA, and side RIGHT",
+    "Posts the no-tests note as a PR-level comment through gh pr comment --body-file",
+    "Both comments carry a plain-text conventional label and end with <!--:robot:--> as the last line",
+    "Re-fetches each posted comment body to verify what landed"
+  ]
+}

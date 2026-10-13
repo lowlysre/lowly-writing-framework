@@ -7,6 +7,6 @@
     "Each annotation starts with `note:` and is one to two sentences",
     "Each annotation ends with <!--:robot:--> as its literal last line",
     "The breaking `Client.send` return type change stays in the PR body, with what a consumer has to do about it, and is not moved into a line comment",
-    "Each annotation is posted as a standalone line comment (for example `gh api .../pulls/88/comments`) after the agent compares the PR author with the session's user, not as a pending review and not through `add_pr_review_comment`"
+    "Each annotation is posted as a annotated line comment (for example `gh api .../pulls/88/comments`) after the agent compares the PR author with the session's user, not as a pending review and not through `add_pr_review_comment`"
   ]
 }
