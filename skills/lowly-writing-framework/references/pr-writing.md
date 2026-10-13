@@ -42,7 +42,7 @@ A small aside about a specific line or file, one that doesn't change a reviewer'
   - A deleted block has no right-side lines. Anchor on the deleted lines themselves with `side=LEFT` (and `start_side=LEFT`), using their line numbers in the base file. Fall back to an adjacent context line only when the API rejects it, and then say "the block below" or "the block above" in the note
 - Start it with `note:` and keep it to a sentence or two. The reviewer labels from `references/review-comments.md` aren't needed otherwise
 - Append the `<!--:robot:-->` watermark per the rule below, on its own last line
-- Post them after the PR exists and its head is pushed, as standalone line comments, one per annotation. An author doesn't leave a review, so never a pending review, and never `add_pr_review_comment`: that tool stages into a pending review and is for reviewing someone else's PR. Post through `gh api`, see `Author annotations` in `references/gh-cli.md`
+- Post them after the PR exists and its head is pushed, as annotated line comments, one per annotation. An author doesn't leave a review, so never a pending review, and never `add_pr_review_comment`: that tool stages into a pending review and is for reviewing someone else's PR. Post through `gh api`, see `Author annotations` in `references/gh-cli.md`
 
 ## AI watermark
 

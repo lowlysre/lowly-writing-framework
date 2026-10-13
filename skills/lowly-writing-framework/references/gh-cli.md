@@ -69,7 +69,7 @@ gh api repos/{owner}/{repo}/pulls/<n>/comments \
 
 ## Author annotations
 
-When the current user authored the PR (`gh api user -q .login` equals `gh pr view <n> --json author -q .author.login`), post each annotation from `references/pr-writing.md` as a standalone line comment with the same `gh api .../pulls/<n>/comments` call as `Suggested edits` above, one call per annotation, `-F body=@path`, current head SHA. Each posts immediately as its own single-comment review; nothing is left pending. Don't use `add_pr_review_comment` here, it stages into a pending review.
+When the current user authored the PR (`gh api user -q .login` equals `gh pr view <n> --json author -q .author.login`), post each annotation from `references/pr-writing.md` as a annotated line comment with the same `gh api .../pulls/<n>/comments` call as `Suggested edits` above, one call per annotation, `-F body=@path`, current head SHA. Each posts immediately as its own single-comment review; nothing is left pending. Don't use `add_pr_review_comment` here, it stages into a pending review.
 
 - Anchor a note about a block on the whole range: add `-F start_line=<first> -f start_side=RIGHT` and set `line` to the last line, so the UI highlights everything the note covers. A single line above the block is hard to connect to it
 - Only lines in the diff can carry a comment, and a range has to stay inside one hunk. A deleted block has no right-side lines: anchor on the deleted lines with `-f side=LEFT -f start_side=LEFT`, using their line numbers in the base file. If the API returns `422`, fall back to the adjacent context line with `side=RIGHT` and word the note "the block below" or "the block above"
