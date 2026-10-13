@@ -23,6 +23,8 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 - Annotated line comments: the user says not to stage, or wants comments posted now, or the session has no linked PR. Post each with the `gh api .../pulls/<n>/comments` call in `references/gh-cli.md`; each lands immediately as its own single-comment review
 - PR-level comment: the point isn't tied to a line, or spans several files. Post with `gh pr comment --body-file`, labeled the same way
 
+Anchor every finding that points at a line in the diff to that line, one comment each. Never fold several line-level findings into one PR-level comment: threads can't be resolved individually, suggested edits can't be applied, and the author has to hunt for the lines. A PR-level comment carries only cross-cutting points. When it carries more than one, give each its own labeled bullet or short heading, not a run of paragraphs.
+
 A missing PR link only rules out `add_pr_review_comment`, not posting. When the user names a PR, fall back to `gh` instead of stopping at drafts; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
 
 ## Suggested edits
