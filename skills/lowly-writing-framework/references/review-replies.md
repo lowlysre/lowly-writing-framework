@@ -34,6 +34,12 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
   - `question:` is answered, not marked done
   - `thought:` and `note:` need a reply only if they ask for something
   - `praise:` gets a thumbs-up reaction, not a reply
+- On a thread opened by a bot (Copilot code review or any other automated reviewer), also react to the thread's first comment, matching the outcome, so the verdict shows without opening the reply:
+  - Done: `+1` (thumbs up)
+  - Not doing: `-1` (thumbs down)
+  - Later: `eyes`
+  - Answer gets no reaction
+  - A human reviewer's thread gets no outcome reaction; reply only. The reaction goes on the root comment, never on your own reply. Post it in the same step as the reply and list it in the user review before posting
 - Append `<!--:robot:-->` as the last line of a reply an agent drafted, per the `## AI watermark` rule in `references/pr-writing.md`
 
 ## Disagreeing

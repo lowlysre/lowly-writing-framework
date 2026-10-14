@@ -1,0 +1,15 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm the author of acme/sdk#88 and the fixes are pushed. Copilot's reviewer (copilot-pull-request-reviewer) left three threads. Thread PRRT_a (first comment id 6001): 'Missing null check on `resp.items`.' I fixed it in commit 3f9a1c2e. Thread PRRT_b (first comment id 6002): 'Use `==` instead of `is` here.' I'm keeping `is` because the value is a singleton sentinel. Thread PRRT_c (first comment id 6003): 'Consider batching these writes.' I'm filing that as acme/sdk#91. A human reviewer, dana, also left thread PRRT_d (first comment id 6004): 'nitpick: rename tmp to buffer.' Done in 3f9a1c2e. Draft the replies and give the gh commands. I've approved posting without review.",
+  "files": [],
+  "expected_behavior": [
+    "Each reply is posted inside its thread through the pulls/<n>/comments/<root-id>/replies endpoint, with root ids 6001 through 6004",
+    "A reaction is added to each Copilot thread's first comment through pulls/comments/<id>/reactions on ids 6001, 6002, and 6003, never on the reply",
+    "Thread 6001 gets content '+1', thread 6002 gets content '-1', and thread 6003 gets content 'eyes'",
+    "Dana's thread 6004 gets a reply but no reaction",
+    "The agent confirms the thread authors are bots before reacting",
+    "The later reply for 6003 links acme/sdk#91 in the full owner/repo#123 form",
+    "Threads 6002 and 6003 stay open, since the replies decline or defer",
+    "The reply body goes in with -F body=@file, not -f"
+  ]
+}
