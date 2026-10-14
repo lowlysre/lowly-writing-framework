@@ -2,18 +2,29 @@
 
 Loaded from `SKILL.md` when drafting or posting a review comment on someone else's PR.
 
-Same structural rules as everywhere: why over how, one point per sentence. Label every comment using [conventional comments](https://conventionalcomments.org/): `praise:`, `nitpick:`, `suggestion:`, `issue:`, `question:`, `thought:`, `chore:`, `note:`. Add a decoration when it changes how the author should act, `suggestion (non-blocking):`, `issue (security):`. Unlabeled `issue:`/`suggestion:` read as blocking, so mark non-blocking ones explicitly.
+Same structural rules as everywhere: why over how, one point per sentence. Label every comment using [conventional comments](https://conventionalcomments.org/): `praise:`, `nitpick:`, `suggestion:`, `issue:`, `question:`, `thought:`, `chore:`, `note:`. Add a decoration when it changes how the author should act, `suggestion (non-blocking):`, `issue (security):`.
 
-- Labels are plain text: `issue:`, not bolded or backticked. `issue:` and `suggestion:` are blocking by default, so a `(blocking)` decoration is noise; only the non-default decoration earns ink
+- Labels are plain text: `issue:`, not bolded or backticked. `issue:` and `suggestion:` are blocking by default, so mark non-blocking ones explicitly; a `(blocking)` decoration is noise, only the non-default decoration earns ink
 - One comment, one point, don't stack unrelated feedback in a thread
 - `suggestion:` says what to change and why; use a GitHub suggested edit (see `Suggested edits` below) for a few-line fix
 - `question:` is a real question, not a suggestion wearing a question mark. If you already know the answer you want, use `suggestion:` instead
 - Review the change the author is actually trying to make, not just the line they touched. When the diff solves the literal ask but misses the real problem, name that before nitpicking mechanics
 - Probe before you prescribe on risky changes: one or two sharp `why` questions beat a barrage of directives
-- `nitpick:` is always non-blocking by definition, don't pile them on
+- `nitpick:` is always non-blocking, don't pile them on
 - `praise:` is fine and encouraged when earned, one line, no gushing
-- Review comments already carry severity through the label (`issue (security):`); don't also wrap the body in a `> [!WARNING]` admonition, that's marking the same thing twice
+- The label already carries severity (`issue (security):`); don't also wrap the body in a `> [!WARNING]` admonition
 - Append `<!--:robot:-->` as the last line, per the `## AI watermark` rule in `references/pr-writing.md`
+
+## Review order and priorities
+
+- Read the PR body and decide whether the change should exist at all before reading code. If not, say so first, with what to do instead, so the author doesn't polish work that gets thrown away
+- Review the main file first, then the rest. When the design is wrong, post that comment immediately instead of finishing the pass, since most line comments disappear with the redesign
+- Weigh design, behavior, needless complexity, tests that would actually fail on a regression, and docs the change makes stale before naming and style. Flag speculative generality (`suggestion:` to solve today's problem) as complexity, not polish
+- The agent drafts comments only; the approve, request-changes, or merge verdict is the user's
+- When you couldn't follow the code, ask for it to be rewritten clearer or commented in the code, not explained in the thread. An explanation that lives only in the review is lost to the next reader
+- Style the repo doesn't specify follows the surrounding code, and the author's choice when nothing surrounds it. Several valid designs: accept the author's, don't argue preference
+- A comment about the code, not the author: "this adds a thread with no measured benefit", not "why did you add a thread"
+- `praise:` names what was good and why, so the author repeats it
 
 ## Delivery mode
 
@@ -36,7 +47,7 @@ A suggested edit is a `suggestion` fenced block inside a line comment on the PR'
 - An empty `suggestion` block deletes the anchored lines
 - Keep the `suggestion:` label and its one-sentence why above the block. The block shows what, the sentence says why
 - Keep a suggestion to about 5 anchored lines. Past that, the block is hard to review inline, easy to apply wrongly, and goes stale on the author's next push. Describe a larger change in a plain `suggestion:` comment, or split it into separate comments that each stand alone
-- Only comment lines that appear in the diff can carry one. Code outside the diff, or a point spanning several files, gets a plain `suggestion:` describing the change
+- Only lines in the diff can carry one. Code outside the diff, or a point spanning several files, gets a plain `suggestion:` describing the change
 - A suggestion in a pending (unsubmitted) review can't be applied yet, and one on a resolved, outdated, or closed-PR thread can't be applied at all
 - One suggestion block per comment; two edits to different lines are two comments
 - To show a code fence inside a suggestion, open and close the block with four backticks so the inner three-backtick fence doesn't end it early

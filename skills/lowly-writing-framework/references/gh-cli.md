@@ -1,14 +1,14 @@
 # gh CLI mechanics
 
-Loaded from `SKILL.md` whenever posting or editing a PR title/body, PR/issue comment, or any other GitHub-hosted text directly through the `gh` CLI. Structured-parameter tools (`create_pull_request`, `update_pull_request`, `reply_to_comment`, etc.) sidestep everything on this page, they never touch a shell string. This page is only for cases that go through `gh` or `gh api` directly. Sidestepping the shell mechanics here doesn't sidestep `references/self-check.md`: run it against the body before every `update_pull_request` call the same as before a `gh pr edit`, a structured tool is still a live edit to the PR.
+Loaded from `SKILL.md` whenever posting or editing a PR title/body, PR/issue comment, or any other GitHub-hosted text directly through the `gh` CLI. Structured-parameter tools (`create_pull_request`, `update_pull_request`, `reply_to_comment`, etc.) sidestep everything on this page, they never touch a shell string. They don't sidestep `references/self-check.md`: run it against the body before every `update_pull_request` call the same as before a `gh pr edit`, a structured tool is still a live edit to the PR.
 
 ## Reading state before you edit
 
-Before editing an existing PR title/body, issue body, or any other live GitHub text, always fetch the current text first (`gh pr view <n> --json title,body`, `gh issue view <n> --json body`, `gh discussion view <n> --json title,body`), never edit from an earlier draft still sitting in the conversation. The user may have hand-tweaked it since, and writing from a stale copy silently reverts their edits. Apply the adjustment to the fetched text, preserving everything not being changed.
+Before editing an existing PR title/body, issue body, or any other live GitHub text, always fetch the current text first (`gh pr view <n> --json title,body`, `gh issue view <n> --json body`, `gh discussion view <n> --json title,body`), never from an earlier draft in the conversation. The user may have hand-tweaked it since, and writing from a stale copy silently reverts their edits. Apply the change to the fetched text, preserving everything else.
 
 ## Looking up a person's name
 
-When the user refers to a person by anything other than their GitHub username (a first name, a full name, an email, or a handle from another system), for example "tag Dana" or "reply to Sam", resolve who they mean before writing the name or an @mention into a body or comment. Don't guess a username or a surname.
+When the user names a person by anything other than their GitHub username (first name, full name, email, or another system's handle), for example "tag Dana" or "reply to Sam", resolve who they mean before writing the name or an @mention into a body or comment. Don't guess a username or a surname.
 
 - Name for a known username: `gh api users/<login> --jq '.name // .login'`. `name` is null when the profile has none, so fall back to the login
 - Username for a name or email: `gh api -X GET search/users -f q='<first last> in:fullname' --jq '.items[:5][].login'`, or `-f q='<email> in:email'`, which only matches public emails. Then confirm each candidate with the call above
@@ -18,13 +18,13 @@ When the user refers to a person by anything other than their GitHub username (a
 
 ## Writing text safely
 
-Never inline markdown as a shell string. Each shell's escaping (backtick, `$`, caret) mangles a body unpredictably the moment it contains backticks, code fences, or `$` references. Write the body to a temp file instead and pass `--body-file <path>` (`gh pr comment`, `gh pr edit`, `gh issue comment`, `gh discussion create`/`edit`/`comment`) or `-F body=@path` (`gh api`), then delete the temp file.
+Never inline markdown as a shell string. Each shell's escaping (backtick, `$`, caret) mangles a body unpredictably the moment it contains backticks, code fences, or `$` references. Write it to a temp file instead and pass `--body-file <path>` (`gh pr comment`, `gh pr edit`, `gh issue comment`, `gh discussion create`/`edit`/`comment`) or `-F body=@path` (`gh api`), then delete the temp file.
 
-`-f` never reads a file, `-F` does. The letter means different things on different subcommands: on `gh discussion`, `-F` is short for `--body-file` and takes a path by itself; on `gh api`, `-F` is `--field` and takes `key=@path`. Spell out the long flag when the command isn't `gh api`, so the two can't be confused. `gh api`'s `-f/--raw-field` is a literal string field, `@path` there posts the literal string `@path` as the body instead of the file's contents, and the call still exits `0`. Only `-F/--field` triggers the `@path` file read. Same trap applies to any other `gh api` field meant to hold drafted text, not just `body`.
+`-f` never reads a file, `-F` does. The letter means different things on different subcommands: on `gh discussion`, `-F` is short for `--body-file` and takes a path by itself; on `gh api`, `-F` is `--field` and takes `key=@path`. Spell out the long flag when the command isn't `gh api`, so the two can't be confused. `gh api`'s `-f/--raw-field` is a literal string field, `@path` there posts the literal string `@path` as the body instead of the file's contents, and the call still exits `0`. Only `-F/--field` triggers the `@path` file read. The trap applies to any `gh api` field holding drafted text, not just `body`.
 
 ## Gating the post on length
 
-Don't eyeball the length ceiling from `references/self-check.md` right before a `gh` call, measure the temp file and branch on the result, so an over-length body never reaches the API in the first place. The ceiling defaults to 3,000 characters; a user can override it by setting the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable:
+Don't eyeball the length ceiling from `references/self-check.md` right before a `gh` call, measure the temp file and branch on the result, so an over-length body never reaches the API. The ceiling defaults to 3,000 characters; the user can override it with the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable:
 
 ```powershell
 $max = if ($env:LOWLY_WRITING_BODY_LENGTH_CEILING) { [int]$env:LOWLY_WRITING_BODY_LENGTH_CEILING } else { 3000 }
@@ -40,9 +40,9 @@ len=$(wc -c < body.md)
 gh pr edit <n> --body-file body.md
 ```
 
-Swap the measurement for a word count when the limit in play is a word count instead of a character ceiling (a review comment convention, a tracker's own field limit): `(Get-Content -Raw body.md).Split() | Where-Object { $_ -ne '' } | Measure-Object` on Windows, `wc -w < body.md` on Linux/macOS. Same shape either way: count, compare against the known valid range, only call `gh` in the branch that passes.
+Swap in a word count when the limit is a word count, not a character ceiling (a review comment convention, a tracker's own field limit): `(Get-Content -Raw body.md).Split() | Where-Object { $_ -ne '' } | Measure-Object` on Windows, `wc -w < body.md` on Linux/macOS. Same shape either way: count, compare against the known valid range, only call `gh` in the branch that passes.
 
-This gate catches an oversized body before the round-trip to GitHub. It doesn't replace the re-fetch-and-diff step in `Verifying what landed` below, a body can pass the length gate and still get mangled by shell escaping on the way out.
+This gate doesn't replace the re-fetch-and-diff step in `Verifying what landed` below: a body can pass the length gate and still get mangled by shell escaping on the way out.
 
 ## Verifying what landed
 
@@ -62,14 +62,14 @@ gh api repos/{owner}/{repo}/pulls/<n>/comments \
 ```
 
 - Add `-F start_line=40 -f start_side=RIGHT` to anchor a multi-line range; `line` is then the last line of the range
-- `line` is a line number in the file at `commit_id`, not a position in the diff, and it has to be a line the PR touches or its surrounding context, or the API returns `422`
-- Use the PR's current head SHA, not an older one: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
+- `line` is a line number in the file at `commit_id`, not a position in the diff, and it must be a line the PR touches or its surrounding context, or the API returns `422`
+- Use the PR's current head SHA: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
 - To batch several reviewer comments on someone else's PR into one notification, create a pending review first (`POST .../pulls/<n>/reviews` with `comments[]`, no `event`) and submit it once, instead of one call per comment. Not for the PR author's own annotations, see `Author annotations` below
 - Verify with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
 
 ## Author annotations
 
-When the current user authored the PR (`gh api user -q .login` equals `gh pr view <n> --json author -q .author.login`), post each annotation from `references/pr-writing.md` as a annotated line comment with the same `gh api .../pulls/<n>/comments` call as `Suggested edits` above, one call per annotation, `-F body=@path`, current head SHA. Each posts immediately as its own single-comment review; nothing is left pending. Don't use `add_pr_review_comment` here, it stages into a pending review.
+When the current user authored the PR (`gh api user -q .login` equals `gh pr view <n> --json author -q .author.login`), post each annotation from `references/pr-writing.md` as an annotated line comment with the same `gh api .../pulls/<n>/comments` call as `Suggested edits` above, one call per annotation, `-F body=@path`, current head SHA. Each posts immediately as its own single-comment review; nothing is left pending. Don't use `add_pr_review_comment` here, it stages into a pending review.
 
 - Anchor a note about a block on the whole range: add `-F start_line=<first> -f start_side=RIGHT` and set `line` to the last line, so the UI highlights everything the note covers. A single line above the block is hard to connect to it
 - Only lines in the diff can carry a comment, and a range has to stay inside one hunk. A deleted block has no right-side lines: anchor on the deleted lines with `-f side=LEFT -f start_side=LEFT`, using their line numbers in the base file. If the API returns `422`, fall back to the adjacent context line with `side=RIGHT` and word the note "the block below" or "the block above"
@@ -127,4 +127,4 @@ What needs `gh api graphql`:
 - `createDiscussion` has no poll field, so polls can't be created through the API. Voting on an existing poll is `addDiscussionPollVote`
 - Re-fetch a comment body to verify what landed, since `gh discussion view` has no single-comment `--json body`: `gh api graphql -f query='query($id:ID!){node(id:$id){... on DiscussionComment{body}}}' -f id=<comment-node-id> --jq .data.node.body`. For the opening post, `gh discussion view <n> --json body --jq .body` is enough
 
-The same `-f`/`-F` trap from `Writing text safely` applies to every mutation above: the body variable has to go through `-F b=@body.md`, a `-f b=@body.md` posts the literal string `@body.md` and exits `0`.
+The same `-f`/`-F` trap from `Writing text safely` applies to every mutation above: the body variable must go through `-F b=@body.md`, a `-f b=@body.md` posts the literal string `@body.md` and exits `0`.

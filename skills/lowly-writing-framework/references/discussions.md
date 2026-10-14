@@ -4,7 +4,7 @@ Loaded from `SKILL.md` when drafting or editing a GitHub Discussion post, a disc
 
 ## Kinds of post
 
-Decide what the post is for before picking a category, the kind decides where it goes and how the thread ends:
+Decide the post's kind before picking a category, it decides where it goes and how the thread ends:
 
 - Question: needs one resolving answer
 - Proposal or idea: needs feedback, and eventually a decision

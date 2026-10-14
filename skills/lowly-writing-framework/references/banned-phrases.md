@@ -19,7 +19,7 @@ These make a claim without evidence. Replace with the concrete property.
 
 ## Connective filler
 
-These pad transitions without adding information. Delete the opener and start the sentence at the subject.
+These pad transitions without information. Delete the opener and start the sentence at the subject.
 
 - **Additionally,** / **Furthermore,** / **Moreover,**: just start the next sentence
 - **Notably,**: the fact is notable enough; the word adds nothing
@@ -36,7 +36,7 @@ These pad transitions without adding information. Delete the opener and start th
 
 ## AI-era tells
 
-Phrases that have become de facto signals of LLM output since 2023.
+De facto signals of LLM output since 2023.
 
 - **delve** / **delves into** / **delving**: say "explains", "covers", "walks through", or be specific
 - **leverage** / **leverages** / **leveraging** / **utilize** / **utilizes** / **utilizing**: say "uses"; "uses the SDK's config" beats "leverages the SDK's config"
@@ -50,7 +50,7 @@ Phrases that have become de facto signals of LLM output since 2023.
 - **actionable**: say the concrete action
 - **holistic**: say what's covered end-to-end and why it matters
 - **synergy** / **synergies**: say the specific interaction
-- **innovative** / **cutting-edge** / **state-of-the-art**: these are marketing words; drop them or say what makes the approach novel
+- **innovative** / **cutting-edge** / **state-of-the-art**: marketing words; drop them or say what makes the approach novel
 - **belt-and-suspenders** / **belt and braces**: name the two safeguards and the failure each one catches that the other doesn't; if neither catches anything the other misses, drop one
 
 ## Hedging and soft-launch language

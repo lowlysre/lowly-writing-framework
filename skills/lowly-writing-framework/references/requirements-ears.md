@@ -1,6 +1,6 @@
 # Requirements (EARS)
 
-Loaded from `SKILL.md` when defining, clarifying, or reviewing requirements: issue acceptance criteria, PR "what this should do" sections, design doc requirement lists, ticket grooming, or a review comment pointing out an ambiguous spec. Applies regardless of which repo/org template wraps around it, EARS is a sentence-level pattern, not a document format, so it fits inside whatever headings the template already has.
+Loaded from `SKILL.md` when defining, clarifying, or reviewing requirements: issue acceptance criteria, PR "what this should do" sections, design doc requirement lists, ticket grooming, or a review comment pointing out an ambiguous spec. Applies inside any repo/org template: EARS is a sentence-level pattern, not a document format, so it fits under whatever headings the template already has.
 
 EARS (Easy Approach to Requirements Syntax, [Alistair Mavin et al., IEEE RE 2009](https://ieeexplore.ieee.org/document/5211796)) constrains every requirement to one of five sentence patterns. Pick the pattern the requirement actually is, don't force everything into "the system shall."
 
@@ -22,7 +22,7 @@ Two modes, same patterns:
 - **Optional feature** (present only when a feature flag/variant applies): `WHERE <feature is included> THE <system> SHALL <response>`
   - `WHERE multi-region replication is enabled THE system SHALL write to at least 2 regions before acknowledging`
 
-Combine clauses when a requirement genuinely needs more than one condition (`WHEN <trigger> WHILE <state> THE <system> SHALL <response>`), but don't stack clauses just to cram unrelated requirements into one sentence, split those into separate requirements instead.
+Combine clauses when a requirement genuinely needs more than one condition (`WHEN <trigger> WHILE <state> THE <system> SHALL <response>`), but don't stack clauses to cram unrelated requirements into one sentence, split those into separate requirements.
 
 ## Rules
 
@@ -42,4 +42,4 @@ Reread every requirement you wrote or edited. Any hit means rewrite:
 - a compound requirement joined by "and"/"or" that's really two requirements
 - a vague trigger or state ("when appropriate", "if needed", "under load") with no observable condition
 - a requirement with no way to test pass/fail as written
-- a requirement that was accurate when first written but describes a trigger, threshold, or response the diff no longer implements after a later edit: re-check the `SHALL` sentence against the current code, not against what was true when you typed it
+- a requirement that was accurate when first written but describes a trigger, threshold, or response the diff no longer implements after a later edit: re-check the `SHALL` sentence against the current code
