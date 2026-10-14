@@ -13,14 +13,14 @@ This skill owns structure and mechanics only: what an artifact contains, where e
 
 Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope. A separately installed voice-pack skill may layer those on top; when both are installed, both apply to the same artifact, this skill for what goes where and the voice pack for how it reads.
 
-**Formatting**, **Never trim these**, **Boundaries**, and **Anti-patterns** below apply everywhere. For anything PR-specific, review-comment-specific, or doc/comment-specific, open the matching reference file when you're actually about to write that artifact:
+**Formatting**, **Never trim these**, **Boundaries**, and **Anti-patterns** below apply everywhere. For anything PR-specific, review-comment-specific, or doc/comment-specific, open the matching reference file when you're about to write that artifact:
 
 - Drafting a PR title or body → `references/pr-writing.md` (titles, issue-closing rules, testing honesty, author annotations on the diff posted by default as annotated line comments, AI watermark)
 - Drafting an issue body → `references/issue-writing.md` (titles, template selection, related-work references, keeping proposed solutions out of the body)
 - Drafting a Discussion post, comment, or reply, or marking an answer → `references/discussions.md` (kinds of post, category selection from the repo's actual categories, threading and answer-marking mechanics, wrapping up with a written outcome, upvotes instead of "+1" comments)
 - Body structure shared by PRs, issues, and discussion posts (fill-template, Context section, linking docs the PR already carries, length ceiling, diagrams) → `references/body-writing.md`, read alongside whichever of the three above applies
 - Adding a mermaid diagram to a PR/issue body or doc → `references/diagrams.md` (GitHub rendering mechanics, known GitHub limitations, theme/styling, legends for color-coded diagrams)
-- Reviewing someone else's PR → `references/review-comments.md` (delivery mode: staged review vs. annotated line comments vs. PR-level comment, conventional comment labels, suggested edits)
+- Reviewing someone else's PR → `references/review-comments.md` (review order and priorities, delivery mode: staged review vs. annotated line comments vs. PR-level comment, conventional comment labels, suggested edits)
 - Replying to reviewer feedback on your own PR, resolving a thread, or re-requesting review → `references/review-replies.md` (reply shapes, matching the reviewer's label, user review before posting, researching claims before replying, disagreeing with evidence, when to resolve or ask the reviewer, post-round updates)
 - Touching a README, doc, or code comment → `references/docs-and-comments.md` (present-tense rule)
 - Writing a design doc, RFC, or retrospective → `references/body-writing.md` for section structure and `references/docs-and-comments.md` for tense; sentence-level architecture for long-form prose is a voice-pack concern, not covered here
@@ -61,7 +61,7 @@ Cut filler, never substance. These stay in even when they make the artifact long
 - Data loss and security risk, stated as risk rather than softened into a caveat
 - Operational blast radius: what this touches in production, who gets paged when it's wrong
 - Known gaps and untested paths, per the testing rules in `references/pr-writing.md`
-- The observed symptom: the exact error text, a link to the failing run/incident, and the root cause mechanics. Terseness cuts filler around these, never the facts themselves
+- The observed symptom: the exact error text, a link to the failing run/incident, and the root cause mechanics
 - Anything the reader explicitly asked for. A requested walkthrough, per-phase notes, or a direct answer to a reviewer's question gets answered in full. The terse rules govern unrequested prose
 
 ## Boundaries
@@ -76,7 +76,7 @@ This skill governs the writing, never the change. Don't reshape a diff, drop a c
   - `add_pr_review_comment`, `edit_pr_review_comment`, `reply_to_comment`, `reply_to_review_thread`, `reply_and_resolve_review_thread`
   - Writing or editing any code comment or doc line, the moment you do it, so narrative language doesn't sneak into the diff before the PR step
   - Defining, clarifying, or implementing a requirement or acceptance criterion, regardless of artifact: use `references/requirements-ears.md`
-- In a long session, don't rely on remembering this rule from the system prompt: treat each trigger above as fresh, regardless of how many turns or unrelated tool calls came before it
+- In a long session, don't rely on remembering this rule from the system prompt: treat each trigger above as fresh, however many turns or unrelated tool calls came before it
 - Before editing an existing PR title/body (or any live comment/doc on GitHub), always fetch the current text first, never edit from an earlier draft in the conversation, per `references/gh-cli.md`
 - While drafting a PR body, scan the diff for line-anchored asides and incidental or tangential changes (not substantial in-scope work, per `references/body-writing.md`); each becomes an annotation instead of body text. Once the PR exists and is pushed, post them (on an existing PR, check authorship first). When the user is the author, do this by default, without being asked, as annotated line comments, never a pending review or `add_pr_review_comment`, per `Author annotations` in `references/pr-writing.md`
 - Run the self-check in `references/self-check.md` over the PR body and every touched comment/doc/prose artifact, right before declaring the task done and again after every later revision, always against the full current text. Every `update_pull_request` call is a later revision: run the self-check on the body you're about to send, structured tools included
@@ -93,7 +93,7 @@ Reject these on sight:
 - Internal chatter leaking in: development back-and-forth, session notes, "as discussed", tool or agent narration
 - Cataloging roads not taken: rejected approaches, reverted experiments, "we chose not to do X" with no bearing on the final diff
   - Exception: a one-line rationale when the approach taken looks wrong or non-obvious at a glance, that's not cataloging, it's the `Anticipated reviewer questions` pattern in `references/body-writing.md`
-- Explaining an absence: a "not covered here" recap of scope a linked sub-issue or tracking issue already names. The issue graph shows it structurally, restating it in prose tells the reviewer nothing they can't already see by clicking through
+- Explaining an absence: a "not covered here" recap of scope a linked sub-issue or tracking issue already names. The issue graph shows it structurally, restating it in prose tells the reviewer nothing a click-through doesn't
 - Exhaustive auto-generated checklists the repo didn't ask for
 - Bolded section headers invented on top of an existing template
 - Stale verification claims: a testing/status claim never re-checked after a later edit changed what it describes. Drift, not fabrication, but it reads as a lie either way; re-verify against the current diff per `references/self-check.md`

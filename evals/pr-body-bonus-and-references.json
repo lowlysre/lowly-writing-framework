@@ -5,7 +5,7 @@
   "expected_behavior": [
     "Every issue reference uses the full owner/repo#123 form in plain text, with no bare #212, no owner-less billing-api#212, and no backticks around any reference",
     "The body closes the issue with a closing keyword (fixes/closes/resolves acme/billing-api#212) and never uses 'Part of' or 'Relates to'",
-    "The footer typo fix sits under its own Bonus/Chores/Also fixed sub-header, not in the main narrative",
+    "The footer typo fix stays out of the main narrative: either an author annotation on the changed line (per the hitchhiker rule in references/pr-writing.md) or its own Bonus/Chores/Also fixed sub-header",
     "The Testing section mentions the manual staging check and doesn't claim pytest or ruff passed locally",
     "Each paragraph is a single source line with no hard wraps, and <!--:robot:--> is the literal last line"
   ]

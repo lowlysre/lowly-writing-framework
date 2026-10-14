@@ -1,6 +1,6 @@
 # Calibration examples
 
-Before/after pairs for structural rules whose text is a judgment call, grouped by the artifact they apply to. Read only the sections `SKILL.md` routes you to for the artifact you're drafting, alongside that artifact's reference file. Each example names the rule it shows and where that rule lives. The rule text stays in its home file, this file only shows it applied. A rule whose text already carries its own inline example doesn't get one here.
+Before/after pairs for structural rules whose text is a judgment call, grouped by the artifact they apply to. Read only the sections `SKILL.md` routes you to for the artifact you're drafting, alongside that artifact's reference file. Each example names the rule it shows and where that rule lives. The rule text stays in its home file. A rule whose text already carries its own inline example doesn't get one here.
 
 Copy the structure, not the content. The project names, sentences, file paths, and issue numbers inside each example are placeholders, so a draft that reuses them (an `acme/` owner, a "retry path") has copied the example instead of applying the rule. How the sentences read is a voice-pack concern, not this file's.
 
@@ -113,7 +113,7 @@ After:
 All five service handlers move to the new client. The refunds handler also retries, since it calls a slower upstream.
 ```
 
-The four identical bullets collapse into a count. The one bullet that differed is the only one still named, because it's the only one a reviewer needs to look at separately.
+The four identical bullets collapse into a count. Only the bullet that differed is still named, since it's the only one a reviewer needs to look at separately.
 
 </example>
 

@@ -7,7 +7,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 ## Before replying
 
 - Fetch the live threads first and work from the unresolved ones, never from a notification or an earlier list in the conversation. The command is in `Replying to review threads` in `references/gh-cli.md`
-- Push before you reply. A reply that says it's done points at a commit the reviewer can open, so confirm it's on the PR head: `gh pr view <n> --json headRefOid -q .headRefOid` matches `git rev-parse HEAD`
+- Push before you reply. A Done reply points at a commit the reviewer can open, so confirm it's on the PR head: `gh pr view <n> --json headRefOid -q .headRefOid` matches `git rev-parse HEAD`
 - Apply a round of feedback in one push, then reply to every thread against that push. One push per thread sends the reviewer chasing several SHAs
 - On an outdated thread, read the lines at the current head before answering. The code may have moved, or an earlier change may have settled it
 - Add fixup commits while review is open and squash at merge. A rebase or force-push after replying orphans the SHAs the replies cite
@@ -16,7 +16,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 
 - Show the user every drafted reply, and the resolve decision for each thread, before anything posts. That includes replies, resolving, reactions, and re-requesting review, through structured tools or `gh`. Posting notifies the reviewer and can't be recalled, and the user knows context the agent doesn't
 - Present them thread by thread: the reviewer's comment, the drafted reply, and whether the thread would be resolved or left open. Flag any reply that declines, cites research, or leaves a thread open with a question, since those are the judgment calls
-- Post only what the user approves, as approved. An edit to the wording means showing the new text again if the change is more than a typo
+- Post only what the user approves, as approved. Show the text again after any rewording beyond a typo
 - Standing permission overrides this. If the user said to post without review ("just post them", "no need to check with me"), skip the pause for that session and say once that you did. Permission given for one PR or one round doesn't carry to the next
 
 ## One reply per thread
@@ -46,6 +46,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 
 - State the decision first, then the evidence: a line-anchored permalink to precedent in the repo, the exact error text, a one-sentence quote from the doc, or a source found per `Researching before you reply`. A reply that is only opinion is where threads stall
 - Name what would change the answer, so the reviewer has a concrete way to reopen it
+- "Fix it in a follow-up" needs an issue filed and linked in the reply before you post it. Cleanup promised without one rarely happens. New complexity this PR introduces gets fixed in this PR, not deferred
 - Open every link and confirm the lines at that SHA say what the reply claims before posting. A cited precedent that doesn't resolve is worse than none
 - Don't resolve a thread whose reply declines
 
@@ -59,7 +60,7 @@ So the extra guard can't fire today. If a second caller skips that cap, the guar
 
 ## Researching before you reply
 
-Look things up instead of answering from memory in two cases. In both, a reply that cites what you read is stronger than one that asserts it.
+Look things up instead of answering from memory in two cases. In both, a reply citing what you read beats one asserting it.
 
 - Objective correctness: the comment or your reply turns on how a language, library, API, or tool behaves, such as a default value, a version's semantics, a security property, or a spec requirement. Check the primary source for the version the repo pins (docs, changelog, spec, source), not a blog post or a summary of one. If the repo's own code or tests settle it, that beats the web
 - Abstract principle: your reply leans on a design idea ("single-responsibility", "idempotent retries", "parse, don't validate"). Find the canonical statement of it, then tie it to a concrete consequence in this diff. The principle alone is name-dropping: "this keeps `build_query` unit-testable without a database" is the claim, and the link only backs it
@@ -69,7 +70,7 @@ Rules for using what you find:
 
 - Open the source and confirm it says what you're about to claim, and that it applies to the version in use. A search snippet or an answer from memory isn't confirmation
 - Link it inline as a named markdown link with the one relevant sentence quoted alongside, per `SKILL.md` Formatting. The reviewer shouldn't have to open it to see what it says
-- Research can show the reviewer is right. Then reply Done, and say what you checked, so the concession is as concrete as a decline would have been
+- If research shows the reviewer is right, reply Done and say what you checked, so the concession is as concrete as a decline would have been
 - If sources disagree, or you can't find one, say what's unverified instead of picking a side. Don't cite a source you didn't open, and don't invent the principle's name or attribution
 - Keep it to one or two links per reply. A reply that stacks citations reads as an argument to win, not a point to settle
 
@@ -89,13 +90,13 @@ If you'd rather the default live in one place, I can move it to `DEFAULT_TIMEOUT
 
 ## Resolving
 
-A commit isn't proof the reviewer is satisfied. The question for each Done is whether the change was exactly what the comment asked for, or whether the author made a call the reviewer should see.
+A commit isn't proof the reviewer is satisfied. For each Done, ask whether the change was exactly what the comment asked for, or whether the author made a call the reviewer should see.
 
 - Done and resolve when the change is mechanical and there's one reasonable reading: a rename, a typo, a suggested edit applied verbatim, a `nitpick:` taken as written
 - Done and leave open, ending with a specific question, when any of these hold:
   - The ask had more than one reasonable fix and you picked one
   - You read the comment differently than its words suggest, or only part of it landed
-  - The comment was an `issue:` about correctness, security, or behavior. The reviewer holds the context to judge whether the fix closes it, so the author doesn't
+  - The comment was an `issue:` about correctness, security, or behavior. The reviewer, not the author, holds the context to judge whether the fix closes it
   - The change reached beyond the anchored lines, or tests changed with it
   - The reviewer hedged ("I think", "maybe") or probed with a `question:` that you answered with code
 - Name what you did and ask the reviewer to confirm it: `Done in 3f9a1c2. Guarded at the call site rather than inside paginate(), since fetch_all is the only caller. Does that cover what you meant?` A bare "let me know if that works" gives them nothing to check. Ask one thing per thread
