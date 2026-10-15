@@ -25,18 +25,18 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 - Open with the outcome, in one of four shapes:
   - Done: `Done in <sha>.` Add a clause only when what changed differs from what was asked, and end with a question when the reviewer should confirm it per `Resolving` below. Write the SHA plain, 7 or more characters: GitHub autolinks it, and backticks turn it into dead text
   - Answer: for a `question:`, the answer first. If the question exposed unclear code, fix the code or its comment, then name the commit. An explanation that lives only in a thread is lost to the next reader, so the durable part goes in a code comment per `references/docs-and-comments.md`, or in the PR body's Anticipated reviewer questions per `references/body-writing.md`
-  - Not doing: the decision, then the reason and its evidence, then what would change it. See `Disagreeing` below
+  - Keeping as is: first what the reviewer got right or why they'd expect the change, then the decision, then the reason and its evidence, then what would change it. See `Disagreeing` below
   - Later: a link to the follow-up issue in full `owner/repo#123` form, and one sentence on why it doesn't belong in this PR. File the issue first per `references/issue-writing.md`
 - A reply with no outcome ("good point", "thanks", "will look") is a miss. Make the change or the decision, then reply
 - Match the reply to the label:
-  - `issue:` and `suggestion:`, and any unlabeled comment, are blocking. Each gets Done, Not doing, or Later, never silence
-  - `nitpick:` and `suggestion (non-blocking):` can be declined in one line
+  - `issue:` and `suggestion:`, and any unlabeled comment, are blocking. Each gets Done, Keeping as is, or Later, never silence
+  - `nitpick:` and `suggestion (non-blocking):` can be left as is with a one-line reason
   - `question:` is answered, not marked done
   - `thought:` and `note:` need a reply only if they ask for something
   - `praise:` gets a thumbs-up reaction, not a reply
 - On a thread opened by a bot (Copilot code review or any other automated reviewer), also react to the thread's first comment, matching the outcome, so the verdict shows without opening the reply:
   - Done: `+1` (thumbs up)
-  - Not doing: `-1` (thumbs down)
+  - Keeping as is: `-1` (thumbs down)
   - Later: `eyes`
   - Answer gets no reaction
   - A human reviewer's thread gets no outcome reaction; reply only. The reaction goes on the root comment, never on your own reply. Post it in the same step as the reply and list it in the user review before posting
@@ -51,7 +51,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 - Don't resolve a thread whose reply declines
 
 ````markdown
-Not changing this. `fetch_all` is the only caller of `paginate`, and it caps `page_size` at 100:
+Fair question, but I'm keeping the guard out. `fetch_all` is the only caller of `paginate`, and it caps `page_size` at 100:
 
 https://github.com/acme/sdk/blob/<full-sha>/sdk/client.py#L88-L91
 
