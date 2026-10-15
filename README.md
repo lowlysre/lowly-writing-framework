@@ -3,7 +3,7 @@
 # lowly-writing-framework
 
 <!-- token-badges:start -->
-[![always loaded: ~130 tokens](https://img.shields.io/badge/always%20loaded-~130%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~27k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~27k%20tokens-informational)](#token-budget)
+[![always loaded: ~130 tokens](https://img.shields.io/badge/always%20loaded-~130%20tokens-informational)](#token-budget) [![on activation: ~3k tokens](https://img.shields.io/badge/on%20activation-~3k%20tokens-informational)](#token-budget) [![on demand: up to ~28k tokens](https://img.shields.io/badge/on%20demand-up%20to%20~28k%20tokens-informational)](#token-budget)
 <!-- token-badges:end -->
 
 An [Agent Skill](https://agentskills.io/) that gives a coding agent the structural rules for developer writing: PR and issue bodies, review comments, docs, code comments, and requirements. It decides what an artifact contains and where each piece sits.
@@ -110,7 +110,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~130 |
 | On activation | `SKILL.md` body | ~3,300 |
-| On demand | Every file under `references/` | ~27,400 |
+| On demand | Every file under `references/` | ~27,600 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.

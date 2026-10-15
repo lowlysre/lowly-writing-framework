@@ -36,7 +36,9 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 
 Anchor every finding that points at a line in the diff to that line, one comment each. Never fold several line-level findings into one PR-level comment: threads can't be resolved individually, suggested edits can't be applied, and the author has to hunt for the lines. A PR-level comment carries only cross-cutting points. When it carries more than one, give each its own labeled bullet or short heading, not a run of paragraphs.
 
-A missing PR link only rules out `add_pr_review_comment`, not posting. When the user names a PR, fall back to `gh` instead of stopping at drafts; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
+A review summary goes in a PR-level comment, never in the `body` of a pending review created through the API: the UI doesn't show that body in the "Review changes" dialog, so the user can't see or submit it. If a summary has to ride with a pending review anyway, tell the user its text won't render and where to find it, per `references/gh-cli.md`.
+
+A missing PR link only rules out `add_pr_review_comment`, which errors when the session isn't linked to the PR, not posting. When the user names a PR, fall back to `gh` instead of stopping at drafts; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
 
 ## Suggested edits
 

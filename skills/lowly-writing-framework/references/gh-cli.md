@@ -65,6 +65,7 @@ gh api repos/{owner}/{repo}/pulls/<n>/comments \
 - `line` is a line number in the file at `commit_id`, not a position in the diff, and it must be a line the PR touches or its surrounding context, or the API returns `422`
 - Use the PR's current head SHA: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
 - To batch several reviewer comments on someone else's PR into one notification, create a pending review first (`POST .../pulls/<n>/reviews` with `comments[]`, no `event`) and submit it once, instead of one call per comment. Not for the PR author's own annotations, see `Author annotations` below
+- Never put a summary `body` in a pending review created through the API. GitHub's UI doesn't prefill the "Review changes" dialog from it: the inline comments show, the body renders nowhere, and the user can't see or submit it even though the API reports it under state `PENDING`. Leave `body` out, and post the summary as a PR-level comment with `gh pr comment --body-file`. If a stranded one already exists, delete it with `gh api -X DELETE repos/{owner}/{repo}/pulls/<n>/reviews/<id>` and repost the comments as annotated line comments
 - Verify with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
 
 ## Author annotations
