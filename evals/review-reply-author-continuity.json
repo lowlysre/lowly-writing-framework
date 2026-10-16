@@ -1,0 +1,15 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm the author of acme/sdk#97. Draft replies for these four threads using the complete live histories below, and say which to resolve. Do not post anything or edit existing comments. Commit 3f9a1c2 is on the PR head. Thread A: reviewer: 'issue: guard the settings import so a missing optional dependency cannot block startup.' My reply: 'This only affects local development, not production.' Verified repository evidence: both entry points import the same settings module, and 3f9a1c2 adds the guard for both paths. Thread B: reviewer: 'suggestion: add an import smoke test.' My reply: 'Give me time to think; I think the upgrade risk is narrow.' I later explicitly asked for the test, and 3f9a1c2 adds it. I gave no reason for changing my mind. Thread C: reviewer: 'nitpick: recieve -> receive.' My existing reply: 'Done in 3f9a1c2.' That reply is still accurate. Thread D: reviewer: 'suggestion: change the default timeout to 60 seconds.' My reply: 'Let me think on this before changing it.' There is no later decision, code change, or authorization for Thread D.",
+  "files": [],
+  "expected_behavior": [
+    "Thread A opens with Done in 3f9a1c2, with the SHA unticked, and explicitly connects the fix to the author's earlier local-only claim and the verified shared import path",
+    "Thread A stays open and ends with a specific confirmation question because the review concerns startup behavior",
+    "Thread B connects the new test to the author's earlier pending decision and the later confirmed decision instead of giving an unexplained Done",
+    "Thread B flags the missing rationale for the user before posting and does not invent research, reflection, a risk reassessment, or another motive for the reversal",
+    "Thread C gets no duplicate reply because the existing author reply already states the current outcome",
+    "Thread D remains pending and open; the agent does not treat the author's request for thinking time as agreement or permission to implement, and does not invent a Done or Keeping as is decision",
+    "The agent presents drafts and resolve decisions for user review without posting, resolving, or editing existing author comments",
+    "<!--:robot:--> is the literal last line of each drafted reply"
+  ]
+}
