@@ -12,6 +12,12 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 - On an outdated thread, read the lines at the current head before answering. The code may have moved, or an earlier change may have settled it
 - Add fixup commits while review is open and squash at merge. A rebase or force-push after replying orphans the SHAs the replies cite
 
+## Existing author replies
+
+- Read each live thread in chronological order, including all replies and any paginated comments, before drafting. Treat the author's replies, whether human-written or agent-drafted, as part of the conversation to continue. If an existing reply already gives the current outcome, don't duplicate it
+- When the outcome changes the author's stated position, connect it to that position after the outcome opener. Name the specific claim or reservation and the verified reason for changing course, rather than posting an unexplained Done. For example, after "this only affects local development": `Done in 3f9a1c2. I said this only affects local development, but the production entry point imports the same module. The guard covers that path too.` Don't invent research, reflection, or a personal motive to explain the change
+- A reply such as "give me time to think" leaves the decision pending; it isn't agreement or permission to act. If the user confirms a decision later, reflect that decision without inventing a rationale. If the reason for a reversal is missing, flag the gap in the user review before posting. Preserve the author's existing comments unless the user asks to edit them
+
 ## Review with the user first
 
 - Show the user every drafted reply, and the resolve decision for each thread, before anything posts. That includes replies, resolving, reactions, and re-requesting review, through structured tools or `gh`. Posting notifies the reviewer and can't be recalled, and the user knows context the agent doesn't
