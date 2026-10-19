@@ -22,6 +22,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 
 - Show the user every drafted reply, and the resolve decision for each thread, before anything posts. That includes replies, resolving, reactions, and re-requesting review, through structured tools or `gh`. Posting notifies the reviewer and can't be recalled, and the user knows context the agent doesn't
 - Present them thread by thread: the reviewer's comment, the drafted reply, and whether the thread would be resolved or left open. Flag any reply that declines, cites research, or leaves a thread open with a question, since those are the judgment calls
+- Keep drafted replies in the chat only. Never stage them on GitHub as pending-review comments, a pending review's replies, or any saved draft: a staged reply the user never submits is orphaned, invisible in the PR and unreviewable by them. A reply either shows in the chat for approval or is posted live, never parked in between
 - Post only what the user approves, as approved. Show the text again after any rewording beyond a typo
 - Standing permission overrides this. If the user said to post without review ("just post them", "no need to check with me"), skip the pause for that session and say once that you did. Permission given for one PR or one round doesn't carry to the next
 
