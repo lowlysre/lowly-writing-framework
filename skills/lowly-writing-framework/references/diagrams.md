@@ -37,8 +37,8 @@ Read the linked syntax page before writing a type you haven't used in this sessi
 
 Decision rules:
 
-- **Table when the reader looks things up; diagram when the reader follows a path or compares in space or time.** A comparison of options across attributes, or a list of settings, is a Markdown table. A schedule, a dependency order, or a flow is a diagram. Data that fits in 3 rows by 3 columns is prose or a table, never a chart.
-- **Anything with a time axis defaults to `gantt` (durations, overlap, dependencies) or `timeline` (events only).** A bulleted or tabular schedule with start and end dates is a signal to use `gantt`, without being asked.
+- **Table when the reader looks things up; diagram when the reader follows a path or compares in space or time.** A comparison of options across attributes, or a list of settings, is a Markdown table. A schedule, a dependency order, or a flow is a diagram. Data that fits in 3 rows by 3 columns is prose or a table by default; a chart earns its place when it shows overlap or dependencies a table can't, as in a three-phase schedule where one phase waits on another.
+- **A schedule or event history defaults to `gantt` (durations, overlap, dependencies) or `timeline` (events only).** A bulleted or tabular schedule with start and end dates is a signal to use `gantt`, without being asked. A numeric series over time (latency, counts) is `xychart-beta`, not either of these.
 - **Prefer the plainest type that carries the point.** A `pie` of two slices is a sentence. A `mindmap` of a linear list is a list.
 - **Geographic content is `geojson`/`topojson`, not a mermaid approximation.** Use `topojson` only when the data already is TopoJSON. Coordinates go in `[longitude, latitude]` order, and the block stays small: a large payload goes in a linked `.geojson` file, which GitHub also renders.
 - **`stl` is for a 3D model the change actually concerns** (a CAD part, a printed bracket). Never decorative. A large model goes in a committed `.stl` file, not inline.
