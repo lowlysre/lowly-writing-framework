@@ -18,7 +18,13 @@ Defer to the local repo's convention first: check CONTRIBUTING, PR templates, an
 
 Absent a template, the heading is `## Testing`, not a bolded `**Testing:**` label or any other variant.
 
-Be honest, this is non-negotiable. Say when tests were added and move on. If testing is hard or missing, say why, but only against a concrete test, script, or documented manual QA step that exists and wasn't run, a fixture the suite lacks, a manual step the runbook calls for that got skipped this time. Don't invent a higher bar the project never held itself to: "couldn't fully end-to-end test this" with no named e2e suite behind it is manufactured doubt, not honesty, skip it. Never write generic "all tests pass" prose or fabricate verification steps. Leave honest unchecked boxes; don't tick inapplicable items. Skip mentioning local checks CI already runs: check the repo's CI config for what already runs on every push before writing a sentence like "ran `uv run pytest`" or "ran the linter locally", a check CI re-runs on this PR anyway is redundant proof, not honesty. Reserve the section for what CI can't see: manual exploratory steps actually taken, or a real, nameable gap in coverage.
+Be honest, this is non-negotiable. Honesty here means no false or invented claims, not a list of everything that wasn't run.
+
+- Check the repo's CI config first. A check CI runs on this PR gets no line at all: not "ran `uv run pytest`", not "ran the linter locally", not "Not run locally: the Airflow tests", not "CI covers them". CI re-runs it and shows the result, so a line about it is redundant proof or manufactured doubt.
+- Reserve the section for what CI can't see: manual exploratory steps actually taken, or a real, nameable gap in coverage.
+- A gap needs a concrete test, script, or documented manual QA step that exists and wasn't run, a fixture the suite lacks, or a manual step the runbook calls for that got skipped this time. "Couldn't fully end-to-end test this" with no named e2e suite behind it is an invented bar, skip it.
+- Say when tests were added and move on. Never write generic "all tests pass" prose or fabricate verification steps.
+- An unchecked box is for a named gap CI can't see, not for anything that wasn't run locally. Don't tick inapplicable items.
 
 A claim can be true when written and stale by the time the PR is pushed; the self-check in `references/self-check.md` covers re-verifying claims against the current diff.
 
