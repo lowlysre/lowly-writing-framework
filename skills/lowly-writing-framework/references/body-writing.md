@@ -62,9 +62,9 @@ The answer follows the same paragraph/sentence rules as the rest of the body, a 
 
 ## Diagrams
 
-Use mermaid when a picture genuinely helps the reader, the mechanics of a change or the wider system context, or a bug's reproduction flow in an issue. Skip for trivial items. One or two inline, each with a one-line lead-in; more than two go in a collapsible section. Favor `flowchart`/`sequenceDiagram`, short node labels. A diagram of the old vs new flow beats prose describing both.
+Use mermaid when a picture genuinely helps the reader, the mechanics of a change or the wider system context, or a bug's reproduction flow in an issue. Skip for trivial items. One or two inline, each with a one-line lead-in; more than two go in a collapsible section. Pick the type by the content's shape: `flowchart`/`sequenceDiagram` for flow, `gantt` for a schedule or phased rollout, a Markdown table for lookups, `geojson`/`stl` for maps and 3D models. Short node labels. A diagram of the old vs new flow beats prose describing both.
 
-For the GitHub rendering mechanics, theme/styling init, color-coded diagrams needing a legend, see `references/diagrams.md`.
+For the full chart-type menu, selection rules, GitHub rendering mechanics, theme/styling init, and color-coded diagrams needing a legend, see `references/diagrams.md`.
 
 ## Before posting
 

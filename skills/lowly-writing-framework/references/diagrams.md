@@ -1,6 +1,58 @@
-# Mermaid diagrams in PR/issue bodies and docs
+# Diagrams, maps, and 3D models in PR/issue bodies and docs
 
-Loaded from `SKILL.md` whenever a diagram is going into a PR body, issue body, or doc. Everything here is GitHub-rendering mechanics for Mermaid, not body structure, see `references/body-writing.md` for when to use one and where it fits inside a body.
+Loaded from `SKILL.md` whenever a diagram, map, or model is going into a PR body, issue body, or doc. Covers which format to pick and the GitHub-rendering mechanics for it, not body structure, see `references/body-writing.md` for when to use one and where it fits inside a body.
+
+## Choosing the format
+
+GitHub renders four fenced diagram syntaxes in issues, discussions, PRs, wikis, and Markdown files: `mermaid`, `geojson`, `topojson`, and `stl` (ASCII only). Pick by the shape of the content, not by habit. The default is not a flowchart: reach for a flowchart only when the content is a flow.
+
+| Content | Use | Syntax reference |
+| --- | --- | --- |
+| Steps, branching, old vs. new flow, system context | `flowchart` | [flowchart](https://mermaid.js.org/syntax/flowchart.html) |
+| Who calls whom, in order, across services | `sequenceDiagram` | [sequence](https://mermaid.js.org/syntax/sequenceDiagram.html) |
+| Work items with dates, durations, or dependencies: rollout plan, migration phases, release schedule | `gantt` | [gantt](https://mermaid.js.org/syntax/gantt.html) |
+| Dated events with no durations: incident timeline, version history | `timeline` | [timeline](https://mermaid.js.org/syntax/timeline.html) |
+| Lifecycle or status transitions | `stateDiagram-v2` | [state](https://mermaid.js.org/syntax/stateDiagram.html) |
+| Tables, keys, relationships | `erDiagram` | [entity relationship](https://mermaid.js.org/syntax/entityRelationshipDiagram.html) |
+| Types, interfaces, inheritance | `classDiagram` | [class](https://mermaid.js.org/syntax/classDiagram.html) |
+| Branch and merge history | `gitGraph` | [gitgraph](https://mermaid.js.org/syntax/gitgraph.html) |
+| Share of a whole (few categories) | `pie` | [pie](https://mermaid.js.org/syntax/pie.html) |
+| Flow volumes between stages | `sankey-beta` | [sankey](https://mermaid.js.org/syntax/sankey.html) |
+| Numeric series: latency, counts over time, benchmarks | `xychart-beta` | [xychart](https://mermaid.js.org/syntax/xyChart.html) |
+| Two-axis prioritization (impact vs. effort) | `quadrantChart` | [quadrant](https://mermaid.js.org/syntax/quadrantChart.html) |
+| Hierarchy or brainstorm | `mindmap` | [mindmap](https://mermaid.js.org/syntax/mindmap.html) |
+| Components with explicit layout | `block-beta` | [block](https://mermaid.js.org/syntax/block.html) |
+| Cloud or infra topology | `architecture-beta` | [architecture](https://mermaid.js.org/syntax/architecture.html) |
+| Binary protocol or header layout | `packet-beta` | [packet](https://mermaid.js.org/syntax/packet.html) |
+| Work-in-progress board | `kanban` | [kanban](https://mermaid.js.org/syntax/kanban.html) |
+| Multi-metric comparison across a few items | `radar-beta` | [radar](https://mermaid.js.org/syntax/radar.html) |
+| Part-to-whole hierarchy sized by value | `treemap-beta` | [treemap](https://mermaid.js.org/syntax/treemap.html) |
+| Traceability of requirements | `requirementDiagram` | [requirement](https://mermaid.js.org/syntax/requirementDiagram.html) |
+| Software architecture levels (system, container, component) | `C4Context` and siblings | [C4](https://mermaid.js.org/syntax/c4.html) |
+| User experience steps with satisfaction scores | `journey` | [user journey](https://mermaid.js.org/syntax/userJourney.html) |
+| Places, regions, coordinates, routes | `geojson`, or `topojson` for shared-boundary data | [GeoJSON spec](https://datatracker.ietf.org/doc/html/rfc7946), [TopoJSON spec](https://github.com/topojson/topojson-specification) |
+| A 3D part or shape | `stl` | [ASCII STL](https://en.wikipedia.org/wiki/STL_(file_format)#ASCII_STL) |
+
+Read the linked syntax page before writing a type you haven't used in this session: the keywords and indentation differ per chart, and GitHub shows "Unable to render rich display" for a slip. The `mermaid.js.org` pages document the latest release, so a feature newer than GitHub's version (see the `info` check below) fails to render even when the docs show it.
+
+Decision rules:
+
+- **Table when the reader looks things up; diagram when the reader follows a path or compares in space or time.** A comparison of options across attributes, or a list of settings, is a Markdown table. A schedule, a dependency order, or a flow is a diagram. Data that fits in 3 rows by 3 columns is prose or a table, never a chart.
+- **Anything with a time axis defaults to `gantt` (durations, overlap, dependencies) or `timeline` (events only).** A bulleted or tabular schedule with start and end dates is a signal to use `gantt`, without being asked.
+- **Prefer the plainest type that carries the point.** A `pie` of two slices is a sentence. A `mindmap` of a linear list is a list.
+- **Geographic content is `geojson`/`topojson`, not a mermaid approximation.** Use `topojson` only when the data already is TopoJSON. Coordinates go in `[longitude, latitude]` order, and the block stays small: a large payload goes in a linked `.geojson` file, which GitHub also renders.
+- **`stl` is for a 3D model the change actually concerns** (a CAD part, a printed bracket). Never decorative. A large model goes in a committed `.stl` file, not inline.
+- **Verified against GitHub's renderer (Mermaid v12.2.0, tested in a scratch gist):** every type in the table above renders, including the `*-beta` ones, `kanban`, `radar-beta`, and `treemap-beta`, with the exact keywords shown. `zenuml` does not: it fails with "No diagram type detected". Use `sequenceDiagram` instead. GitHub's build changes over time, so rerun the `info` check below before relying on a type the table doesn't list or a non-`-beta` spelling.
+
+Check which Mermaid version GitHub currently ships (a chart type newer than that fails with "Unable to render rich display"):
+
+````text
+```mermaid
+  info
+```
+````
+
+The theme and legend sections below are flowchart mechanics. Other types take their own syntax, so confirm the init directive applies before copying it onto them (a `gantt` uses `%%{init: {"theme": "dark"}}%%`, for example, with no `flowchart` key). Every chart still follows the screen-reader rule under Known GitHub limitations: the lead-in sentence states the takeaway.
 
 ## Theme and styling
 

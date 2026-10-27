@@ -1,0 +1,14 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR body for this change in acme/infra, closing acme/infra#31, from branch `db-cutover`. The PR adds the runbook for migrating the orders database to the new cluster in three phases: dual-write (Nov 3 to Nov 10), read cutover (Nov 10 to Nov 14, needs dual-write finished), and old-cluster decommission (Nov 14 to Nov 28, needs read cutover finished). Reviewers need to see how the phases overlap and depend on each other. No PR template exists.",
+  "files": [],
+  "expected_behavior": [
+    "The schedule is shown as a mermaid gantt diagram, not a flowchart, a bulleted list, or a Markdown table",
+    "The gantt expresses the three phases with their dates and the finish-to-start dependencies",
+    "The diagram has a one-line lead-in that states the takeaway in prose",
+    "The body does not repeat every date in prose beside the diagram",
+    "The body closes acme/infra#31 with a closing keyword in the full owner/repo#123 form",
+    "The body has at least one ## heading and no top-level # heading",
+    "<!--:robot:--> is the literal last line"
+  ]
+}
