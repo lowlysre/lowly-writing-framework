@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Write the PR body for this change in acme/web. It adds a retry to the sync job. .github/workflows/ci.yml runs pytest and ruff on every push. I did not run pytest locally, but I did run the sync job by hand against staging and watched it retry once and succeed. Closes acme/web#12. No PR template exists.",
+  "files": [],
+  "expected_behavior": [
+    "## Testing does not mention pytest, ruff, or any other check the CI config runs on every push",
+    "No line says a CI-run check was not run locally, and no sentence says CI covers anything",
+    "No unchecked box is added for the unrun local pytest",
+    "The manual staging run is described as a step actually taken",
+    "acme/web#12 follows a closing keyword",
+    "<!--:robot:--> is the literal last line"
+  ]
+}

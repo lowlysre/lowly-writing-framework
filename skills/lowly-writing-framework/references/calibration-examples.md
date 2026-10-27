@@ -461,6 +461,31 @@ The steps sit in their own section instead of inside Testing, and the list order
 
 </example>
 
+<example>
+
+### CI-run checks left out of Testing
+
+Shows the CI-exemption rule in `references/pr-writing.md`: a check CI runs on the PR gets no line, run or not.
+
+Before:
+
+```markdown
+## Testing
+- Ran `docker compose run airflow-init` with the fixture mount.
+- [ ] Not run: the Airflow tests locally. The CI Airflow jobs on this PR cover them.
+```
+
+After:
+
+```markdown
+## Testing
+Ran `docker compose run airflow-init` with the fixture mount and a native SSO profile; the dev file pulled and imported.
+```
+
+The unchecked box and the "CI covers them" clause are gone because CI runs those tests on this PR. Only the manual run CI can't see remains.
+
+</example>
+
 </examples>
 
 ## Meat proxy mode
