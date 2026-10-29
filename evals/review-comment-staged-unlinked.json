@@ -1,0 +1,16 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Review acme/sdk#88, which someone else wrote. This session has no PR linked. Stage your comments as a review I can submit myself. Findings: `sdk/config.py` line 41 hardcodes a timeout of 30; `sdk/client.py` lines 10-14 swallow exceptions with a bare `except:`; overall the PR needs tests before it merges.",
+  "files": [],
+  "expected_behavior": [
+    "Does not stop at pasteable drafts in chat or say a review can't be staged because no PR is linked",
+    "Does not call add_pr_review_comment and does not post annotated line comments or a PR-level comment",
+    "Checks for an existing pending review on the PR before creating one",
+    "Creates one pending review through gh api repos/acme/sdk/pulls/88/reviews --input with a payload file, commit_id from the PR head SHA, and a comments array holding the config.py line 41 comment and the client.py comment anchored with start_line 10 and line 14",
+    "The payload has no event and no body",
+    "Never submits the review: no event value, no POST to .../reviews/<id>/events, no gh pr review",
+    "Verifies the review's state is PENDING and its comments match the drafted bodies and anchors",
+    "Hands the user the review ID, the comment count, the testing summary to paste into the Review changes dialog, and where to submit it",
+    "Each comment carries a plain-text conventional label and ends with <!--:robot:--> as the last line"
+  ]
+}

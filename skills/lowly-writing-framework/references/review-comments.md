@@ -30,15 +30,15 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 
 "Leave comments" means one of three things. Pick the mode before drafting, because it decides the tool and whether a pending review exists:
 
-- Staged review comments: the user asks to review, stage, or leave review comments on a PR the session is linked to. Use `add_pr_review_comment`; the comments sit in a pending review the user submits
-- Annotated line comments: the user says not to stage, or wants comments posted now, or the session has no linked PR. Post each with the `gh api .../pulls/<n>/comments` call in `references/gh-cli.md`; each lands immediately as its own single-comment review
+- Staged review comments: the default when the user asks to review, stage, or leave review comments and hasn't asked for them to post now. The comments sit in one pending review that only the user sees until they submit it. On a PR the session is linked to, use `add_pr_review_comment`. On any other PR, create the pending review through `gh api`, per `Staging a review` in `references/gh-cli.md`
+- Annotated line comments: the user says not to stage, or wants comments posted now. Post each with the `gh api .../pulls/<n>/comments` call in `references/gh-cli.md`; each lands immediately as its own single-comment review
 - PR-level comment: the point isn't tied to a line, or spans several files. Post with `gh pr comment --body-file`, labeled the same way
 
 Anchor every finding that points at a line in the diff to that line, one comment each. Never fold several line-level findings into one PR-level comment: threads can't be resolved individually, suggested edits can't be applied, and the author has to hunt for the lines. A PR-level comment carries only cross-cutting points. When it carries more than one, give each its own labeled bullet or short heading, not a run of paragraphs.
 
-A review summary goes in a PR-level comment, never in the `body` of a pending review created through the API: the UI doesn't show that body in the "Review changes" dialog, so the user can't see or submit it. If a summary has to ride with a pending review anyway, tell the user its text won't render and where to find it, per `references/gh-cli.md`.
+Never put a review summary in the `body` of a pending review created through the API: the UI doesn't show that body in the "Review changes" dialog, so the user can't see or submit it. For a staged review, hand the summary to the user in chat to paste into that dialog when they submit. When posting directly, the summary goes in a PR-level comment.
 
-A missing PR link only rules out `add_pr_review_comment`, which errors when the session isn't linked to the PR, not posting. When the user names a PR, fall back to `gh` instead of stopping at drafts; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
+A missing PR link only rules out `add_pr_review_comment`, which errors when the session isn't linked to the PR. It rules out neither staging nor posting. When the user names a PR, stage or post through `gh` instead of stopping at drafts in chat; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
 
 ## Suggested edits
 

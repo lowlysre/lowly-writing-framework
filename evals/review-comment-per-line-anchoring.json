@@ -5,7 +5,7 @@
   "expected_behavior": [
     "Posts the config.py line 41, client.py line 12, and client.py line 77 findings as three separate line-anchored comments, one point each",
     "Does not fold the three line-level findings into one PR-level comment or one multi-point review body",
-    "Uses the line-anchored tool for the mode (add_pr_review_comment when staging, gh api .../pulls/88/comments when posting directly), with path and line set for each",
+    "Uses the line-anchored tool for the mode (add_pr_review_comment or a gh api .../pulls/88/reviews pending review when staging, gh api .../pulls/88/comments when posting directly), with path and line set for each",
     "Puts only the cross-cutting points (no tests, empty description) in a PR-level comment, not anchored to a line",
     "If the PR-level comment carries both cross-cutting points, gives each its own labeled bullet or short heading instead of a run of paragraphs",
     "Each comment carries a plain-text conventional label and ends with <!--:robot:--> as the last line"
