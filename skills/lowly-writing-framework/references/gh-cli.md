@@ -64,9 +64,25 @@ gh api repos/{owner}/{repo}/pulls/<n>/comments \
 - Add `-F start_line=40 -f start_side=RIGHT` to anchor a multi-line range; `line` is then the last line of the range
 - `line` is a line number in the file at `commit_id`, not a position in the diff, and it must be a line the PR touches or its surrounding context, or the API returns `422`
 - Use the PR's current head SHA: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
-- To batch several reviewer comments on someone else's PR into one notification, create a pending review first (`POST .../pulls/<n>/reviews` with `comments[]`, no `event`) and submit it once, instead of one call per comment. Not for the PR author's own annotations, see `Author annotations` below
-- Never put a summary `body` in a pending review created through the API. GitHub's UI doesn't prefill the "Review changes" dialog from it: the inline comments show, the body renders nowhere, and the user can't see or submit it even though the API reports it under state `PENDING`. Leave `body` out, and post the summary as a PR-level comment with `gh pr comment --body-file`. If a stranded one already exists, fetch it first (`gh api repos/{owner}/{repo}/pulls/<n>/reviews/<id>` and `.../comments`) and save the summary and each inline comment with its anchor. Then delete it with `gh api -X DELETE repos/{owner}/{repo}/pulls/<n>/reviews/<id>` and recreate a bodyless pending review from the saved comments, so the user still submits it. Repost as annotated line comments only when the user has authorized immediate posting, since those publish at once
+- To stage these comments for the user to submit instead of posting each one now, see `Staging a review` below
 - Verify with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`
+
+## Staging a review
+
+A staged review is a pending review on someone else's PR: every line comment sits in one draft that only the user can see, and nothing notifies the author until the user submits it in the UI. It works through `gh api` with no linked session, so a missing PR link is never a reason to fall back to drafts in chat or to comments that post at once. Not for the PR author's own annotations, see `Author annotations` below.
+
+1. Check for a pending review already open: `gh api repos/{owner}/{repo}/pulls/<n>/reviews --jq '.[] | select(.state=="PENDING") | .id'`. GitHub allows one pending review per user per PR, and the API only returns the current user's. If one exists, it's the user's own draft: never delete or overwrite it. Add each comment to it with the GraphQL `addPullRequestReviewThread` mutation (`pullRequestReviewId` is the review's `node_id`; the other fields mirror the REST comment fields in camelCase), or ask the user to submit or discard it first
+2. Write each comment body to its own file, then build one JSON payload: `commit_id` set to the PR's current head SHA, and a `comments` array with one entry per comment. Each entry holds its `body` plus the same anchor fields as the call in `Suggested edits` above, `path`, `line`, and `side`, with `start_line` and `start_side` added for a range
+3. Leave out `event` and `body`. Without `event`, the review is created as `PENDING`; any `event` value submits it on the user's behalf
+4. Post it with `gh api repos/{owner}/{repo}/pulls/<n>/reviews --input payload.json`. Keep the payload and comment files outside the working tree, in a temp or session folder, and delete them once verified. On PowerShell, build the payload with `ConvertTo-Json -Depth 5` and write it UTF-8 without a BOM (`[IO.File]::WriteAllText($path, $json, [Text.UTF8Encoding]::new($false))`), since a BOM can break the JSON parse
+5. Verify: `gh api repos/{owner}/{repo}/pulls/<n>/reviews/<id> --jq .state` returns `PENDING`, and `gh api repos/{owner}/{repo}/pulls/<n>/reviews/<id>/comments --paginate` has one comment per draft, each body matching its file and each `path`/`line` matching its anchor
+6. Never submit it: no `event`, no `POST .../reviews/<id>/events`, no `gh pr review`. The verdict is the user's, per `references/review-comments.md`
+
+Never put a summary `body` in a pending review created through the API. GitHub's UI doesn't prefill the "Review changes" dialog from it: the inline comments show, the body renders nowhere, and the user can't see or submit it even though the API reports it under state `PENDING`. Hand the summary to the user in chat, ready to paste into that dialog when they submit. A PR-level comment through `gh pr comment --body-file` publishes at once, so post it there only when the user has authorized immediate posting.
+
+If a stranded body already exists, fetch it first (`gh api repos/{owner}/{repo}/pulls/<n>/reviews/<id>` and `.../comments`) and save the summary and each inline comment with its anchor. Then delete it with `gh api -X DELETE repos/{owner}/{repo}/pulls/<n>/reviews/<id>` and recreate a bodyless pending review from the saved comments, so the user still submits it. Repost as annotated line comments only when the user has authorized immediate posting, since those publish at once.
+
+Close the handoff with what the user needs to finish: the review ID, the comment count, the summary to paste, and where to submit it, the PR's **Files changed** tab, **Review changes**. Say that the author sees nothing until the user submits it.
 
 ## Author annotations
 

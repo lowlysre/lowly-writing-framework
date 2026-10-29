@@ -28,7 +28,7 @@ Voice, tone, humor, punctuation preferences, and phrasing taste are out of scope
 - Defining, clarifying, or implementing a requirement or acceptance criterion, in a dedicated requirements doc or inline in a comment/PR/commit → `references/requirements-ears.md` (EARS syntax, document mode vs. inline mode)
 - Checking a draft for banned AI-era phrases → `references/banned-phrases.md`
 - Writing an artifact whose real actor is another AI even though it's attributed to a human, invoked explicitly ("meat proxy mode") → `references/meat-proxy-mode.md`
-- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, review-thread replies and resolving, `gh discussion` and GraphQL-only discussion mutations)
+- Posting or editing anything directly through the `gh` CLI → `references/gh-cli.md` (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, staging a pending review for the user to submit, review-thread replies and resolving, `gh discussion` and GraphQL-only discussion mutations)
 - Drafting a PR, issue, or discussion body → also read the `Bodies` sections of `references/calibration-examples.md`, plus its `PR Testing section` and `PR author annotations` section for a PR (before/after pairs for the judgment-call rules; skip the file for review comments, code comments, and docs). In meat proxy mode, read its `Meat proxy mode` section too
 
 ## Formatting

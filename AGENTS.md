@@ -22,7 +22,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - `skills/lowly-writing-framework/references/banned-phrases.md`: banned AI-era phrases checked during the self-check pass
 - `skills/lowly-writing-framework/references/calibration-examples.md`: before/after pairs showing structural rules from other files applied, grouped by artifact; the rule text stays in its home file, this one only illustrates it
 - `skills/lowly-writing-framework/references/meat-proxy-mode.md`: artifacts whose real actor is another AI, invoked explicitly
-- `skills/lowly-writing-framework/references/gh-cli.md`: `gh` CLI mechanics (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, `gh discussion` and its GraphQL fallbacks) for anything posted directly through the CLI rather than a structured tool
+- `skills/lowly-writing-framework/references/gh-cli.md`: `gh` CLI mechanics (fetch-before-edit, shell-escaping, `-f`/`-F`, re-fetch-to-verify, line-anchored suggested edits, staging a pending review, `gh discussion` and its GraphQL fallbacks) for anything posted directly through the CLI rather than a structured tool
 - `evals/`: evaluation scenarios in Anthropic's [evaluation structure](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices#build-evaluations-first) (`skills`, `query`, `files`, `expected_behavior`), one JSON file per scenario
 - `docs/`: the tutorial, how-to guides, and explanation split out of the README by Diátaxis quadrant. The README keeps what an agent needs on every read: install, update, the voice-pack pairing rule, a short layout pointer, token budget, and versioning. A new long-form section goes in `docs/`, not the README
 
