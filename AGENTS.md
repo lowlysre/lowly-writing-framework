@@ -14,7 +14,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - `skills/lowly-writing-framework/references/pr-writing.md`: PR titles, issue-closing rules, testing honesty, author annotations, AI watermark
 - `skills/lowly-writing-framework/references/issue-writing.md`: issue titles, template selection, related-work references
 - `skills/lowly-writing-framework/references/discussions.md`: GitHub Discussion kinds of post, category selection, threading and answer-marking, wrapping up, upvotes and reactions
-- `skills/lowly-writing-framework/references/review-comments.md`: conventional comment labels and suggested edits for reviewing someone else's PR
+- `skills/lowly-writing-framework/references/review-comments.md`: conventional comment labels, problem vs. offered fix, and suggested edits for reviewing someone else's PR
 - `skills/lowly-writing-framework/references/review-replies.md`: the PR author's side of review, reply shapes per thread, researching objective claims and abstract principles before replying, disagreeing with evidence, when to resolve or ask the reviewer, re-requesting review
 - `skills/lowly-writing-framework/references/docs-and-comments.md`: present-tense rule for README/doc/code-comment prose
 - `skills/lowly-writing-framework/references/self-check.md`: the finishing pass run over PR and issue bodies, docs, and comments

@@ -6,7 +6,7 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 
 - Labels are plain text: `issue:`, not bolded or backticked. `issue:` and `suggestion:` are blocking by default, so mark non-blocking ones explicitly; a `(blocking)` decoration is noise, only the non-default decoration earns ink
 - One comment, one point, don't stack unrelated feedback in a thread
-- `suggestion:` says what to change and why; use a GitHub suggested edit (see `Suggested edits` below) for a few-line fix
+- `suggestion:` says what to change and why, with the problem first, per `Problem vs. offered fix` below; use a GitHub suggested edit (see `Suggested edits` below) for a few-line fix
 - `question:` is a real question, not a suggestion wearing a question mark. If you already know the answer you want, use `suggestion:` instead
 - Review the change the author is actually trying to make, not just the line they touched. When the diff solves the literal ask but misses the real problem, name that before nitpicking mechanics
 - Probe before you prescribe on risky changes: one or two sharp `why` questions beat a barrage of directives
@@ -25,6 +25,16 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 - Style the repo doesn't specify follows the surrounding code, and the author's choice when nothing surrounds it. Several valid designs: accept the author's, don't argue preference
 - A comment about the code, not the author: "this adds a thread with no measured benefit", not "why did you add a thread"
 - `praise:` names what was good and why, so the author repeats it
+
+## Problem vs. offered fix
+
+The author usually knows the code best, so a comment asks for the problem to be solved, not for a particular solution. An offered fix that reads as an order derails the thread into debating the fix instead of the problem.
+
+- State the problem and why it matters first, as the comment's lead sentence. The fix, if any, comes after
+- Offered fixes default to illustrative. Introduce one as an option, `One option:` or `For example:`, so the author knows any fix for the stated problem resolves the comment
+- Prescribe a specific implementation only when the implementation itself is the requirement: a repo convention, an API or schema contract, a security control, consistency with an existing pattern. Say which, in the same comment: `Use DEFAULT_TIMEOUT_MS here, the retry wrapper reads only that constant`. A prescribed fix with no stated reason reads as preference
+- A blocking `issue:` or `suggestion:` blocks on the problem, never on the shape of the offered fix. A different fix that solves the stated problem resolves the thread
+- Skip the fix entirely when the problem statement already makes it obvious, or when there's no fix in mind yet. A bare problem with its why is a complete comment
 
 ## Delivery mode
 
@@ -48,6 +58,7 @@ A suggested edit is a `suggestion` fenced block inside a line comment on the PR'
 - Write the full replacement lines, indentation included. The block's content is swapped in verbatim, so a dropped leading space or tab lands in the file
 - An empty `suggestion` block deletes the anchored lines
 - Keep the `suggestion:` label and its one-sentence why above the block. The block shows what, the sentence says why
+- A suggested edit reads as "apply this". When the exact text doesn't matter, mark it illustrative in the why sentence, per `Problem vs. offered fix` above, or describe the fix in prose instead
 - Keep a suggestion to about 5 anchored lines. Past that, the block is hard to review inline, easy to apply wrongly, and goes stale on the author's next push. Describe a larger change in a plain `suggestion:` comment, or split it into separate comments that each stand alone
 - Only lines in the diff can carry one. Code outside the diff, or a point spanning several files, gets a plain `suggestion:` describing the change
 - A suggestion in a pending (unsubmitted) review can't be applied yet, and one on a resolved, outdated, or closed-PR thread can't be applied at all
