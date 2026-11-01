@@ -47,6 +47,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
   - Later: `eyes`
   - Answer gets no reaction
   - A human reviewer's thread gets no outcome reaction; reply only. The reaction goes on the root comment, never on your own reply. Post it in the same step as the reply and list it in the user review before posting
+- Never end a reply to a bot with a confirmation question such as `Is that what you wanted?` or `Does that cover it?`. A bot won't answer, so the question leaves the thread hanging. State the outcome as a fact, and drop the `Resolving` closing question for a bot's thread
 - Append `<!--:robot:-->` as the last line of a reply an agent drafted, per the `## AI watermark` rule in `references/pr-writing.md`
 
 ## Disagreeing
