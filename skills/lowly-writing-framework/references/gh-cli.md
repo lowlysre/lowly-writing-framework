@@ -84,6 +84,24 @@ If a stranded body already exists, fetch it first (`gh api repos/{owner}/{repo}/
 
 Close the handoff with what the user needs to finish: the review ID, the comment count, the summary to paste, and where to submit it, the PR's **Files changed** tab, **Review changes**. Say that the author sees nothing until the user submits it.
 
+## Reading existing review comments
+
+Before reviewing someone else's PR, per `Existing comments` in `references/review-comments.md`. Two calls cover everything already said:
+
+- Every review thread, resolved and outdated included: the list query in `Replying to review threads` below, minus its `select(.isResolved | not)` filter. Each node carries the thread ID (`PRRT_...`), `isResolved`, `isOutdated`, its anchor, and the first comment's `databaseId`
+- PR-level comments and review summaries: `gh pr view <n> --json comments,reviews --jq '.comments[], .reviews[] | {author: .author.login, body}'`. Skip entries with an empty `body`, those are reviews made only of line comments
+
+Reply to an existing thread in the review's delivery mode:
+
+- Posting now: the `replies` endpoint in `Replying to review threads` below, with the thread's first-comment `databaseId`
+- Staged: add the reply to the pending review so it publishes with the rest when the user submits. `pullRequestReviewId` is the pending review's `node_id`, from step 1 of `Staging a review` above; create the review first, per steps 2-4 there, if there isn't one yet:
+
+```bash
+gh api graphql -f query='mutation($t:ID!,$r:ID!,$b:String!){addPullRequestReviewThreadReply(input:{pullRequestReviewThreadId:$t,pullRequestReviewId:$r,body:$b}){comment{databaseId}}}' -f t=<PRRT_id> -f r=<review-node-id> -F b=@reply.md
+```
+
+- Verify a staged reply appears in `gh api repos/{owner}/{repo}/pulls/<n>/reviews/<id>/comments` with its body matching the file, per `Verifying what landed`
+
 ## Author annotations
 
 When the current user authored the PR (`gh api user -q .login` equals `gh pr view <n> --json author -q .author.login`), post each annotation from `references/pr-writing.md` as an annotated line comment with the same `gh api .../pulls/<n>/comments` call as `Suggested edits` above, one call per annotation, `-F body=@path`, current head SHA. Each posts immediately as its own single-comment review; nothing is left pending. Don't use `add_pr_review_comment` here, it stages into a pending review.

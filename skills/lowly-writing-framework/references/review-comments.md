@@ -15,6 +15,19 @@ Same structural rules as everywhere: why over how, one point per sentence. Label
 - The label already carries severity (`issue (security):`); don't also wrap the body in a `> [!WARNING]` admonition
 - Append `<!--:robot:-->` as the last line, per the `## AI watermark` rule in `references/pr-writing.md`
 
+## Existing comments
+
+Read what's already on the PR before drafting a single comment: every review thread, resolved and outdated ones included, plus PR-level comments and review summaries, bots' as well as people's. Fetch them with `Reading existing review comments` in `references/gh-cli.md`. A finding someone already raised never gets a second thread; the author would answer the same point twice and the two threads drift apart.
+
+- Raised in a line thread and you agree: reply in that thread only when you add something it lacks, such as evidence, a failing case, a fix, or a different severity. With nothing to add, react 👍 on the thread's first comment instead of replying "+1"
+- Raised in a line thread and you disagree: reply in that thread with the reason, under its own label. Never open a competing thread on the same line
+- Raised in a resolved thread: skip it, unless the fix didn't land at the current head. Then reply in that thread with what's still wrong, and tell the user it needs unresolving, since a reply doesn't reopen it
+- Raised in an outdated thread: check the finding against the current head first. Reply in the old thread when it still applies, with a permalink to where the code moved
+- Raised only in a PR-level comment or review summary, with no thread to reply in: skip it. When you have something new, put it in your own comment and link the earlier one
+- A reply is a review comment: same conventional label, same watermark, same delivery mode as the rest of the review
+- Reactions post publicly at once, even in a staged review. In staged mode, list the threads you'd 👍 for the user instead of reacting
+- Close the handoff with each finding you skipped or folded into an existing thread, linked to that thread, so the user's review summary doesn't restate it
+
 ## Review order and priorities
 
 - Read the PR body and decide whether the change should exist at all before reading code. If not, say so first, with what to do instead, so the author doesn't polish work that gets thrown away

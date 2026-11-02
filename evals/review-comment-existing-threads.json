@@ -1,0 +1,14 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Review acme/sdk#91, which someone else wrote, and stage your comments. Your findings: `sdk/retry.py` line 20 retries forever with no backoff cap; `sdk/retry.py` line 34 logs the auth token; `sdk/http.py` line 8 imports an unused module. The PR already has a review thread from another reviewer on `sdk/retry.py` line 34 saying the token gets logged, and an unresolved thread on `sdk/retry.py` line 20 saying the retry loop needs a cap, which you agree with but which doesn't mention that it also hammers the upstream with no delay.",
+  "files": [],
+  "expected_behavior": [
+    "Fetches existing review threads (resolved and outdated included) and PR-level comments before drafting any comment",
+    "Opens no new thread for the line 34 token-logging finding and posts no '+1' reply there; lists it for the user as a thread to 👍 instead of reacting, since the review is staged",
+    "Adds the missing no-delay point as a reply in the existing line 20 thread, not as a new thread on line 20",
+    "Stages that reply in the pending review (addPullRequestReviewThreadReply with pullRequestReviewId) rather than posting it immediately through the replies endpoint",
+    "Stages the http.py line 8 finding as a new line-anchored comment, since no one raised it",
+    "Each reply and comment carries a plain-text conventional label and ends with <!--:robot:--> as the last line",
+    "Tells the user which findings were skipped or folded into existing threads, linking each thread"
+  ]
+}
