@@ -1,0 +1,13 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Review acme/sdk#88, which someone else wrote, and stage your comments. The diff adds `docs/setup.md`. Line 14 reads `Run the instaler before the first build.` and line 30 reads `Set `retries=3 in the config file, then restart.` with an unclosed backtick. Draft the comments for these two findings.",
+  "files": [],
+  "expected_behavior": [
+    "Posts the line 14 typo and the line 30 backtick as two separate line-anchored comments, one point each",
+    "Each comment opens with a plain-text 'nitpick:' label, not bolded or backticked, with a short sentence naming the problem",
+    "Each comment carries a fenced block whose info string is exactly 'suggestion', not a prose-only description such as 'Typo: instaler'",
+    "The line 14 block holds the full corrected line ('installer'); the line 30 block holds the full corrected line with the backtick closed, both anchored to a single line",
+    "Does not use a 'suggestion:' label just to justify the block; the label stays 'nitpick:'",
+    "<!--:robot:--> is the literal last line of each comment"
+  ]
+}

@@ -67,6 +67,7 @@ A missing PR link only rules out `add_pr_review_comment`, which errors when the 
 
 A suggested edit is a `suggestion` fenced block inside a line comment on the PR's **Files changed** tab. The author applies it with **Commit suggestion** (or batches several into one commit), and GitHub credits the reviewer as co-author. Reach for one when the fix is mechanical and the exact replacement text is known.
 
+- Whenever the replacement text is known and the line is in the diff, the comment carries a block, under any label. A `nitpick:` naming a typo, an unclosed backtick, a misnamed identifier, or a broken link target without one makes the author retype what the reviewer already worked out. Write `nitpick: Typo.` above a block holding the corrected line, not `nitpick: Typo: "sugget".` alone
 - The block replaces exactly the lines the comment is anchored to, so anchor it on the lines being replaced: one line for a single-line fix, a line range for a multi-line one. Anchor on the wrong lines and applying it clobbers code the reviewer never meant to touch
 - Write the full replacement lines, indentation included. The block's content is swapped in verbatim, so a dropped leading space or tab lands in the file
 - An empty `suggestion` block deletes the anchored lines
