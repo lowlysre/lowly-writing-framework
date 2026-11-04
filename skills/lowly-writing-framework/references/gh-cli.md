@@ -22,6 +22,17 @@ Never inline markdown as a shell string. Each shell's escaping (backtick, `$`, c
 
 `-f` never reads a file, `-F` does. The letter means different things on different subcommands: on `gh discussion`, `-F` is short for `--body-file` and takes a path by itself; on `gh api`, `-F` is `--field` and takes `key=@path`. Spell out the long flag when the command isn't `gh api`, so the two can't be confused. `gh api`'s `-f/--raw-field` is a literal string field, `@path` there posts the literal string `@path` as the body instead of the file's contents, and the call still exits `0`. Only `-F/--field` triggers the `@path` file read. The trap applies to any `gh api` field holding drafted text, not just `body`.
 
+## PowerShell argument mechanics
+
+Each of these fails quietly or with a misleading error, and only on PowerShell:
+
+- Keep a literal `"` out of `gh api graphql -f query=...`: `\"` ends a double-quoted string early (`UNKNOWN_CHAR`), and Windows PowerShell 5.1 strips `"` from single-quoted native arguments too. Write the query quote-free in single quotes and pass values as variables: `-f query='query($o:String!){organization(login:$o){id}}' -f o=OvertureMaps`
+- Member access isn't expanded in an argument: `-f a=$sc.id` passes the literal `@{id=...}.id`. Use `$id = $sc.id` first, or `$($sc.id)`
+- `--jq` output is a `string[]`, one element per line, so `-replace` and `+=` act on lines. Join it: `$b = (gh issue view <n> --json body --jq .body) -join "`n"`
+- A multi-line `--body` mangles. Write a temp file and pass `--body-file`: `$f = New-TemporaryFile; [IO.File]::WriteAllText($f.FullName, $b); gh issue edit <n> --body-file $f.FullName; Remove-Item $f`
+- A double-quoted here-string (`@"..."@`) eats backticks as escapes. Use `@'...'@` for any body holding markdown code spans
+- Older gh rejects `--jq` on `gh project item-add`. `--format json | ConvertFrom-Json` works on all versions
+
 ## Gating the post on length
 
 Don't eyeball the length ceiling from `references/self-check.md` right before a `gh` call, measure the temp file and branch on the result, so an over-length body never reaches the API. The ceiling defaults to 3,000 characters; the user can override it with the `LOWLY_WRITING_BODY_LENGTH_CEILING` environment variable:
