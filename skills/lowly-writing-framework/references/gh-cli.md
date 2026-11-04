@@ -28,7 +28,7 @@ Each of these fails quietly or with a misleading error, and only on PowerShell:
 
 - Keep a literal `"` out of `gh api graphql -f query=...`: `\"` ends a double-quoted string early (`UNKNOWN_CHAR`), and Windows PowerShell 5.1 strips `"` from single-quoted native arguments too. Write the query quote-free in single quotes and pass values as variables: `-f query='query($o:String!){organization(login:$o){id}}' -f o=OvertureMaps`
 - Member access isn't expanded in an argument: `-f a=$sc.id` passes the literal `@{id=...}.id`. Use `$id = $sc.id` first, or `$($sc.id)`
-- `--jq` output is a `string[]`, one element per line, so `-replace` and `+=` act on lines. Join it: `$b = (gh issue view <n> --json body --jq .body) -join "`n"`
+- `--jq` output is a `string[]`, one element per line, so `-replace` and `+=` act on lines. Join it: ``$b = (gh issue view <n> --json body --jq .body) -join "`n"``
 - A multi-line `--body` mangles. Write a temp file and pass `--body-file`: `$f = New-TemporaryFile; [IO.File]::WriteAllText($f.FullName, $b); gh issue edit <n> --body-file $f.FullName; Remove-Item $f`
 - A double-quoted here-string (`@"..."@`) eats backticks as escapes. Use `@'...'@` for any body holding markdown code spans
 - Older gh rejects `--jq` on `gh project item-add`. `--format json | ConvertFrom-Json` works on all versions
