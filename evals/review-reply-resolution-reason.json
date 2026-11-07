@@ -1,0 +1,15 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "I'm the author of acme/sdk#88 and the fix is pushed at head 9b2e7d41. Three review threads are open. Thread PRRT_aaa (first comment id 6001): 'nitpick: use a dataclass instead of a dict for Config.' The repo's other config objects are dicts too, for example sdk/settings.py lines 12-20, and I'm keeping that convention. Thread PRRT_bbb (first comment id 6002): 'question: why does retry() sleep before the first attempt?' That code was deleted in commit 4c1d8e0a and the thread is now outdated. Thread PRRT_ccc (first comment id 6003): 'issue: close() leaks the socket when flush() raises.' I disagree, flush() can't raise after connect() succeeds. Draft the replies, decide how each thread resolves, and give the gh commands.",
+  "files": [],
+  "expected_behavior": [
+    "Each reply is posted inside its thread through the pulls/<n>/comments/<root-id>/replies endpoint with ids 6001, 6002, and 6003",
+    "The PRRT_aaa reply opens with the decision to keep dicts, cites sdk/settings.py with a line-anchored permalink on a full commit SHA, and the thread is resolved with resolutionReason WONT_FIX",
+    "The PRRT_bbb reply states the code was removed in 4c1d8e0a, and the thread is resolved with resolutionReason INVALID",
+    "The PRRT_ccc thread is left unresolved: it is a blocking issue: the reviewer hasn't conceded, so neither WONT_FIX nor INVALID is used",
+    "The resolve commands use the resolveReviewThread mutation with the PRRT_ ids and pass resolutionReason, and every reply is posted before its thread is resolved",
+    "The agent does not use reply_and_resolve_review_thread for the WONT_FIX or INVALID threads, since it takes no reason",
+    "The agent presents each drafted reply with its thread and resolve decision, including the reason, for the user to approve, and runs no posting or resolving command until the user approves",
+    "<!--:robot:--> is the literal last line of each reply"
+  ]
+}
