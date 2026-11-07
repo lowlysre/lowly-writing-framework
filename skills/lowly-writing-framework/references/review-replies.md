@@ -56,7 +56,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 - Name what would change the answer, so the reviewer has a concrete way to reopen it
 - "Fix it in a follow-up" needs an issue filed and linked in the reply before you post it. Cleanup promised without one rarely happens. New complexity this PR introduces gets fixed in this PR, not deferred
 - Open every link and confirm the lines at that SHA say what the reply claims before posting. A cited precedent that doesn't resolve is worse than none
-- Don't resolve a thread whose reply declines
+- Don't resolve a thread whose reply declines, unless it's a `WONT_FIX` or `INVALID` resolve per `Resolving`
 
 ````markdown
 Fair question, but I'm keeping the guard out. `fetch_all` is the only caller of `paginate`, and it caps `page_size` at 100:
@@ -109,7 +109,13 @@ A commit isn't proof the reviewer is satisfied. For each Done, ask whether the c
   - The reviewer hedged ("I think", "maybe") or probed with a `question:` that you answered with code
 - Name what you did and ask the reviewer to confirm it: `Done in 3f9a1c2. Guarded at the call site rather than inside paginate(), since fetch_all is the only caller. Does that cover what you meant?` A bare "let me know if that works" gives them nothing to check. Ask one thing per thread
 - When unsure which side a thread falls on, leave it open. A reviewer closing a thread costs one click, and an author closing one early can bury a finding that was only half addressed
-- Leave it open as well when the reply declines, defers, applies only part of the ask, or asks something back. The reviewer closes those
+- Leave it open as well when the reply declines, defers, applies only part of the ask, or asks something back, except a decline that fits `WONT_FIX` or `INVALID` below. The reviewer closes the rest
+- Resolve with a reason instead of a plain resolve when one fits, and post the reply first so the reason has its evidence:
+  - `ADDRESSED`: Done, the change landed
+  - `WONT_FIX`: a reply that declines with evidence per `Disagreeing`, on a comment the reviewer didn't mark blocking
+  - `INVALID` (shown as "not relevant"): the comment is outdated because the code moved or was deleted, doesn't apply to this PR, or duplicates a thread already handled
+  - Never use `WONT_FIX` or `INVALID` to close a blocking `issue:` the reviewer hasn't conceded; leave that open
+  - Through `gh`, pass `resolutionReason` per `Replying to review threads` in `references/gh-cli.md`. `reply_and_resolve_review_thread` takes no reason, so for `WONT_FIX` or `INVALID` use `reply_to_review_thread` then the mutation
 - The repo's convention wins. If `CONTRIBUTING.md` or the PR template says reviewers resolve their own threads, resolve none
 - Never resolve a thread you haven't replied to, and never bulk-resolve a list
 - With structured tools, `reply_and_resolve_review_thread` fits a mechanical Done and an Answer nothing hangs on, `reply_to_review_thread` fits the rest. Through `gh`, see `Replying to review threads` in `references/gh-cli.md`

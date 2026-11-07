@@ -5,8 +5,8 @@
   "expected_behavior": [
     "Both replies are posted inside their threads through the pulls/<n>/comments/<root-id>/replies endpoint with ids 5001 and 5002, not as a top-level PR comment",
     "The first reply opens with the decision not to add the guard, then cites the caller cap with a line-anchored permalink on a full commit SHA, and names what would change the answer",
-    "The first thread is left unresolved because the reply declines",
-    "The second reply is one line starting with 'Done in 3f9a1c2e' with the SHA unticked, and its thread is resolved through the resolveReviewThread mutation using the PRRT_ id",
+    "The first thread is left unresolved because the reply declines a blocking issue: the reviewer hasn't conceded, so no WONT_FIX or INVALID reason is used",
+    "The second reply is one line starting with 'Done in 3f9a1c2e' with the SHA unticked, and its thread is resolved through the resolveReviewThread mutation using the PRRT_ id and resolutionReason ADDRESSED",
     "The reply body goes in with -F body=@file, not -f",
     "The agent checks that the pushed head SHA matches the commit it cites and re-fetches each reply to verify it landed",
     "The agent presents each drafted reply with its thread and resolve decision for the user to approve, and runs no posting or resolving command until the user approves",
