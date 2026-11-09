@@ -32,6 +32,7 @@ Combine clauses when a requirement genuinely needs more than one condition (`WHE
 - Triggers and states must be observable and unambiguous: `WHEN the queue depth exceeds 1000` beats `WHEN load is high`
 - Quantify wherever the spec implies a number: latency, retry count, timeout, threshold. "Fast" and "eventually" aren't requirements
 - Keep the acceptance criterion and the EARS statement identical, don't restate the same rule two different ways in one issue/PR
+- State observable behavior, not mechanism. `WHEN an invoice is 30 days overdue THE billing system SHALL add a 5% late fee` is a requirement; `...SHALL insert a row into the fees table` is the design leaking in, per `references/separation-of-concerns.md`
 
 ## Self-check before finishing
 
@@ -41,5 +42,6 @@ Reread every requirement you wrote or edited. Any hit means rewrite:
 - an untriggered event-driven requirement (missing `WHEN`) or an unstated actor
 - a compound requirement joined by "and"/"or" that's really two requirements
 - a vague trigger or state ("when appropriate", "if needed", "under load") with no observable condition
+- a requirement that names a table, endpoint, queue, or library instead of observable behavior
 - a requirement with no way to test pass/fail as written
 - a requirement that was accurate when first written but describes a trigger, threshold, or response the diff no longer implements after a later edit: re-check the `SHALL` sentence against the current code

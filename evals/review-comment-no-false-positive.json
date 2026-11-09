@@ -1,0 +1,11 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "Review acme/shop#70, which someone else wrote, and stage your comments. Check it for design problems first. The diff adds `shop/handlers.py`:\n\n```python\n1   import json\n2   import sys\n3   from shop.tiers import compute_tier\n4   from shop.repo import save_tier\n5\n6   def handle_order_placed(event):\n7       order = json.loads(event[\"body\"])\n8       tier = compute_tier(order[\"units\"], order[\"customer_tier\"])\n9       save_tier(order[\"id\"], tier)\n```\n\n`compute_tier` already exists in `shop/tiers.py` as a pure function with its own unit tests. `sys` on line 2 is never used.",
+  "files": [],
+  "expected_behavior": [
+    "Doesn't open a comment suggesting `handle_order_placed` separate business logic from implementation, since it is thin orchestration around a pure function",
+    "Stages a `nitpick:` on line 2 for the unused `sys` import, with a `suggestion` block that deletes the line",
+    "Tells the user it found no mixed-concerns problem in the handler, rather than silently skipping the check",
+    "Each comment carries a plain-text conventional label and ends with <!--:robot:--> as the last line"
+  ]
+}
