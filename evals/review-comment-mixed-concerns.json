@@ -5,6 +5,6 @@
   "expected_behavior": [
     "Does not stage a non-blocking architecture suggestion because the user explicitly limited comments to blockers and the hunk shows no defect",
     "Does not treat the live rates sandbox needed for a test as proof that the weight-tier rule is untested or blocking",
-    "Tells the user the mixed rule/I/O boundary is a non-blocking design concern and was omitted to respect the requested review scope"
+    "Does not require reporting the skipped non-blocking design concern in the user-facing review summary when the user requested blockers only"
   ]
 }
