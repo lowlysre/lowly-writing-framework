@@ -10,7 +10,7 @@ Flag only when you can name one concrete extraction. Otherwise it is a vague "se
 
 - One body holds a branch or calculation over domain values plus a side effect (DB write, HTTP call, file write, queue publish)
 - A client, connection, clock, random source, or config read built inside the logic and changing its outcome, instead of passed in
-- A test needing a container, network, filesystem, or patched clock to cover plain branching or arithmetic
+- A test needing a container, network, or filesystem to cover plain branching or arithmetic
 - A rule change and an I/O change in the same hunk
 
 ## Not a finding
@@ -29,7 +29,7 @@ Flag only when you can name one concrete extraction. Otherwise it is a vague "se
 
 - Scan the diff while drafting. Tell the user in chat first, naming the function and the extraction, and offer: fix here, split to a follow-up, or ship as is. The user picks
 - Shipped as is: one body sentence naming the function and what stays coupled, per `Known gaps` in `SKILL.md`'s Never trim list. No "for now", and no cleanup promise unless a tracking issue exists; if the user wants one, file it per `references/issue-writing.md` and link it
-- Testing never claims unit coverage of a rule whose tests need a container, network, or patched clock. Say what they need
+- Testing never claims unit coverage of a rule whose tests need a container, network, or filesystem. Say what they need
 
 ### Review comment (you are the reviewer)
 
