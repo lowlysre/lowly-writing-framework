@@ -32,7 +32,7 @@ Combine clauses when a requirement genuinely needs more than one condition (`WHE
 - Triggers and states must be observable and unambiguous: `WHEN the queue depth exceeds 1000` beats `WHEN load is high`
 - Quantify wherever the spec implies a number: latency, retry count, timeout, threshold. "Fast" and "eventually" aren't requirements
 - Keep the acceptance criterion and the EARS statement identical, don't restate the same rule two different ways in one issue/PR
-- State observable behavior, not mechanism. `WHEN an invoice is 30 days overdue THE billing system SHALL add a 5% late fee` is a requirement; `...SHALL insert a row into the fees table` is the design leaking in, per `references/separation-of-concerns.md`
+- State observable behavior, not mechanism. `WHEN an invoice is 30 days overdue THE billing system SHALL add a 5% late fee` is a requirement; `...SHALL insert a row into the fees table` is the design leaking in
 
 ## Self-check before finishing
 

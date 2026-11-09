@@ -5,7 +5,7 @@
   "expected_behavior": [
     "Doesn't open a comment suggesting `handle_order_placed` separate business logic from implementation, since it is thin orchestration around a pure function",
     "Stages a `nitpick:` on line 2 for the unused `sys` import, with a `suggestion` block that deletes the line",
-    "Tells the user it found no mixed-concerns problem in the handler, rather than silently skipping the check",
+    "Doesn't add a design note or report the absence of a mixed-concerns problem solely because code is visible",
     "Each comment carries a plain-text conventional label and ends with <!--:robot:--> as the last line"
   ]
 }

@@ -1,8 +1,8 @@
 # Business logic vs. implementation
 
-Loaded from `SKILL.md` when a diff, function, or requirement is in view while drafting a PR body, review comment or reply, code comment, or requirement. Runs on every such artifact, not only when design comes up.
+Optional design-review guidance. Use it when the user asks for design feedback or a concrete design concern is already in scope. Code being visible alone does not require an architecture review, comment, or PR-body note.
 
-A function that decides and performs draws the same review flags every time: a rule testable only through a database, a client or clock hidden in the logic, a small behavior change touching I/O code. Name it before the PR opens or precisely in review. Never reshape the diff, per `SKILL.md`'s Boundaries.
+When design feedback is in scope, look for a concrete boundary whose extraction has a named benefit, such as testing a rule without a database or keeping a client or clock from changing the rule's outcome. Never reshape the diff, per `SKILL.md`'s Boundaries.
 
 ## Signals
 
@@ -27,15 +27,13 @@ Flag only when you can name one concrete extraction. Otherwise it is a vague "se
 
 ### PR body (you are the author)
 
-- Scan the diff while drafting. Tell the user in chat first, naming the function and the extraction, and offer: fix here, split to a follow-up, or ship as is. The user picks
-- Shipped as is: one body sentence naming the function and what stays coupled, per `Known gaps` in `SKILL.md`'s Never trim list. No "for now", and no cleanup promise unless a tracking issue exists; if the user wants one, file it per `references/issue-writing.md` and link it
-- Testing never claims unit coverage of a rule whose tests need a container, network, or filesystem. Say what they need
+- Do not add a design note solely because a function mixes a rule and I/O. Include a testing limitation or operational risk only when it materially affects what the reviewer needs to know, and describe that impact rather than prescribing an architecture
 
 ### Review comment (you are the reviewer)
 
 - Raise it in the design tier of `Review order and priorities` in `references/review-comments.md`
 - Label it `suggestion (non-blocking):`. Use `issue:` only when the mix causes a defect in this PR or leaves a diff rule untested
-- A request to comment only on blockers narrows severity, not detection. Stage it as non-blocking and tell the user, so they can drop it
+- Respect the requested review scope. Do not stage a non-blocking architecture suggestion when the user asks for blockers only; treat the concern as blocking only when the mix causes a defect or leaves changed behavior untested
 - Name the function, the rule and effect it conflates, and the cost here, then offer the extraction as one option, per `Problem vs. offered fix`:
 
   ```markdown
@@ -54,6 +52,6 @@ Use the outcomes in `references/review-replies.md`:
 
 - Done: name the commit
 - Keeping as is: name where the boundary already sits, or why the function is too small
-- Later: file the issue first. Only for `suggestion (non-blocking):`; an `issue:` finding is fixed in this PR, per `Disagreeing`
+- Later: link an existing tracking issue if one exists. Do not promise follow-up work without one, per `Disagreeing`
 
 Code comments marking where the rule ends and the I/O begins, and requirements stating mechanism instead of behavior, are covered in `references/docs-and-comments.md` and `references/requirements-ears.md`.
