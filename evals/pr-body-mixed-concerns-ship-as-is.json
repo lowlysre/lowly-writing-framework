@@ -7,7 +7,7 @@
     "Does not rewrite, split, or otherwise reshape the code to make the PR read better, and does not refuse to write the body",
     "The body names the coupling in one sentence that identifies `price_order` and what stays coupled, with no 'for now' or promise of later cleanup",
     "The body doesn't invent a follow-up issue number; it offers to file one, or links none",
-    "The Testing section doesn't claim the discount rule is unit tested, and says the test needs a running Redis container",
+    "The body doesn't claim the discount rule is unit tested, and the Redis-container dependency of its test is disclosed in the coupling sentence or the chat note; a Testing section that narrates the CI-run suite fails per the CI-exemption rule",
     "The body closes acme/shop#61 with a closing keyword in the full owner/repo#123 form",
     "The body has at least one ## heading and no top-level # heading",
     "<!--:robot:--> is the literal last line"
