@@ -19,6 +19,7 @@ This skill owns structure and mechanics: what an artifact contains, where each s
 - `skills/lowly-writing-framework/references/docs-and-comments.md`: present-tense rule for README/doc/code-comment prose
 - `skills/lowly-writing-framework/references/self-check.md`: the finishing pass run over PR and issue bodies, docs, and comments
 - `skills/lowly-writing-framework/references/requirements-ears.md`: EARS-syntax requirements, document mode vs. inline mode
+- `skills/lowly-writing-framework/references/separation-of-concerns.md`: the business-logic-vs-implementation check for code-bearing artifacts (signals, what isn't a finding, per-artifact action), loaded alongside whichever PR, review, doc, or requirement file applies
 - `skills/lowly-writing-framework/references/banned-phrases.md`: banned AI-era phrases checked during the self-check pass
 - `skills/lowly-writing-framework/references/calibration-examples.md`: before/after pairs showing structural rules from other files applied, grouped by artifact; the rule text stays in its home file, this one only illustrates it
 - `skills/lowly-writing-framework/references/meat-proxy-mode.md`: artifacts whose real actor is another AI, invoked explicitly

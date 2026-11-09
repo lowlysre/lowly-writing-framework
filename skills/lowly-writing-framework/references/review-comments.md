@@ -33,6 +33,7 @@ Read what's already on the PR before drafting a single comment: every review thr
 - Read the PR body and decide whether the change should exist at all before reading code. If not, say so first, with what to do instead, so the author doesn't polish work that gets thrown away
 - Review the main file first, then the rest. When the design is wrong, post that comment immediately instead of finishing the pass, since most line comments disappear with the redesign
 - Weigh design, behavior, needless complexity, tests that would actually fail on a regression, and docs the change makes stale before naming and style. Flag speculative generality (`suggestion:` to solve today's problem) as complexity, not polish
+- Look for a business rule that decides and performs in the same function (a fee rule that also opens a connection) as part of the design pass. Label, wording, and the not-a-finding cases are in `references/separation-of-concerns.md`
 - The agent drafts comments only; the approve, request-changes, or merge verdict is the user's
 - When you couldn't follow the code, ask for it to be rewritten clearer or commented in the code, not explained in the thread. An explanation that lives only in the review is lost to the next reader
 - Style the repo doesn't specify follows the surrounding code, and the author's choice when nothing surrounds it. Several valid designs: accept the author's, don't argue preference

@@ -57,6 +57,7 @@ Same structural rules as everywhere: why over how, one point per sentence. The l
 - "Fix it in a follow-up" needs an issue filed and linked in the reply before you post it. Cleanup promised without one rarely happens. New complexity this PR introduces gets fixed in this PR, not deferred
 - Open every link and confirm the lines at that SHA say what the reply claims before posting. A cited precedent that doesn't resolve is worse than none
 - Don't resolve a thread whose reply declines, unless it's a `WONT_FIX` or `INVALID` resolve per `Resolving`
+- A reviewer's finding that a function mixes a business rule with I/O gets Done, Keeping as is, or Later per `Reply to a separation finding` in `references/separation-of-concerns.md`
 
 ````markdown
 Fair question, but I'm keeping the guard out. `fetch_all` is the only caller of `paginate`, and it caps `page_size` at 100:
