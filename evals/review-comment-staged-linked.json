@@ -8,7 +8,8 @@
     "Creates one pending review through gh api repos/acme/sdk/pulls/88/reviews --input with a payload file, commit_id from the PR head SHA, and a comments array holding the config.py line 41 comment and the client.py comment anchored with start_line 10 and line 14",
     "The payload has no event and no body, and the review is never submitted",
     "Verifies through the API that the review's state is PENDING and its comments match the drafted bodies and anchors before saying anything is staged",
-    "If the review call errors and a retry fails, posts the comments as annotated line comments through gh api .../pulls/88/comments and tells the user they published at once",
+    "If the review call errors, re-fetches the pending review and its comments, keeps what landed, and retries only the comments confirmed missing",
+    "If the retry fails, posts nothing: shows the error and the missing drafts in chat and asks before posting them as annotated line comments",
     "Hands the user the review ID, the comment count, and where to submit it on github.com"
   ]
 }
