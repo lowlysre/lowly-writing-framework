@@ -1,0 +1,14 @@
+{
+  "skills": ["lowly-writing-framework"],
+  "query": "This session is linked to acme/sdk#88, which someone else wrote, and `add_pr_review_comment` is available. Flag these two findings and leave that as a pending review: `sdk/config.py` line 41 hardcodes a timeout of 30; `sdk/client.py` lines 10-14 swallow exceptions with a bare `except:`.",
+  "files": [],
+  "expected_behavior": [
+    "Does not call add_pr_review_comment, even though the session is linked to the PR",
+    "Checks for an existing pending review on the PR before creating one",
+    "Creates one pending review through gh api repos/acme/sdk/pulls/88/reviews --input with a payload file, commit_id from the PR head SHA, and a comments array holding the config.py line 41 comment and the client.py comment anchored with start_line 10 and line 14",
+    "The payload has no event and no body, and the review is never submitted",
+    "Verifies through the API that the review's state is PENDING and its comments match the drafted bodies and anchors before saying anything is staged",
+    "If the review call errors and a retry fails, posts the comments as annotated line comments through gh api .../pulls/88/comments and tells the user they published at once",
+    "Hands the user the review ID, the comment count, and where to submit it on github.com"
+  ]
+}

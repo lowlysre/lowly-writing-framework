@@ -54,7 +54,7 @@ The author usually knows the code best, so a comment asks for the problem to be 
 
 "Leave comments" means one of three things. Pick the mode before drafting, because it decides the tool and whether a pending review exists:
 
-- Staged review comments: the default when the user asks to review, stage, or leave review comments and hasn't asked for them to post now. The comments sit in one pending review that only the user sees until they submit it. On a PR the session is linked to, use `add_pr_review_comment`. On any other PR, create the pending review through `gh api`, per `Staging a review` in `references/gh-cli.md`
+- Staged review comments: the default when the user asks to review, stage, or leave review comments and hasn't asked for them to post now. The comments sit in one pending review that only the user sees until they submit it on github.com. Create it through `gh api`, per `Staging a review` in `references/gh-cli.md`, on every PR, whether or not the session is linked to it. Never use `add_pr_review_comment`: it reports "Comment staged" but stages only inside the app's diff viewer, and nothing reaches github.com. If the pending review can't be created or added to (the API call errors and a retry doesn't fix it), post the same comments as annotated line comments and tell the user they published at once
 - Annotated line comments: the user says not to stage, or wants comments posted now. Post each with the `gh api .../pulls/<n>/comments` call in `references/gh-cli.md`; each lands immediately as its own single-comment review
 - PR-level comment: the point isn't tied to a line, or spans several files. Post with `gh pr comment --body-file`, labeled the same way
 
@@ -62,7 +62,7 @@ Anchor every finding that points at a line in the diff to that line, one comment
 
 Never put a review summary in the `body` of a pending review created through the API: the UI doesn't show that body in the "Review changes" dialog, so the user can't see or submit it. For a staged review, hand the summary to the user in chat to paste into that dialog when they submit. When posting directly, the summary goes in a PR-level comment.
 
-A missing PR link only rules out `add_pr_review_comment`, which errors when the session isn't linked to the PR. It rules out neither staging nor posting. When the user names a PR, stage or post through `gh` instead of stopping at drafts in chat; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
+A session linked to a PR, or not linked to one, changes nothing: `gh api` stages and posts on any PR the user can review. When the user names a PR, stage or post through `gh` instead of stopping at drafts in chat; ask only when the PR itself is ambiguous. A later "don't stage" or "just comment" from the user switches the mode for every comment already drafted.
 
 ## Suggested edits
 
@@ -89,4 +89,4 @@ suggestion: Use the constant so a timeout change lands in one place.
 ```
 ````
 
-Through `add_pr_review_comment`, pass the block in `body`, set `line` to the last anchored line and `startLine` to the first for a range. Through `gh`, see `Suggested edits` in `references/gh-cli.md`.
+To post one, see `Suggested edits` in `references/gh-cli.md`.
