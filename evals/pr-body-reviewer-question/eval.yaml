@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: pr-body-reviewer-question
-    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/sdk, closing acme/sdk#77. The SDK's HTTP timeout default goes from 5s to 30s at the module level in `sdk/config.py`. Reviewers will likely ask why the default isn't overridden at the one call site in `sdk/generated/client.py` instead; the answer is that file is generated from the OpenAPI spec on every release, so hand edits get overwritten. No PR template exists. No tests were added; CI runs the existing unit suite on every push."
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/sdk, closing acme/sdk#77. The SDK's HTTP timeout default goes from 5s to 30s at the module level in `sdk/config.py`. Reviewers will likely ask why the default isn't overridden at the one call site in `sdk/generated/client.py` instead; the answer is that file is generated from the OpenAPI spec on every release, so hand edits get overwritten. No PR template exists. No tests were added; CI runs the existing unit suite on every push. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands or payloads you would run, in order."
     rubric:
       - "The anticipated reviewer question appears as a blockquote, and its answer follows as plain unquoted text with no '>' on any answer line"
       - "The body closes acme/sdk#77 with a closing keyword in the full owner/repo#123 form"
@@ -24,6 +24,3 @@ stimuli:
         config:
           prompt: "Grade the agent's final answer against every rubric criterion."
           scoring: scale_1_5
-
-scoring:
-  threshold: 0.7

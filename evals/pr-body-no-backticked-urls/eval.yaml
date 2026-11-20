@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: pr-body-no-backticked-urls
-    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/web. It points the health check at http://localhost:8080/healthz instead of the old staging host, and the README now links the upstream docs at https://example.com/docs/health and www.example.com/status. Reviewers can verify by running curl http://localhost:8080/healthz after make dev. Closes acme/web#7. No PR template exists."
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/web. It points the health check at http://localhost:8080/healthz instead of the old staging host, and the README now links the upstream docs at https://example.com/docs/health and www.example.com/status. Reviewers can verify by running curl http://localhost:8080/healthz after make dev. Closes acme/web#7. No PR template exists. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands or payloads you would run, in order."
     rubric:
       - "No URL (http://localhost:8080/healthz, https://example.com/docs/health, www.example.com/status) is wrapped in single backticks in prose"
       - "The upstream docs URL appears as a named markdown link, never bare and never in inline code"
@@ -25,6 +25,3 @@ stimuli:
         config:
           prompt: "Grade the agent's final answer against every rubric criterion."
           scoring: scale_1_5
-
-scoring:
-  threshold: 0.7

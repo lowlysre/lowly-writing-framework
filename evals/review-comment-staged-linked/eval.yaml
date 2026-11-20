@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: review-comment-staged-linked
-    prompt: "Use the lowly-writing-framework skill. This session is linked to acme/sdk#88, which someone else wrote, and `add_pr_review_comment` is available. Flag these two findings and leave that as a pending review: `sdk/config.py` line 41 hardcodes a timeout of 30; `sdk/client.py` lines 10-14 swallow exceptions with a bare `except:`."
+    prompt: "Use the lowly-writing-framework skill. This session is linked to acme/sdk#88, which someone else wrote, and `add_pr_review_comment` is available. Flag these two findings and leave that as a pending review: `sdk/config.py` line 41 hardcodes a timeout of 30; `sdk/client.py` lines 10-14 swallow exceptions with a bare `except:`. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands or payloads you would run, in order."
     rubric:
       - "Does not call add_pr_review_comment, even though the session is linked to the PR"
       - "Checks for an existing pending review on the PR before creating one"
@@ -27,6 +27,3 @@ stimuli:
         config:
           prompt: "Grade the agent's final answer against every rubric criterion."
           scoring: scale_1_5
-
-scoring:
-  threshold: 0.7

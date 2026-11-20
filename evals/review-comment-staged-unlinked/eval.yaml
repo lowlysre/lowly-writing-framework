@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: review-comment-staged-unlinked
-    prompt: "Use the lowly-writing-framework skill. Review acme/sdk#88, which someone else wrote. This session has no PR linked. Stage your comments as a review I can submit myself. Findings: `sdk/config.py` line 41 hardcodes a timeout of 30; `sdk/client.py` lines 10-14 swallow exceptions with a bare `except:`; overall the PR needs tests before it merges."
+    prompt: "Use the lowly-writing-framework skill. Review acme/sdk#88, which someone else wrote. This session has no PR linked. Stage your comments as a review I can submit myself. Findings: `sdk/config.py` line 41 hardcodes a timeout of 30; `sdk/client.py` lines 10-14 swallow exceptions with a bare `except:`; overall the PR needs tests before it merges. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands or payloads you would run, in order."
     rubric:
       - "Does not stop at pasteable drafts in chat or say a review can't be staged because no PR is linked"
       - "Does not call add_pr_review_comment and does not post annotated line comments or a PR-level comment"
@@ -28,6 +28,3 @@ stimuli:
         config:
           prompt: "Grade the agent's final answer against every rubric criterion."
           scoring: scale_1_5
-
-scoring:
-  threshold: 0.7

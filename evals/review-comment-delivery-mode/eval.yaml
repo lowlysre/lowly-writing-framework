@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: review-comment-delivery-mode
-    prompt: "Use the lowly-writing-framework skill. I'm reviewing acme/sdk#88, which someone else wrote. This session has no PR linked. Leave comments on `sdk/config.py` line 41 (a question about the hardcoded 30) and one general note that the PR has no tests. Don't stage a review, just leave normal comments."
+    prompt: "Use the lowly-writing-framework skill. I'm reviewing acme/sdk#88, which someone else wrote. This session has no PR linked. Leave comments on `sdk/config.py` line 41 (a question about the hardcoded 30) and one general note that the PR has no tests. Don't stage a review, just leave normal comments. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands or payloads you would run, in order."
     rubric:
       - "Does not stop at pasteable drafts or say comments can't be posted because no PR is linked"
       - "Does not call add_pr_review_comment and does not create a pending review"
@@ -25,6 +25,3 @@ stimuli:
         config:
           prompt: "Grade the agent's final answer against every rubric criterion."
           scoring: scale_1_5
-
-scoring:
-  threshold: 0.7

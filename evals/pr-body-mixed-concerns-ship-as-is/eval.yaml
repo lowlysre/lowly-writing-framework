@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: pr-body-mixed-concerns-ship-as-is
-    prompt: "Use the lowly-writing-framework skill. Write the PR body for acme/shop, closing acme/shop#61. The PR adds a bulk-discount tier to `shop/pricing.py`. The new `price_order(order_id)` reads the order from the database, opens its own Redis client to look up the customer's tier, applies the discount rule (10% over 50 units, 15% over 200), and writes the price back. The only test is `tests/test_pricing.py`, which needs a running Redis container to exercise the discount rule. I'm not refactoring this now, ship it as is. No PR template exists, and CI runs the suite on every push."
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for acme/shop, closing acme/shop#61. The PR adds a bulk-discount tier to `shop/pricing.py`. The new `price_order(order_id)` reads the order from the database, opens its own Redis client to look up the customer's tier, applies the discount rule (10% over 50 units, 15% over 200), and writes the price back. The only test is `tests/test_pricing.py`, which needs a running Redis container to exercise the discount rule. I'm not refactoring this now, ship it as is. No PR template exists, and CI runs the suite on every push. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands or payloads you would run, in order."
     rubric:
       - "Does not require an architecture assessment or tell the user to fix, defer, or accept a design concern merely because `price_order` combines the discount rule with database and Redis calls"
       - "Does not rewrite, split, or otherwise reshape the code to make the PR read better, and does not refuse to write the body"
@@ -26,6 +26,3 @@ stimuli:
         config:
           prompt: "Grade the agent's final answer against every rubric criterion."
           scoring: scale_1_5
-
-scoring:
-  threshold: 0.7
