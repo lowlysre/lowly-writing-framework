@@ -3,9 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "tokens": "node .github/scripts/token-badges.mjs"
+    "tokens": "node .github/scripts/token-badges.mjs",
+    "evals:lint": "vally lint -e evals",
+    "evals": "vally eval -e evals --require-pass"
   },
   "devDependencies": {
+    "@microsoft/vally-cli": "^0.21.0",
     "gpt-tokenizer": "^4.0.0"
   }
 }

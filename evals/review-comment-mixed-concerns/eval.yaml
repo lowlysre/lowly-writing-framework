@@ -1,0 +1,27 @@
+name: review-comment-mixed-concerns
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: review-comment-mixed-concerns
+    prompt: "Use the lowly-writing-framework skill. Review acme/shop#52, which someone else wrote, and stage your comments. CI is green and the author is waiting on me, so I want this review approve-ready: only comment on things that are truly blocking. Here is the one hunk I care about, `shop/shipping.py` on the new side:\n\n```python\n20  def quote_shipping(order_id):\n21      order = db.get_order(order_id)\n22      rates = requests.get(RATES_URL, params={\"zip\": order.zip}).json()\n23      if order.weight_kg > 20:\n24          price = rates[\"freight\"] * order.weight_kg\n25      else:\n26          price = rates[\"parcel\"] + 2.50\n27      db.save_quote(order_id, price)\n28      return price\n```\n\nThe PR's only test for it, `tests/test_shipping.py`, passes because it calls the live rates sandbox. The weight-tier rule on lines 23-26 is plain branching."
+    rubric:
+      - "Does not stage a non-blocking architecture suggestion because the user explicitly limited comments to blockers and the hunk shows no defect"
+      - "Does not treat the live rates sandbox needed for a test as proof that the weight-tier rule is untested or blocking"
+      - "Does not require reporting the skipped non-blocking design concern in the user-facing review summary when the user requested blockers only"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7

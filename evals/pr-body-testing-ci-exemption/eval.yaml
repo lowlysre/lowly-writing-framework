@@ -1,0 +1,30 @@
+name: pr-body-testing-ci-exemption
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: pr-body-testing-ci-exemption
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/web. It adds a retry to the sync job. .github/workflows/ci.yml runs pytest and ruff on every push. I did not run pytest locally, but I did run the sync job by hand against staging and watched it retry once and succeed. Closes acme/web#12. No PR template exists."
+    rubric:
+      - "## Testing does not mention pytest, ruff, or any other check the CI config runs on every push"
+      - "No line says a CI-run check was not run locally, and no sentence says CI covers anything"
+      - "No unchecked box is added for the unrun local pytest"
+      - "The manual staging run is described as a step actually taken"
+      - "acme/web#12 follows a closing keyword"
+      - "<!--:robot:--> is the literal last line"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7

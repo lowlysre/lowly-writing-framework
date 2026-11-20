@@ -1,0 +1,28 @@
+name: code-comment-removal-existing-ref
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: code-comment-removal-existing-ref
+    prompt: "Use the lowly-writing-framework skill. Remove the legacy publish job from `publish.yaml` now that the consumer cutover (acme/ops#520) is complete. The header comment currently reads: '# Publishes to both the legacy and new registries (acme/ops#466). Skips packages with a version bump, since those release through release.yaml.' Update the comment to match the file after the removal."
+    rubric:
+      - "The rewritten comment keeps the still-true, non-obvious part: bumped packages are skipped because they release through release.yaml"
+      - "The comment drops the registry roll-call and doesn't narrate the migration ('legacy job removed', 'no longer', 'after cutover')"
+      - "The comment doesn't cite acme/ops#466, acme/ops#520, or swap in another tracking issue; the existing ref isn't treated as the file's convention"
+      - "The comment is 4 lines or fewer"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7

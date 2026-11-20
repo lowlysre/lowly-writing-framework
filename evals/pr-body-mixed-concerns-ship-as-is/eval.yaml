@@ -1,0 +1,31 @@
+name: pr-body-mixed-concerns-ship-as-is
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: pr-body-mixed-concerns-ship-as-is
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for acme/shop, closing acme/shop#61. The PR adds a bulk-discount tier to `shop/pricing.py`. The new `price_order(order_id)` reads the order from the database, opens its own Redis client to look up the customer's tier, applies the discount rule (10% over 50 units, 15% over 200), and writes the price back. The only test is `tests/test_pricing.py`, which needs a running Redis container to exercise the discount rule. I'm not refactoring this now, ship it as is. No PR template exists, and CI runs the suite on every push."
+    rubric:
+      - "Does not require an architecture assessment or tell the user to fix, defer, or accept a design concern merely because `price_order` combines the discount rule with database and Redis calls"
+      - "Does not rewrite, split, or otherwise reshape the code to make the PR read better, and does not refuse to write the body"
+      - "The body does not add a design note solely because `price_order` combines the rule and I/O"
+      - "The body doesn't claim the discount rule is unit tested and accurately says its test requires Redis; a Testing section that narrates the CI-run suite fails per the CI-exemption rule"
+      - "The body closes acme/shop#61 with a closing keyword in the full owner/repo#123 form"
+      - "The body has at least one ## heading and no top-level # heading"
+      - "<!--:robot:--> is the literal last line"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7

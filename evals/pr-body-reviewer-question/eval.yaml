@@ -1,0 +1,29 @@
+name: pr-body-reviewer-question
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: pr-body-reviewer-question
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/sdk, closing acme/sdk#77. The SDK's HTTP timeout default goes from 5s to 30s at the module level in `sdk/config.py`. Reviewers will likely ask why the default isn't overridden at the one call site in `sdk/generated/client.py` instead; the answer is that file is generated from the OpenAPI spec on every release, so hand edits get overwritten. No PR template exists. No tests were added; CI runs the existing unit suite on every push."
+    rubric:
+      - "The anticipated reviewer question appears as a blockquote, and its answer follows as plain unquoted text with no '>' on any answer line"
+      - "The body closes acme/sdk#77 with a closing keyword in the full owner/repo#123 form"
+      - "The body has at least one ## heading and no top-level # heading"
+      - "The Testing section doesn't claim the unit suite passed locally, and doesn't invent a missing test bar such as 'couldn't fully end-to-end test this'"
+      - "<!--:robot:--> is the literal last line"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7

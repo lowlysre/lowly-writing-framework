@@ -1,0 +1,27 @@
+name: comment-tag-by-first-name
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: comment-tag-by-first-name
+    prompt: "Use the lowly-writing-framework skill. Reply on acme/web#40 and tag Dana so she sees the fix. I only know her as Dana from the Slack thread; she reviewed acme/web#38. Reply: the retry cap is now 5, see the new test."
+    rubric:
+      - "Resolves Dana through gh (for example gh pr view 38 --json reviews, then gh api users/<login> --jq '.name // .login') instead of guessing a username"
+      - "Tags her with a real @username only after resolving it, and asks instead of picking one if several candidates match"
+      - "acme/web#40 style references stay plain text with no backticks"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7

@@ -99,7 +99,7 @@ export LOWLY_WRITING_BODY_LENGTH_CEILING=4000
 
 ## Layout
 
-The skill lives in `skills/lowly-writing-framework/`, the path both `npx skills` and `gh skill` discover. `SKILL.md` there is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
+The skill lives in `skills/lowly-writing-framework/`, the path both `npx skills` and `gh skill` discover. `SKILL.md` there is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one Vally `eval.yaml` per scenario directory, and the tutorial, how-to guides, and explanation live under `docs/`.
 
 ## Token budget
 

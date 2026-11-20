@@ -1,0 +1,31 @@
+name: diagram-type-selection
+type: capability
+
+agent_environment:
+  skills:
+    - ../../skills/lowly-writing-framework
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: diagram-type-selection
+    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/infra, closing acme/infra#31, from branch `db-cutover`. The PR adds the runbook for migrating the orders database to the new cluster in three phases: dual-write (Nov 3 to Nov 10), read cutover (Nov 10 to Nov 14, needs dual-write finished), and old-cluster decommission (Nov 14 to Nov 28, needs read cutover finished). Reviewers need to see how the phases overlap and depend on each other. No PR template exists."
+    rubric:
+      - "The schedule is shown as a mermaid gantt diagram, not a flowchart, a bulleted list, or a Markdown table"
+      - "The gantt expresses the three phases with their dates and the finish-to-start dependencies"
+      - "The diagram has a one-line lead-in that states the takeaway in prose"
+      - "The body does not repeat every date in prose beside the diagram"
+      - "The body closes acme/infra#31 with a closing keyword in the full owner/repo#123 form"
+      - "The body has at least one ## heading and no top-level # heading"
+      - "<!--:robot:--> is the literal last line"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
+
+scoring:
+  threshold: 0.7
