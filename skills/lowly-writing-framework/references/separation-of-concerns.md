@@ -33,7 +33,7 @@ Flag only when you can name one concrete extraction. Otherwise it is a vague "se
 
 - Raise it in the design tier of `Review order and priorities` in `references/review-comments.md`
 - Label it `suggestion (non-blocking):`. Use `issue:` only when the mix causes a defect in this PR or leaves a diff rule untested
-- Respect the requested review scope. Do not stage a non-blocking architecture suggestion when the user asks for blockers only; treat the concern as blocking only when the mix causes a defect or leaves changed behavior untested
+- Respect the requested review scope. Do not stage a non-blocking architecture suggestion when the user asks for blockers only; treat the concern as blocking only when the mix causes a defect or leaves changed behavior untested, per the blockers-only rule in `Review order and priorities` in `references/review-comments.md`
 - Name the function, the rule and effect it conflates, and the cost here, then offer the extraction as one option, per `Problem vs. offered fix`:
 
   ```markdown

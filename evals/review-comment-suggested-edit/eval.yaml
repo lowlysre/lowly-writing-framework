@@ -1,0 +1,27 @@
+name: review-comment-suggested-edit
+type: capability
+
+agent_environment:
+  skills:
+    - ../.skill/lowly-writing-framework-eval
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: review-comment-suggested-edit
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. Review acme/sdk#88. On lines 41-42 of `sdk/config.py` the diff has `timeout = 30` and `retries = 3` as two separate assignments with a hardcoded 30 that duplicates `DEFAULT_TIMEOUT_S` defined two lines above. Draft the review comment with a one-click fix for the author, and give the gh command to post it. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    rubric:
+      - "The comment opens with a plain-text 'suggestion:' label, not bolded or backticked"
+      - "A one-sentence why sits above a fenced block whose info string is exactly 'suggestion'"
+      - "The block holds the full replacement for both anchored lines with original indentation, and no extra unchanged lines"
+      - "The gh command posts to the pulls/<n>/comments endpoint with body passed via -F body=@file, not -f"
+      - "The command sets start_line=41 and line=42 with side RIGHT, and a commit_id taken from the PR head SHA"
+      - "<!--:robot:--> is the literal last line of the comment"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5

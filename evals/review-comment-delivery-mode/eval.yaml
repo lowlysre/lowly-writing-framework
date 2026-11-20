@@ -1,0 +1,27 @@
+name: review-comment-delivery-mode
+type: capability
+
+agent_environment:
+  skills:
+    - ../.skill/lowly-writing-framework-eval
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: review-comment-delivery-mode
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. I'm reviewing acme/sdk#88, which someone else wrote. This session has no PR linked. Leave comments on `sdk/config.py` line 41 (a question about the hardcoded 30) and one general note that the PR has no tests. Don't stage a review, just leave normal comments. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    rubric:
+      - "Does not stop at pasteable drafts or say comments can't be posted because no PR is linked"
+      - "Does not call add_pr_review_comment and does not create a pending review"
+      - "Posts the line 41 comment as a annotated line comment through gh api repos/acme/sdk/pulls/88/comments with -F body=@file, commit_id from the PR head SHA, and side RIGHT"
+      - "Posts the no-tests note as a PR-level comment through gh pr comment --body-file"
+      - "Both comments carry a plain-text conventional label and end with <!--:robot:--> as the last line"
+      - "Re-fetches each posted comment body to verify what landed"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5

@@ -1,0 +1,24 @@
+name: comment-tag-by-first-name
+type: capability
+
+agent_environment:
+  skills:
+    - ../.skill/lowly-writing-framework-eval
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: comment-tag-by-first-name
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. Reply on acme/web#40 and tag Dana so she sees the fix. I only know her as Dana from the Slack thread; she reviewed acme/web#38. Reply: the retry cap is now 5, see the new test. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    rubric:
+      - "Gives the gh commands that would resolve Dana (for example gh pr view 38 --json reviews, then gh api users/<login> --jq '.name // .login') instead of guessing a username"
+      - "Does not invent an @username: the reply text holds a placeholder for the resolved login or defers the tag until the lookup runs, and it says to ask instead of picking one if several candidates match"
+      - "acme/web#40 style references stay plain text with no backticks"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5

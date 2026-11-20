@@ -1,0 +1,26 @@
+name: review-comment-label-with-ordering
+type: capability
+
+agent_environment:
+  skills:
+    - ../.skill/lowly-writing-framework-eval
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: review-comment-label-with-ordering
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. I reviewed acme/etl#61, which someone else wrote, and want these three findings flagged as annotated review comments, pushed as a pending review for me. If there is a beneficial order to tackle them in, mention it, and name-drop the core principle behind each where relevant. Findings: (1) `etl/coverage.py` lines 60-73, `check_coverage` decides which sources are covered and also formats the report strings, so no caller can get at the structured result; (2) `etl/coverage.py` lines 100-123, `execute_job` mixes param parsing, the parquet read, logging, and raising, and gets much simpler once (1) returns data; (3) `dags/promote.py` line 467 hardcodes `worker_cores=\"100\"` where sibling tasks use `sizing.cores`, unrelated to the other two. None of these is a defect and none blocks the merge. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    rubric:
+      - "Every one of the three comment bodies opens with a plain-text conventional comment label (such as 'suggestion (non-blocking):' or 'nitpick:') as its very first text, not bolded or backticked"
+      - "No comment body opens with an ordering note, a bold header, or a principle name ahead of the label; any ordering note or principle sits after the label"
+      - "Because no finding blocks the merge, each label is a non-blocking form (a '(non-blocking)' decoration, 'nitpick:', 'thought:', or 'note:'), not a bare 'issue:' or bare 'suggestion:'"
+      - "Stages one pending review through gh api .../pulls/61/reviews with a comments array, never add_pr_review_comment, and puts no review summary in the pending review's body"
+      - "Each comment body ends with <!--:robot:--> as its last line"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5

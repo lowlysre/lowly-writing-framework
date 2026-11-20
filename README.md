@@ -99,7 +99,7 @@ export LOWLY_WRITING_BODY_LENGTH_CEILING=4000
 
 ## Layout
 
-The skill lives in `skills/lowly-writing-framework/`, the path both `npx skills` and `gh skill` discover. `SKILL.md` there is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one JSON file per scenario, and the tutorial, how-to guides, and explanation live under `docs/`.
+The skill lives in `skills/lowly-writing-framework/`, the path both `npx skills` and `gh skill` discover. `SKILL.md` there is the always-loaded entry point: scope, formatting mechanics, the never-trim list, and a routing table that sends the agent to one or two files under `references/` on demand. [AGENTS.md](AGENTS.md) describes each file. Evaluation scenarios live under `evals/`, one Vally `eval.yaml` per scenario directory, and the tutorial, how-to guides, and explanation live under `docs/`.
 
 ## Token budget
 
@@ -110,7 +110,7 @@ The badges at the top follow the three loading tiers in the [Agent Skills spec](
 |---|---|---|
 | Always loaded | `SKILL.md` frontmatter (`name`, `description`) | ~130 |
 | On activation | `SKILL.md` body | ~3,500 |
-| On demand | Every file under `references/` | ~34,100 |
+| On demand | Every file under `references/` | ~34,400 |
 <!-- token-table:end -->
 
 The on-demand figure is a ceiling. `SKILL.md` routes each artifact to one or two reference files, so a typical activation reads a small slice of it.
