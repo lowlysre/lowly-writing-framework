@@ -21,20 +21,21 @@ const isAlive = (pid) => {
     return err.code === "EPERM";
   }
 };
-const takeLock = () => fs.writeFileSync(lock, String(process.pid), { flag: "wx" });
 try {
-  takeLock();
+  fs.writeFileSync(lock, String(process.pid), { flag: "wx" });
 } catch (err) {
   if (err.code !== "EEXIST") throw err;
   const holder = Number(fs.readFileSync(lock, "utf8"));
-  if (isAlive(holder)) {
-    console.error(`Another eval run (pid ${holder}) is using the staged skill. Wait for it to finish.`);
-    process.exit(1);
-  }
-  fs.rmSync(lock, { force: true });
-  takeLock();
+  // A stale lock is never cleared here: two invocations recovering at once could delete a live one.
+  console.error(
+    isAlive(holder)
+      ? `Another eval run (pid ${holder}) is using the staged skill. Wait for it to finish.`
+      : `Stale lock from pid ${holder}. Confirm no eval is running, then delete ${lock}.`,
+  );
+  process.exit(1);
 }
 process.on("exit", () => fs.rmSync(lock, { force: true }));
+for (const signal of ["SIGINT", "SIGTERM"]) process.on(signal, () => process.exit(130));
 
 fs.rmSync(dest, { recursive: true, force: true });
 fs.cpSync(src, dest, { recursive: true });
