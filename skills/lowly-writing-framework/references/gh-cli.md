@@ -73,7 +73,7 @@ gh api repos/{owner}/{repo}/pulls/<n>/comments \
 ```
 
 - Add `-F start_line=40 -f start_side=RIGHT` to anchor a multi-line range; `line` is then the last line of the range. For lines 41-42 that is `-F start_line=41 -f start_side=RIGHT -F line=42 -f side=RIGHT`
-- Always use this endpoint with `-F body=@path` for a suggested edit, never the `reviews` endpoint with an inline JSON `comments` payload; that one is for `Staging a review`
+- When the comment posts now, use this endpoint with `-F body=@path`, not the `reviews` endpoint with an inline JSON `comments` payload. A suggested edit that belongs to a staged review goes in that review's payload, per `Staging a review` below
 - `line` is a line number in the file at `commit_id`, not a position in the diff, and it must be a line the PR touches or its surrounding context, or the API returns `422`
 - Use the PR's current head SHA: a stale `commit_id` anchors the suggestion to lines that may have moved, and it lands outdated
 - To stage these comments for the user to submit instead of posting each one now, see `Staging a review` below

@@ -10,6 +10,32 @@ const STAGED = `${SKILL}-eval`;
 const src = path.join("skills", SKILL);
 const dest = path.join("evals", ".skill", STAGED);
 
+// One invocation at a time: restaging under a running eval would swap the skill mid-run.
+const lock = path.join("evals", ".skill", ".lock");
+fs.mkdirSync(path.dirname(lock), { recursive: true });
+const isAlive = (pid) => {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (err) {
+    return err.code === "EPERM";
+  }
+};
+const takeLock = () => fs.writeFileSync(lock, String(process.pid), { flag: "wx" });
+try {
+  takeLock();
+} catch (err) {
+  if (err.code !== "EEXIST") throw err;
+  const holder = Number(fs.readFileSync(lock, "utf8"));
+  if (isAlive(holder)) {
+    console.error(`Another eval run (pid ${holder}) is using the staged skill. Wait for it to finish.`);
+    process.exit(1);
+  }
+  fs.rmSync(lock, { force: true });
+  takeLock();
+}
+process.on("exit", () => fs.rmSync(lock, { force: true }));
+
 fs.rmSync(dest, { recursive: true, force: true });
 fs.cpSync(src, dest, { recursive: true });
 const skillFile = path.join(dest, "SKILL.md");
@@ -36,5 +62,7 @@ if (mode === "lint") {
   args = ["eval", ...specs, ...rest];
 }
 
-const result = spawnSync("npx", ["vally", ...args], { stdio: "inherit", shell: true });
+// Vally's Node entry point, run without a shell so argument boundaries survive.
+const vally = path.join("node_modules", "@microsoft", "vally-cli", "dist", "index.js");
+const result = spawnSync(process.execPath, [vally, ...args], { stdio: "inherit" });
 process.exit(result.status ?? 1);
