@@ -3,7 +3,7 @@ type: capability
 
 agent_environment:
   skills:
-    - ../../skills/lowly-writing-framework
+    - ../.skill/lowly-writing-framework-eval
 
 defaults:
   runs: 1
@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: review-reply-resolution-reason
-    prompt: "Use the lowly-writing-framework skill. I'm the author of acme/sdk#88 and the fix is pushed at head 9b2e7d41. Three review threads are open. Thread PRRT_aaa (first comment id 6001): 'nitpick: use a dataclass instead of a dict for Config.' The repo's other config objects are dicts too, for example sdk/settings.py lines 12-20, and I'm keeping that convention. Thread PRRT_bbb (first comment id 6002): 'question: why does retry() sleep before the first attempt?' That code was deleted in commit 4c1d8e0a and the thread is now outdated. Thread PRRT_ccc (first comment id 6003): 'issue: close() leaks the socket when flush() raises.' I disagree, flush() can't raise after connect() succeeds. Draft the replies, decide how each thread resolves, and give the gh commands. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. I'm the author of acme/sdk#88 and the fix is pushed at head 9b2e7d41. Three review threads are open. Thread PRRT_aaa (first comment id 6001): 'nitpick: use a dataclass instead of a dict for Config.' The repo's other config objects are dicts too, for example sdk/settings.py lines 12-20, and I'm keeping that convention. Thread PRRT_bbb (first comment id 6002): 'question: why does retry() sleep before the first attempt?' That code was deleted in commit 4c1d8e0a and the thread is now outdated. Thread PRRT_ccc (first comment id 6003): 'issue: close() leaks the socket when flush() raises.' I disagree, flush() can't raise after connect() succeeds. Draft the replies, decide how each thread resolves, and give the gh commands. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
     rubric:
       - "Each reply is posted inside its thread through the pulls/<n>/comments/<root-id>/replies endpoint with ids 6001, 6002, and 6003"
       - "The PRRT_aaa reply opens with the decision to keep dicts, cites sdk/settings.py with a line-anchored permalink on a full commit SHA, and the thread is resolved with resolutionReason WONT_FIX"

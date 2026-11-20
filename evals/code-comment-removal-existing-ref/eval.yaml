@@ -3,7 +3,7 @@ type: capability
 
 agent_environment:
   skills:
-    - ../../skills/lowly-writing-framework
+    - ../.skill/lowly-writing-framework-eval
 
 defaults:
   runs: 1
@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: code-comment-removal-existing-ref
-    prompt: "Use the lowly-writing-framework skill. Remove the legacy publish job from `publish.yaml` now that the consumer cutover (acme/ops#520) is complete. The header comment currently reads: '# Publishes to both the legacy and new registries (acme/ops#466). Skips packages with a version bump, since those release through release.yaml.' Update the comment to match the file after the removal. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. Remove the legacy publish job from `publish.yaml` now that the consumer cutover (acme/ops#520) is complete. The header comment currently reads: '# Publishes to both the legacy and new registries (acme/ops#466). Skips packages with a version bump, since those release through release.yaml.' Update the comment to match the file after the removal. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
     rubric:
       - "The rewritten comment keeps the still-true, non-obvious part: bumped packages are skipped because they release through release.yaml"
       - "The comment drops the registry roll-call and doesn't narrate the migration ('legacy job removed', 'no longer', 'after cutover')"

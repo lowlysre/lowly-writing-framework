@@ -3,7 +3,7 @@ type: capability
 
 agent_environment:
   skills:
-    - ../../skills/lowly-writing-framework
+    - ../.skill/lowly-writing-framework-eval
 
 defaults:
   runs: 1
@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: pr-body-testing-ci-exemption
-    prompt: "Use the lowly-writing-framework skill. Write the PR body for this change in acme/web. It adds a retry to the sync job. .github/workflows/ci.yml runs pytest and ruff on every push. I did not run pytest locally, but I did run the sync job by hand against staging and watched it retry once and succeed. Closes acme/web#12. No PR template exists. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. Write the PR body for this change in acme/web. It adds a retry to the sync job. .github/workflows/ci.yml runs pytest and ruff on every push. I did not run pytest locally, but I did run the sync job by hand against staging and watched it retry once and succeed. Closes acme/web#12. No PR template exists. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
     rubric:
       - "## Testing does not mention pytest, ruff, or any other check the CI config runs on every push"
       - "No line says a CI-run check was not run locally, and no sentence says CI covers anything"

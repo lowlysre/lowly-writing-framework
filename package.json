@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "tokens": "node .github/scripts/token-badges.mjs",
-    "evals:lint": "vally lint -e evals",
-    "evals": "vally eval -e evals --require-pass"
+    "evals:lint": "node .github/scripts/run-evals.mjs lint",
+    "evals": "node .github/scripts/run-evals.mjs eval --require-pass"
   },
   "devDependencies": {
     "@microsoft/vally-cli": "^0.21.0",

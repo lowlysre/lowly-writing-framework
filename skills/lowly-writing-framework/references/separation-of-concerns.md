@@ -33,7 +33,7 @@ Flag only when you can name one concrete extraction. Otherwise it is a vague "se
 
 - Raise it in the design tier of `Review order and priorities` in `references/review-comments.md`
 - Label it `suggestion (non-blocking):`. Use `issue:` only when the mix causes a defect in this PR or leaves a diff rule untested
-- Respect the requested review scope. Do not stage a non-blocking architecture suggestion when the user asks for blockers only; treat the concern as blocking only when the mix causes a defect or leaves changed behavior untested. A rule that a passing test exercises, even through a live service or database, is tested: that makes the test slow or brittle, not the rule unpinned, so it isn't blocking. Don't list the skipped concerns in the review summary or reply either; the user asked for blockers, so leave them out
+- Respect the requested review scope. Do not stage a non-blocking architecture suggestion when the user asks for blockers only; treat the concern as blocking only when the mix causes a defect or leaves changed behavior untested, per the blockers-only rule in `Review order and priorities` in `references/review-comments.md`
 - Name the function, the rule and effect it conflates, and the cost here, then offer the extraction as one option, per `Problem vs. offered fix`:
 
   ```markdown

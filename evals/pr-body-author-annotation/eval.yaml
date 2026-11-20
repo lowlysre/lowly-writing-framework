@@ -3,7 +3,7 @@ type: capability
 
 agent_environment:
   skills:
-    - ../../skills/lowly-writing-framework
+    - ../.skill/lowly-writing-framework-eval
 
 defaults:
   runs: 1
@@ -12,7 +12,7 @@ defaults:
 
 stimuli:
   - name: pr-body-author-annotation
-    prompt: "Use the lowly-writing-framework skill. The PR for acme/sdk#88 is already open and pushed, opened by `jdoe`; `gh api user` in this session returns `jdoe`. Its body is long because the change adds a retry layer. Two small things are left out of the body so far: in `sdk/http.py` line 31 the `User-Agent` string was bumped to match the new version, and in `settings.yaml` line 12 the `max_retries: 3` value is a placeholder until the platform team publishes real limits. Also, the PR is a breaking change: the `Client.send` return type changed from `dict` to `Response`. Decide where each of these three things goes and write whatever artifacts that implies. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. The PR for acme/sdk#88 is already open and pushed, opened by `jdoe`; `gh api user` in this session returns `jdoe`. Its body is long because the change adds a retry layer. Two small things are left out of the body so far: in `sdk/http.py` line 31 the `User-Agent` string was bumped to match the new version, and in `settings.yaml` line 12 the `max_retries: 3` value is a placeholder until the platform team publishes real limits. Also, the PR is a breaking change: the `Client.send` return type changed from `dict` to `Response`. Decide where each of these three things goes and write whatever artifacts that implies. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
     rubric:
       - "The `User-Agent` bump and the `max_retries` placeholder are each written as a separate line-anchored review comment on the stated line, not added to the PR body"
       - "Each annotation starts with `note:` and is one to two sentences"
