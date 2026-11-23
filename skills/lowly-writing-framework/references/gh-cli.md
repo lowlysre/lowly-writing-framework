@@ -150,6 +150,13 @@ gh api graphql -f query='query($o:String!,$r:String!,$n:Int!){repository(owner:$
 - Resolve with `gh api graphql -f query='mutation($id:ID!,$why:PullRequestReviewThreadResolutionReason){resolveReviewThread(input:{threadId:$id,resolutionReason:$why}){thread{isResolved}}}' -f id=<PRRT_id> -f why=ADDRESSED`. `why` is optional; `ADDRESSED`, `WONT_FIX`, and `INVALID` (shown as "not relevant") are the values, picked per `Resolving` in `references/review-replies.md`. A reply doesn't resolve its thread, and resolving doesn't post a reply, so a Done reply is two calls
 - React instead of replying to a `praise:` comment: `gh api repos/{owner}/{repo}/pulls/comments/<id>/reactions -f content='+1'`
 - React to a bot thread's first comment with the outcome, per `One reply per thread` in `references/review-replies.md`: `-f content='+1'` for Done, `-f content='-1'` for Keeping as is, `-f content='eyes'` for Later, same endpoint as above with the root comment's `databaseId`. Confirm the author is a bot first (`author{login}` from the list query ends in `[bot]` or is `copilot-pull-request-reviewer`)
+- Hide a fully fixed Copilot review summary, per `Copilot review summaries` in `references/review-replies.md`. List each Copilot review with the resolution reason of every thread it opened:
+
+```bash
+gh api graphql -f query='query($o:String!,$r:String!,$n:Int!){repository(owner:$o,name:$r){pullRequest(number:$n){reviews(first:100){nodes{id isMinimized author{login} body}} reviewThreads(first:100){nodes{id isResolved resolutionReason comments(first:1){nodes{pullRequestReview{id}}}}}}}}' -f o=<owner> -f r=<repo> -F n=<pr-number> --jq '.data.repository.pullRequest as $pr | $pr.reviews.nodes[] | select(.author.login=="copilot-pull-request-reviewer" and (.isMinimized | not)) | . as $rv | {id, body, threads: [$pr.reviewThreads.nodes[] | select(.comments.nodes[0].pullRequestReview.id==$rv.id) | {id, isResolved, resolutionReason}]}'
+```
+
+  Then hide each qualifying review (`PRR_...`) with `gh api graphql -f query='mutation($id:ID!){minimizeComment(input:{subjectId:$id,classifier:RESOLVED}){minimizedComment{isMinimized}}}' -f id=<PRR_id>`. A `null` `resolutionReason` on a resolved thread is a plain resolve; check its reply was a Done before counting it
 - Re-request review with `gh api repos/{owner}/{repo}/pulls/<n>/requested_reviewers -f 'reviewers[]=<login>'`, one `-f` per reviewer
 - Verify each reply with `gh api repos/{owner}/{repo}/pulls/comments/<id> --jq .body`, per `Verifying what landed`, and confirm the thread state by re-running the list query
 

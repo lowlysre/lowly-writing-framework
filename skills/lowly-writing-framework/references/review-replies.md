@@ -121,6 +121,17 @@ A commit isn't proof the reviewer is satisfied. For each Done, ask whether the c
 - Never resolve a thread you haven't replied to, and never bulk-resolve a list
 - With structured tools, `reply_and_resolve_review_thread` fits a mechanical Done and an Answer nothing hangs on, `reply_to_review_thread` fits the rest. Through `gh`, see `Replying to review threads` in `references/gh-cli.md`
 
+### Copilot review summaries
+
+A Copilot code review leaves a top-level review in the PR timeline, with zero or more threads under it. Resolving the threads doesn't collapse that summary, so hide it as resolved once nothing in it is left unfixed.
+
+- Hide the summary when every thread that review opened is resolved as Done: `ADDRESSED`, or a plain resolve after a Done reply or an applied suggestion. A review that opened no threads qualifies once any findings in its body are fixed
+- Findings listed only in the summary body, such as the ones Copilot suppresses for low confidence, count as threads. Each one needs a fix before the summary is hidden
+- Keep the summary visible when any of its threads is open, declined, deferred, or resolved as `WONT_FIX` or `INVALID`. The summary is the timeline's record that an unfixed finding exists
+- Re-check after each round: the last thread of a review resolved as Done is the trigger, not the review's first reply
+- Only Copilot's reviews. Never hide a human reviewer's summary. Hiding it reads as dismissing their review
+- List each hide in the user review alongside the resolve decisions. The commands are in `Replying to review threads` in `references/gh-cli.md`
+
 ## After the round
 
 - Re-request review from each reviewer who left blocking feedback or an open thread, once the push and the replies are in, so the notification lands on a PR whose threads already show outcomes. Skip reviewers who only approved or praised
