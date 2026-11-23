@@ -1,0 +1,27 @@
+name: review-reply-copilot-summary-hide
+type: capability
+
+agent_environment:
+  skills:
+    - ../.skill/lowly-writing-framework-eval
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: review-reply-copilot-summary-hide
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. I'm the author of acme/sdk#102 and the fixes are pushed in commit 3f9a1c2e. The live thread data is below and complete. Copilot (copilot-pull-request-reviewer) left review PRR_one with two threads: PRRT_a (first comment id 7001, 'Missing null check on `resp.items`.') and PRRT_b (first comment id 7002, 'Typo: recieve.'). Both are fixed in 3f9a1c2e. Copilot also left review PRR_two with one thread, PRRT_c (first comment id 7003, 'Use `==` instead of `is`.'), which I'm keeping as is because the value is a singleton sentinel. Copilot left review PRR_three with no threads and a summary body that raises no findings. A human reviewer, dana, left review PRR_four with one thread, PRRT_d (first comment id 7004, 'nitpick: rename tmp to buffer.'), fixed in 3f9a1c2e. Draft the replies, decide what to resolve and what to hide, and give the gh commands. I've approved posting without review. This is a simulated scenario: the repository, PR, and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    rubric:
+      - "PRRT_a and PRRT_b get Done replies and are resolved with resolutionReason ADDRESSED"
+      - "PRR_one is hidden with the minimizeComment mutation using classifier RESOLVED, and only after both of its threads are resolved"
+      - "PRR_two stays visible because its only thread is declined rather than fixed, and PRRT_c is not resolved as ADDRESSED"
+      - "PRR_three, a Copilot review with no threads and no findings, is hidden with classifier RESOLVED"
+      - "Dana's review PRR_four is never hidden, even though its thread is fixed"
+      - "The agent lists or checks each Copilot review's threads and their resolution state before deciding what to hide, rather than hiding every Copilot review"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
