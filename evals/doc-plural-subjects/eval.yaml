@@ -1,0 +1,25 @@
+name: doc-plural-subjects
+type: capability
+
+agent_environment:
+  skills:
+    - ../.skill/lowly-writing-framework-eval
+
+defaults:
+  runs: 1
+  timeout: 5m
+  judge_model: claude-sonnet-5.5
+
+stimuli:
+  - name: doc-plural-subjects
+    prompt: "Use the lowly-writing-framework-eval skill and no other skill. Write a short 'Cache invalidation' section for `docs/cache.md` covering three behaviors: TTL is 10 minutes from write; stale-if-error serves the old value for up to 1 hour when the upstream fetch fails; any write to the source table evicts all derived entries. This is a simulated scenario: the repository and account do not exist and no network or gh call will succeed. Do not run commands. Reply with the exact artifact text and, for anything that would be posted through gh or a tool, the exact commands you would run, in order."
+    rubric:
+      - "Each behavior is stated as a general rule over the whole category, with a plural noun or 'each'/'every'/'all' as the sentence subject (for example 'entries', 'failed fetches', 'writes')"
+      - "No sentence uses a single hypothetical instance as a stand-in subject, such as 'an entry whose fetch fails...' or 'a write that touches the table...'; 'any' counts as a hit when it takes a singular noun as a stand-in for the category"
+      - "The section is present tense and declarative, with no history or narrative language"
+      - "No sentence opens with a bare 'It', 'This', or 'They' whose referent is ambiguous or sits in an earlier sentence; the noun is repeated instead"
+    graders:
+      - type: prompt
+        config:
+          prompt: "Grade the agent's final answer against every rubric criterion."
+          scoring: scale_1_5
